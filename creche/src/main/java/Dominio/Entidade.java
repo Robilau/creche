@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifsc.creche;
+package Dominio;
 
 /**
  *
  * @author Aluno
  */
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Teste");
-        System.out.println("outro teste aaaaaaaa");
-    }
+public abstract class Entidade {
+    private int Id;
+    
+    public abstract boolean validar();    
 }
