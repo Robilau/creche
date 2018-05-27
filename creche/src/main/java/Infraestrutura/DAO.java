@@ -9,6 +9,7 @@ import Dominio.Entidade;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.WriteResult;
+import java.lang.reflect.ParameterizedType;
 import static javafx.scene.input.KeyCode.T;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
@@ -19,7 +20,7 @@ import org.jongo.MongoCollection;
  *
  * @author Leticia
  */
-public class DAO<T extends Entidade> {
+public abstract class DAO<T extends Entidade> {
 
     DB _db;
     Jongo _jongo;
@@ -32,11 +33,12 @@ public class DAO<T extends Entidade> {
      *
      * @param colecao
      */
-    public DAO(String colecao) {
+    public DAO() {
         _db = new Mongo().getDB("CRECHE");
         _jongo = new Jongo(_db);
-        _colecao = _jongo.getCollection(colecao);
-        clazz = T.getClass();
+        final ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
+        Class<T> clazz = (Class<T>) (type).getActualTypeArguments()[0];
+        _colecao = _jongo.getCollection(clazz.getSimpleName().toUpperCase());
     }
 
     /**
@@ -57,37 +59,39 @@ public class DAO<T extends Entidade> {
     public T Pegar(String id) {
         return (T) _colecao.findOne(new ObjectId(id)).as(clazz);
     }
-    
+
     /**
      * Método que atualiza na base de dados o objeto passado por paramtro
+     *
      * @param t
-     * @return 
+     * @return
      */
-    public T Atualizar(T t){
-        WriteResult wr = _colecao.update(new ObjectId(t.getId())).with(t);
-        if (wr.getN() == 1) return Pegar(t.getId());
-        return null;
+    public void Atualizar(T t) {
+        _colecao.update(new ObjectId(t.getId())).with(t);
     }
-    
+
     /**
      * Método que insere na base de dados o objeto passado por parametro
+     *
      * @param t
-     * @return 
+     * @return
      */
-    public T Inserir (T t){
-        WriteResult wr = _colecao.save(t);
-        if (wr.getN() == 1) return Pegar(t.getId());
-        return null;
+    public void Inserir(T t) {
+        _colecao.save(t);
     }
-    
+
     /**
-     * Método que remove da base de dados o objeto referente ao id passado por parametro
+     * Método que remove da base de dados o objeto referente ao id passado por
+     * parametro
+     *
      * @param id
-     * @return 
+     * @return
      */
-    public boolean Remover(String id){
+    public boolean Remover(String id) {
         WriteResult wr = _colecao.remove(new ObjectId(id));
-        if (wr.getN() == 1) return true;
+        if (wr.getN() == 1) {
+            return true;
+        }
         return false;
     }
 

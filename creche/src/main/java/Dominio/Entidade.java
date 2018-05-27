@@ -19,6 +19,10 @@ public abstract class Entidade {
     public String getId() {
         return Id;
     }
+
+    public void setId(String Id) {
+        this.Id = Id;
+    }  
     
     public abstract boolean validar();    
 }
