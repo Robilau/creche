@@ -22,7 +22,7 @@ import org.jongo.MongoCursor;
  *
  * @author Leticia
  */
-public abstract class mongoDAO<T extends Entidade> {
+public abstract class mongoDAO<T extends Entidade>{
 
     DB _db;
     Jongo _jongo;
