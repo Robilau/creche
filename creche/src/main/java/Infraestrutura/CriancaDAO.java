@@ -11,5 +11,6 @@ import Dominio.Crianca;
  *
  * @author T0KS1CK
  */
-public class CriancaDAO extends DAO <Crianca> {    
+public class CriancaDAO extends mongoDAO <Crianca> {   
+    
 }

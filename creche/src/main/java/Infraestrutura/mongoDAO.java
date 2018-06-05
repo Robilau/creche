@@ -5,6 +5,7 @@
  */
 package Infraestrutura;
 
+import Dominio.Crianca;
 import Dominio.Entidade;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
@@ -14,18 +15,19 @@ import static javafx.scene.input.KeyCode.T;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
+import org.jongo.MongoCursor;
 
 /**
  * Classe que faz a conexão com o banco de dados
  *
  * @author Leticia
  */
-public abstract class DAO<T extends Entidade> {
+public abstract class mongoDAO<T extends Entidade> {
 
     DB _db;
     Jongo _jongo;
     MongoCollection _colecao;
-    Class clazz;
+    Class<T> clazz;
 
     /**
      * O método construtor recebe como parâmetro o nome da coleção alvo no banco
@@ -33,11 +35,12 @@ public abstract class DAO<T extends Entidade> {
      *
      * @param colecao
      */
-    public DAO() {
+    public mongoDAO() {
         _db = new Mongo().getDB("CRECHE");
         _jongo = new Jongo(_db);
         final ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
-        Class<T> clazz = (Class<T>) (type).getActualTypeArguments()[0];
+        clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+				.getActualTypeArguments()[0];
         _colecao = _jongo.getCollection(clazz.getSimpleName().toUpperCase());
     }
 
