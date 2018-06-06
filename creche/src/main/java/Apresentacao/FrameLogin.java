@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package Apresentacao;
-
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JFrame;
 
@@ -30,6 +31,8 @@ public class FrameLogin extends javax.swing.JInternalFrame {
         jPanelLogin = new javax.swing.JPanel();
         jTextUser = new javax.swing.JTextField();
         jTextSenha = new javax.swing.JTextField();
+        Icon icon = new ImageIcon("src/main/resources/Imagens/ok.png");
+        jButton1 = new javax.swing.JButton(icon);
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
@@ -53,12 +56,22 @@ public class FrameLogin extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelLoginLayout = new javax.swing.GroupLayout(jPanelLogin);
         jPanelLogin.setLayout(jPanelLoginLayout);
         jPanelLoginLayout.setHorizontalGroup(
             jPanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTextUser, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
             .addComponent(jTextSenha)
+            .addGroup(jPanelLoginLayout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelLoginLayout.setVerticalGroup(
             jPanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -67,7 +80,8 @@ public class FrameLogin extends javax.swing.JInternalFrame {
                 .addComponent(jTextUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jTextSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -82,7 +96,7 @@ public class FrameLogin extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(293, Short.MAX_VALUE)
+                .addContainerGap(284, Short.MAX_VALUE)
                 .addComponent(jPanelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(87, 87, 87))
         );
@@ -116,8 +130,13 @@ public class FrameLogin extends javax.swing.JInternalFrame {
         jTextUser.setForeground(Color.black);
     }//GEN-LAST:event_jTextUserFocusGained
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelLogin;
     private javax.swing.JTextField jTextSenha;

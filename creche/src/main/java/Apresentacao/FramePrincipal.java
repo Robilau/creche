@@ -5,6 +5,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 public class FramePrincipal extends javax.swing.JFrame {
 
