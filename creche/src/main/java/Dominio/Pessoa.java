@@ -46,6 +46,10 @@ public abstract class Pessoa extends Entidade{
     public void setRG(String RG) {
         this.RG = RG;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Pessoa{" + "nome=" + nome + ", telefone=" + telefone + ", endereco=" + endereco + ", RG=" + RG + '}';
+    }   
     
 }

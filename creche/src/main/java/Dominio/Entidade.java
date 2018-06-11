@@ -5,24 +5,21 @@
  */
 package Dominio;
 
-import org.jongo.marshall.jackson.oid.ObjectId;
-
 /**
  *
  * @author Aluno
  */
 public abstract class Entidade {
     
-    @ObjectId
-    private String Id;
+    private int Id;
 
-    public String getId() {
+    public int getId() {
         return Id;
     }
 
-    public void setId(String Id) {
+    public void setId(int Id) {
         this.Id = Id;
-    }  
+    }
     
     public abstract boolean validar();    
 }
