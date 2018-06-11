@@ -1,0 +1,3 @@
+CREATE TABLE TBUsuario (id_ususario serial primary key not null, login text, senha text);
+Create table TBCrianca (id_crianca serial primary key not null, nome text, telefone text, endereco text, rg text);
+create table TBCuidador (id_cuidador serial primary key not null, nome text, telefone text, endereco text, rg text, cpf text);
