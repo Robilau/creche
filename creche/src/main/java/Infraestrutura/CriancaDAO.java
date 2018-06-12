@@ -86,7 +86,7 @@ public class CriancaDAO {
         Statement st = conn.createStatement();
 
         ResultSet rs = st.executeQuery("SELECT * FROM TBCrianca WHERE id_crianca = " + id);
-        if (rs.first()) {
+        if (rs.next()) {
             Crianca c = new Crianca();
             c.setNome(rs.getString("nome"));
             c.setTelefone(rs.getString("telefone"));

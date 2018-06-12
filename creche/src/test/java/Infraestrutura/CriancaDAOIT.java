@@ -24,7 +24,7 @@ public class CriancaDAOIT {
     Crianca _criancaEsperada;
     ObjectMother _objectMother;
     CriancaDAO _repositorio;
-    SeedDatabase _seed;
+    SeedDatabase _seed = new SeedDatabase();
 
     @Before
     public void setUp() throws SQLException {
@@ -63,7 +63,7 @@ public class CriancaDAOIT {
     @Test
     public void testPegarTodas() throws Exception {
         List<Crianca> result = _repositorio.pegarTodas();
-        Assertions.assertThat(result.size()).isEqualTo(2);
+        Assertions.assertThat(result.size()).isEqualTo(1);
     }
 
     /**
