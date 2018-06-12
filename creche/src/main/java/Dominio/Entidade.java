@@ -5,13 +5,16 @@
  */
 package Dominio;
 
-/**
- *
- * @author Aluno
+/**A classe Entidade é abstrata e fornece atributos e métodos
+ * relevantes para o instanciamento de objetos que herdam 
+ * essas características... 
+ * @author Gabriel Celestino, Leticia Ventura, Lucas Chaves
+ * @version 1.0
+ * @since Vr. 1.0
  */
 public abstract class Entidade {
-    
-    private int Id;
+
+    int Id;
 
     public int getId() {
         return Id;
@@ -20,6 +23,7 @@ public abstract class Entidade {
     public void setId(int Id) {
         this.Id = Id;
     }
-    
-    public abstract boolean validar();    
+
+    public abstract boolean validar();
+
 }
