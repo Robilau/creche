@@ -8,6 +8,7 @@ package Infraestrutura;
 import Dominio.Crianca;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,25 +21,28 @@ import java.util.List;
  */
 public class CriancaDAO {
 
-    public boolean Adicionar(Crianca crianca) throws SQLException {
+    String SQL_INSERT = "INSERT INTO TBCrianca (nome, telefone, endereco, rg) VALUES (?,?,?,?);";
+
+    public Crianca adicionar(Crianca crianca) throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
-        Statement st = conn.createStatement();
 
-        StringBuilder query = new StringBuilder();
-        query.append("INSERT INTO TBCrianca (nome, telefone, endereco, rg) VALUES (");
-        query.append("\'" + crianca.getNome() + "\',");
-        query.append("\'" + crianca.getTelefone() + "\',");
-        query.append("\'" + crianca.getEndereco() + "\',");
-        query.append("\'" + crianca.getRG() + "\'");
-        query.append(");");
+        PreparedStatement statement = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+        statement.setString(1, crianca.getNome());
+        statement.setString(2, crianca.getTelefone());
+        statement.setString(3, crianca.getTelefone());
+        statement.setString(4, crianca.getEndereco());
 
-        boolean res = st.execute(query.toString());
-        st.close();
-
-        return res;
+        int affectedRows = statement.executeUpdate();
+        if (affectedRows != 0) {
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                crianca.setId(generatedKeys.getLong(1));
+            }
+        }
+        return crianca;
     }
 
-    public Crianca Atualizar(Crianca crianca) throws SQLException, Exception {
+    public void atualizar(Crianca crianca) throws SQLException, Exception {
         if (crianca.getId() < 1) {
             throw new Exception("Id inválido");
         }
@@ -54,20 +58,10 @@ public class CriancaDAO {
         query.append("rg = \'").append(crianca.getRG()).append("\'");
         query.append(" WHERE id_crianca = ").append(crianca.getId());
 
-        ResultSet rs = st.executeQuery(query.toString());
-
-        Crianca c = new Crianca();
-        c.setNome(rs.getString("nome"));
-        c.setTelefone(rs.getString("telefone"));
-        c.setEndereco(rs.getString("endereco"));
-        c.setRG(rs.getString("rg"));
-
-        st.close();
-
-        return c;
+        st.execute(query.toString());
     }
 
-    public List<Crianca> PegarTodas() throws SQLException {
+    public List<Crianca> pegarTodas() throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM TBCrianca");
@@ -84,7 +78,7 @@ public class CriancaDAO {
         return lista;
     }
 
-    public Crianca Pegar(int id) throws SQLException, Exception {
+    public Crianca pegar(long id) throws SQLException, Exception {
         if (id < 1) {
             throw new Exception("Id inválido");
         }
@@ -92,23 +86,14 @@ public class CriancaDAO {
         Statement st = conn.createStatement();
 
         ResultSet rs = st.executeQuery("SELECT * FROM TBCrianca WHERE id_crianca = " + id);
-
-        Crianca c = new Crianca();
-        c.setNome(rs.getString("nome"));
-        c.setTelefone(rs.getString("telefone"));
-        c.setEndereco(rs.getString("endereco"));
-        c.setRG(rs.getString("rg"));
-        return c;
-    }
-
-    private Crianca take(ResultSet rs) throws SQLException {
-        Crianca c = new Crianca();
-        if (rs.next()) {
+        if (rs.first()) {
+            Crianca c = new Crianca();
             c.setNome(rs.getString("nome"));
             c.setTelefone(rs.getString("telefone"));
             c.setEndereco(rs.getString("endereco"));
             c.setRG(rs.getString("rg"));
+            return c;
         }
-        return c;
+        return null;
     }
 }
