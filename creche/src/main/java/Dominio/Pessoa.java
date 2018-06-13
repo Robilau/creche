@@ -35,7 +35,11 @@ public abstract class Pessoa extends Entidade {
         this.endereco = endereco;
         this.RG = RG;
     }
-
+    
+    public Pessoa(){
+        
+    }
+    
     public String getNome() {
         return nome;
     }
@@ -68,4 +72,9 @@ public abstract class Pessoa extends Entidade {
         this.RG = RG;
     }
 
+    @Override
+    public String toString() {
+        return "Pessoa{" + "nome=" + nome + ", telefone=" + telefone + ", endereco=" + endereco + ", RG=" + RG + '}';
+    }   
+    
 }
