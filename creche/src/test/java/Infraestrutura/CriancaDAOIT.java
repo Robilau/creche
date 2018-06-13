@@ -54,7 +54,9 @@ public class CriancaDAOIT {
         System.out.println("atualizar");
         _crianca = _objectMother.pegarCrianca();
         _crianca.setId(1);
-        _repositorio.atualizar(_crianca);
+        _crianca.setNome("atualizar");
+        _criancaEsperada = _repositorio.atualizar(_crianca);
+        Assertions.assertThat(_criancaEsperada.getNome()).isEqualToIgnoringCase(_crianca.getNome());
     }
 
     /**
@@ -75,7 +77,18 @@ public class CriancaDAOIT {
         _crianca = _objectMother.pegarCrianca();
         _crianca.setId(1);
         _criancaEsperada = _repositorio.pegar(_crianca.getId());
-        Assertions.assertThat(_criancaEsperada.getNome()).isEqualToIgnoringCase("nome");
+        Assertions.assertThat(_criancaEsperada.getNome()).isEqualToIgnoringCase(_crianca.getNome());
+    }
+
+    /**
+     * Test of deletar method, of class CriancaDAO.
+     */
+    @Test
+    public void testDeletar() throws Exception {
+        System.out.println("deletar");
+        long id = 1;
+        _repositorio.deletar(id);
+        Assertions.assertThat(_repositorio.pegar(id)).isNull();
     }
 
 }

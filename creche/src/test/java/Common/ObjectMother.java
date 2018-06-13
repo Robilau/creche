@@ -15,10 +15,10 @@ import Dominio.ResponsavelPelaCrianca;
 public class ObjectMother {
     public Crianca pegarCrianca(){
         Crianca c = new Crianca();
-        c.setEndereco("lages");
-        c.setNome("crianca");
-        c.setRG("123890");
-        c.setTelefone("456");
+        c.setEndereco("endereco");
+        c.setNome("nome");
+        c.setRG("rg");
+        c.setTelefone("telefone");
         return c;
     }
 }

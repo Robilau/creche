@@ -22,15 +22,13 @@ import java.util.List;
 public class CriancaDAO {
 
     String SQL_INSERT = "INSERT INTO TBCrianca (nome, telefone, endereco, rg) VALUES (?,?,?,?);";
+    String SQL_UPDATE = "UPDATE TBCrianca SET nome = ?, telefone = ?, endereco = ?, rg = ? WHERE id_crianca = ?";
 
     public Crianca adicionar(Crianca crianca) throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
 
         PreparedStatement statement = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
-        statement.setString(1, crianca.getNome());
-        statement.setString(2, crianca.getTelefone());
-        statement.setString(3, crianca.getTelefone());
-        statement.setString(4, crianca.getEndereco());
+        statement = prepararPreparedStatement(statement, crianca);
 
         int affectedRows = statement.executeUpdate();
         if (affectedRows != 0) {
@@ -42,23 +40,31 @@ public class CriancaDAO {
         return crianca;
     }
 
-    public void atualizar(Crianca crianca) throws SQLException, Exception {
+    public Crianca atualizar(Crianca crianca) throws SQLException, Exception {
         if (crianca.getId() < 1) {
             throw new Exception("Id inválido");
         }
 
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
-        Statement st = conn.createStatement();
+        PreparedStatement statement = conn.prepareStatement(SQL_UPDATE);
+        statement = prepararPreparedStatement(statement, crianca);
+        statement.setLong(5, crianca.getId());
 
-        StringBuilder query = new StringBuilder();
-        query.append("UPDATE TBCrianca SET ");
-        query.append("nome = \'").append(crianca.getNome()).append("\', ");
-        query.append("telefone = \'").append(crianca.getTelefone()).append("\', ");
-        query.append("endereco = \'").append(crianca.getEndereco()).append("\', ");
-        query.append("rg = \'").append(crianca.getRG()).append("\'");
-        query.append(" WHERE id_crianca = ").append(crianca.getId());
+        int affectedRows = statement.executeUpdate();
+        if (affectedRows != 0) {
+            return pegar(crianca.getId());
+        }
+        return null;
+    }
+    
+    public void deletar(long id) throws SQLException, Exception {
+        if (id < 1) {
+            throw new Exception("Id inválido");
+        }
 
-        st.execute(query.toString());
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
+        Statement statement = conn.createStatement();
+        statement.execute("DELETE FROM TBCrianca WHERE id_crianca = " + id);
     }
 
     public List<Crianca> pegarTodas() throws SQLException {
@@ -95,5 +101,13 @@ public class CriancaDAO {
             return c;
         }
         return null;
+    }
+
+    private PreparedStatement prepararPreparedStatement(PreparedStatement statement, Crianca crianca) throws SQLException {
+        statement.setString(1, crianca.getNome());
+        statement.setString(2, crianca.getTelefone());
+        statement.setString(3, crianca.getTelefone());
+        statement.setString(4, crianca.getEndereco());
+        return statement;
     }
 }
