@@ -5,7 +5,7 @@
  */
 package Infraestrutura;
 
-import Dominio.Crianca;
+import Dominio.Features.Crianca.Crianca;
 import Common.ObjectMother;
 import Common.SeedDatabase;
 import java.sql.SQLException;

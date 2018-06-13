@@ -5,7 +5,8 @@
  */
 package Infraestrutura;
 
-import Dominio.Crianca;
+import Dominio.Features.Crianca.Crianca;
+import Dominio.Features.Crianca.ICriancaPostgresRepository;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,11 +20,12 @@ import java.util.List;
  *
  * @author T0KS1CK
  */
-public class CriancaDAO {
+public class CriancaDAO implements ICriancaPostgresRepository{
 
     String SQL_INSERT = "INSERT INTO TBCrianca (nome, telefone, endereco, rg) VALUES (?,?,?,?);";
     String SQL_UPDATE = "UPDATE TBCrianca SET nome = ?, telefone = ?, endereco = ?, rg = ? WHERE id_crianca = ?";
 
+    @Override
     public Crianca adicionar(Crianca crianca) throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
 
@@ -40,6 +42,7 @@ public class CriancaDAO {
         return crianca;
     }
 
+    @Override
     public Crianca atualizar(Crianca crianca) throws SQLException, Exception {
         if (crianca.getId() < 1) {
             throw new Exception("Id inválido");
@@ -57,6 +60,7 @@ public class CriancaDAO {
         return null;
     }
     
+    @Override
     public void deletar(long id) throws SQLException, Exception {
         if (id < 1) {
             throw new Exception("Id inválido");
@@ -67,6 +71,7 @@ public class CriancaDAO {
         statement.execute("DELETE FROM TBCrianca WHERE id_crianca = " + id);
     }
 
+    @Override
     public List<Crianca> pegarTodas() throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
         Statement st = conn.createStatement();
@@ -84,6 +89,7 @@ public class CriancaDAO {
         return lista;
     }
 
+    @Override
     public Crianca pegar(long id) throws SQLException, Exception {
         if (id < 1) {
             throw new Exception("Id inválido");

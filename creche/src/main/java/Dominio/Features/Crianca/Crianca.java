@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dominio;
+package Dominio.Features.Crianca;
 
+import Dominio.Pessoa;
+import Dominio.ResponsavelPelaCrianca;
 import java.util.Date;
 
 /**

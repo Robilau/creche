@@ -5,7 +5,7 @@
  */
 package Common;
 
-import Dominio.Crianca;
+import Dominio.Features.Crianca.Crianca;
 import Dominio.ResponsavelPelaCrianca;
 
 /**
