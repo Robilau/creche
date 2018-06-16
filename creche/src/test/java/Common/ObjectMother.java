@@ -13,7 +13,7 @@ import Dominio.ResponsavelPelaCrianca;
  * @author Aluno
  */
 public class ObjectMother {
-    public Crianca pegarCrianca(){
+    public static Crianca pegarCrianca(){
         Crianca c = new Crianca();
         c.setEndereco("endereco");
         c.setNome("nome");
