@@ -24,6 +24,6 @@ public abstract class Entidade {
         this.Id = Id;
     }
 
-    public abstract boolean validar();
+    public abstract void validar() throws Exception;
 
 }

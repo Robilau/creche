@@ -16,8 +16,8 @@ import java.sql.Statement;
  */
 public class SeedDatabase {
     String seedCriancaTable = "DROP TABLE TBCrianca; "
-            + "CREATE TABLE TBCrianca (id_crianca serial primary key not null, nome text, telefone text, endereco text, rg text); "
-            + "INSERT INTO TBCrianca (nome, telefone, endereco, rg) VALUES ('nome','telefone','endereco','rg');";
+            + "CREATE TABLE TBCrianca (id_crianca serial primary key not null, nome text, rg text, dataNascimento Date, rpc_id integer); "
+            + "INSERT INTO TBCrianca (nome, rg, dataNascimento) VALUES ('nome','rg', now());";
     public void criancaSeed() throws SQLException{
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
         Statement st = conn.createStatement();

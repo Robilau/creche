@@ -21,21 +21,8 @@ package Dominio;
 public class ResponsavelPelaCrianca extends Pessoa {
 
     private String CPF;
-
-    /**
-     * Método construtor da classe <b><i>Mensalidade</i></b>. Este método recebe
-     * 5 parametros como atributos para o seu funcionamento.
-     *
-     * @param <b>CPF</b> CPF do objeto instanciado
-     * @param <b>nome</b> Nome do objeto intanciado
-     * @param <b>telefone</b> Telefone do objeto instanciado
-     * @param <b>endereco</b> Endereco do objeto instanciado
-     * @param <b>RG</b> RG do objeto instanciado
-     */
-    public ResponsavelPelaCrianca(String CPF, String nome, String telefone, String endereco, String RG) {
-        super(nome, telefone, endereco, RG);
-        this.CPF = CPF;
-    }
+    private String telefone;
+    private String endereco;
 
     public String getCPF() {
         return CPF;
@@ -43,10 +30,26 @@ public class ResponsavelPelaCrianca extends Pessoa {
 
     public void setCPF(String CPF) {
         this.CPF = CPF;
+    }    
+    
+    public String getTelefone() {
+        return telefone;
     }
 
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }   
+
     @Override
-    public boolean validar() {
+    public void validar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

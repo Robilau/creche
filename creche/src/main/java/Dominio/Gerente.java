@@ -18,21 +18,9 @@ package Dominio;
  * @see Entidade
  */
 public class Gerente extends Pessoa {
-    /**
-     * Método construtor da classe <b><i>Gerente</i></b>. Este método recebe 5
-     * parametros como atributos para o seu funcionamento.
-     * @param <b>CPF</b>
-     * @param <b>nome</b>
-     * @param <b>telefone</b>
-     * @param <b>endereco</b>
-     * @param <b>RG </b>
-     */
-    public Gerente(String CPF, String nome, String telefone, String endereco, String RG) {
-        super(nome, telefone, endereco, RG);
-        this.CPF = CPF;
-    }
 
     private String CPF;
+    private String telefone;
 
     public String getCPF() {
         return CPF;
@@ -41,9 +29,18 @@ public class Gerente extends Pessoa {
     public void setCPF(String CPF) {
         this.CPF = CPF;
     }
+    
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
 
     @Override
-    public boolean validar() {
+    public void validar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

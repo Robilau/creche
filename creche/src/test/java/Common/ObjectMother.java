@@ -6,6 +6,7 @@
 package Common;
 
 import Dominio.Features.Crianca.Crianca;
+import java.util.Date;
 
 /**
  *
@@ -14,10 +15,9 @@ import Dominio.Features.Crianca.Crianca;
 public class ObjectMother {
     public static Crianca pegarCrianca(){
         Crianca c = new Crianca();
-        c.setEndereco("endereco");
+        c.setDataNascimento(new Date());
         c.setNome("nome");
         c.setRG("rg");
-        c.setTelefone("telefone");
         return c;
     }
 }

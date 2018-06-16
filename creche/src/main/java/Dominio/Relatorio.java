@@ -41,7 +41,7 @@ public class Relatorio extends Entidade {
     }
 
     @Override
-    public boolean validar() {
+    public void validar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

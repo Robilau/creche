@@ -22,19 +22,19 @@ public class CriancaDAOIT {
 
     Crianca _crianca;
     Crianca _criancaEsperada;
-    CriancaDAO _repositorio;
+    CriancaPostgresRepository _repositorio;
     SeedDatabase _seed = new SeedDatabase();
 
     @Before
     public void setUp() throws SQLException {
         _crianca = new Crianca();
         _criancaEsperada = new Crianca();
-        _repositorio = new CriancaDAO();
+        _repositorio = new CriancaPostgresRepository();
         _seed.criancaSeed();
     }
 
     /**
-     * Test of adicionar method, of class CriancaDAO.
+     * Test of adicionar method, of class CriancaPostgresRepository.
      * @throws java.lang.Exception
      */
     @Test
@@ -46,7 +46,7 @@ public class CriancaDAOIT {
     }
 
     /**
-     * Test of atualizar method, of class CriancaDAO.
+     * Test of atualizar method, of class CriancaPostgresRepository.
      * @throws java.lang.Exception
      */
     @Test
@@ -60,7 +60,7 @@ public class CriancaDAOIT {
     }
 
     /**
-     * Test of pegarTodas method, of class CriancaDAO.
+     * Test of pegarTodas method, of class CriancaPostgresRepository.
      * @throws java.lang.Exception
      */
     @Test
@@ -70,7 +70,7 @@ public class CriancaDAOIT {
     }
 
     /**
-     * Test of pegar method, of class CriancaDAO.
+     * Test of pegar method, of class CriancaPostgresRepository.
      * @throws java.lang.Exception
      */
     @Test
@@ -83,7 +83,7 @@ public class CriancaDAOIT {
     }
 
     /**
-     * Test of deletar method, of class CriancaDAO.
+     * Test of deletar method, of class CriancaPostgresRepository.
      * @throws java.lang.Exception
      */
     @Test

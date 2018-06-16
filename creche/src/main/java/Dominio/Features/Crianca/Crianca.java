@@ -29,23 +29,6 @@ public class Crianca extends Pessoa {
     private Date dataNascimento;
     private ResponsavelPelaCrianca responsavelPelaCrianca;
 
-    /**
-     * Método construtor da classe <b><i>Crianca</i></b>. Este método recebe 6
-     * parametros como atributos para o seu funcionamento.
-     *
-     * @param <b>dataNascimento</b> Data de Nascimento do objeto instanciado 
-     * @param <b>responsavelPelaCrianca</b> Responsavel Pela Criança do objeto instanciado
-     * @param <b>nome</b> Nome do objeto instanciado
-     * @param <b>telefone</b> Telefone do objeto instanciado
-     * @param <b>endereco</b> Endereço do objeto instanciado
-     * @param <b>RG</b> RG do objeto instanciado
-     */
-    public Crianca(Date dataNascimento, ResponsavelPelaCrianca responsavelPelaCrianca, String nome, String telefone, String endereco, String RG) {
-        super(nome, telefone, endereco, RG);
-        this.dataNascimento = dataNascimento;
-        this.responsavelPelaCrianca = responsavelPelaCrianca;
-    }
-
     public Crianca() {
     }   
 
@@ -66,7 +49,7 @@ public class Crianca extends Pessoa {
     }
 
     @Override
-    public boolean validar() {
+    public void validar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
