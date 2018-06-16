@@ -26,7 +26,7 @@ public class CriancaDAO implements ICriancaPostgresRepository {
     private final String SQL_GET = "SELECT * FROM TBCrianca WHERE id_crianca = ?;";
 
     @Override
-    public Crianca adicionar(Crianca crianca) throws SQLException {
+    public Crianca adicionar(Crianca crianca) throws SQLException{
         PreparedStatement statement = DAO.criarStatementRetornandoChaveGerada(SQL_INSERT);
         statement = prepareStatement(statement, crianca);
 

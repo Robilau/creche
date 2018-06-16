@@ -6,6 +6,8 @@
 package Dominio.Features.Crianca;
 
 import Dominio.Pessoa;
+import Dominio.Pessoa;
+import Dominio.ResponsavelPelaCrianca;
 import Dominio.ResponsavelPelaCrianca;
 import java.util.Date;
 

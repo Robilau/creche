@@ -27,52 +27,28 @@ public class CriancaService implements ICriancaService {
     }
 
     @Override
-    public void adicionar(Crianca crianca) {
-        try {
-            repositorio.adicionar(crianca);
-        } catch (SQLException ex) {
-            Logger.getLogger(CriancaService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public Crianca adicionar(Crianca crianca) throws SQLException {
+        return repositorio.adicionar(crianca);
     }
 
     @Override
-    public void atualizar(Crianca crianca) {
-        try {
-            repositorio.atualizar(crianca);
-        } catch (Exception ex) {
-            Logger.getLogger(CriancaService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public Crianca atualizar(Crianca crianca) throws SQLException, Exception {
+        return repositorio.atualizar(crianca);
     }
 
     @Override
-    public Crianca pegar(Crianca crianca) {
-        Crianca c = new Crianca();
-        try {
-            c = repositorio.pegar(crianca.getId());
-        } catch (Exception ex) {
-            Logger.getLogger(CriancaService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return c;
+    public Crianca pegar(Crianca crianca) throws SQLException, Exception{
+        return repositorio.pegar(crianca.getId());
     }
 
     @Override
-    public List<Crianca> pegarTodas() {
-        ArrayList<Crianca> lista = new ArrayList<>();
-        try {
-            lista = (ArrayList<Crianca>) repositorio.pegarTodas();
-        } catch (SQLException ex) {
-            Logger.getLogger(CriancaService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return lista;
+    public List<Crianca> pegarTodas() throws SQLException{
+        return repositorio.pegarTodas();
     }
 
     @Override
-    public void deletar(Crianca crianca) {
-        try {
-            repositorio.deletar(crianca.getId());
-        } catch (Exception ex) {
-            Logger.getLogger(CriancaService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public boolean deletar(Crianca crianca) throws SQLException, Exception{
+        return repositorio.deletar(crianca.getId());
     }
-
+     
 }

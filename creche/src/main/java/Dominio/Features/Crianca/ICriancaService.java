@@ -5,6 +5,7 @@
  */
 package Dominio.Features.Crianca;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -12,9 +13,14 @@ import java.util.List;
  * @author Aluno
  */
 public interface ICriancaService {
-    void adicionar(Crianca crianca);
-    void atualizar(Crianca crianca);
-    Crianca pegar(Crianca crianca);
-    List<Crianca> pegarTodas();
-    void deletar(Crianca crianca);
+
+    Crianca adicionar(Crianca crianca) throws SQLException;
+
+    Crianca atualizar(Crianca crianca) throws SQLException, Exception;
+
+    Crianca pegar(Crianca crianca) throws SQLException, Exception;
+
+    List<Crianca> pegarTodas() throws SQLException;
+
+    boolean deletar(Crianca crianca)  throws SQLException, Exception;
 }

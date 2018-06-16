@@ -1,7 +1,7 @@
 
 package Dominio.Interfaces;
 
-import java.util.Vector;
+import java.util.List;
 
 /**
  * Interface que define os metodos que uma classe de repositorio deve ter
@@ -10,7 +10,7 @@ import java.util.Vector;
 public interface IRepository <T>{
     T Adicionar(T t);
     T Atualizar(T t);
-    void Excluir(T t);
-    Vector<T> PegarTodos();
+    boolean Excluir(T t);
+    List<T> PegarTodos();
     T Pegar(long id);
 }

@@ -35,6 +35,7 @@ public class CriancaDAOIT {
 
     /**
      * Test of adicionar method, of class CriancaDAO.
+     * @throws java.lang.Exception
      */
     @Test
     public void testAdicionar() throws Exception {
@@ -46,6 +47,7 @@ public class CriancaDAOIT {
 
     /**
      * Test of atualizar method, of class CriancaDAO.
+     * @throws java.lang.Exception
      */
     @Test
     public void testAtualizar() throws Exception {
@@ -59,6 +61,7 @@ public class CriancaDAOIT {
 
     /**
      * Test of pegarTodas method, of class CriancaDAO.
+     * @throws java.lang.Exception
      */
     @Test
     public void testPegarTodas() throws Exception {
@@ -68,6 +71,7 @@ public class CriancaDAOIT {
 
     /**
      * Test of pegar method, of class CriancaDAO.
+     * @throws java.lang.Exception
      */
     @Test
     public void testPegar() throws Exception {
@@ -80,6 +84,7 @@ public class CriancaDAOIT {
 
     /**
      * Test of deletar method, of class CriancaDAO.
+     * @throws java.lang.Exception
      */
     @Test
     public void testDeletar() throws Exception {
