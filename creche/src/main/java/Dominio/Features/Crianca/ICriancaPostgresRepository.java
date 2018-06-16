@@ -16,6 +16,6 @@ public interface ICriancaPostgresRepository {
     Crianca adicionar(Crianca crianca) throws SQLException;
     Crianca atualizar(Crianca crianca) throws SQLException, Exception;
     Crianca pegar(long id)throws SQLException, Exception;
-    void deletar(long id) throws SQLException, Exception;
+    boolean deletar(long id) throws SQLException, Exception;
     List<Crianca> pegarTodas()throws SQLException;
 }

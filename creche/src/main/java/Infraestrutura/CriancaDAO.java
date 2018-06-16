@@ -7,12 +7,9 @@ package Infraestrutura;
 
 import Dominio.Features.Crianca.Crianca;
 import Dominio.Features.Crianca.ICriancaPostgresRepository;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,25 +17,20 @@ import java.util.List;
  *
  * @author T0KS1CK
  */
-public class CriancaDAO implements ICriancaPostgresRepository{
+public class CriancaDAO implements ICriancaPostgresRepository {
 
-    String SQL_INSERT = "INSERT INTO TBCrianca (nome, telefone, endereco, rg) VALUES (?,?,?,?);";
-    String SQL_UPDATE = "UPDATE TBCrianca SET nome = ?, telefone = ?, endereco = ?, rg = ? WHERE id_crianca = ?";
+    private final String SQL_INSERT = "INSERT INTO TBCrianca (nome, telefone, endereco, rg) VALUES (?,?,?,?);";
+    private final String SQL_UPDATE = "UPDATE TBCrianca SET nome = ?, telefone = ?, endereco = ?, rg = ? WHERE id_crianca = ?;";
+    private final String SQL_DELETE = "DELETE FROM TBCrianca WHERE id_crianca = ?;";
+    private final String SQL_GETALL = "SELECT * FROM TBCrianca;";
+    private final String SQL_GET = "SELECT * FROM TBCrianca WHERE id_crianca = ?;";
 
     @Override
     public Crianca adicionar(Crianca crianca) throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
+        PreparedStatement statement = DAO.criarStatementRetornandoChaveGerada(SQL_INSERT);
+        statement = prepareStatement(statement, crianca);
 
-        PreparedStatement statement = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
-        statement = prepararPreparedStatement(statement, crianca);
-
-        int affectedRows = statement.executeUpdate();
-        if (affectedRows != 0) {
-            ResultSet generatedKeys = statement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                crianca.setId(generatedKeys.getLong(1));
-            }
-        }
+        crianca.setId(DAO.add(statement));
         return crianca;
     }
 
@@ -47,44 +39,33 @@ public class CriancaDAO implements ICriancaPostgresRepository{
         if (crianca.getId() < 1) {
             throw new Exception("Id inválido");
         }
-
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
-        PreparedStatement statement = conn.prepareStatement(SQL_UPDATE);
-        statement = prepararPreparedStatement(statement, crianca);
+        PreparedStatement statement = DAO.criarStatement(SQL_UPDATE);
+        statement = prepareStatement(statement, crianca);
         statement.setLong(5, crianca.getId());
 
-        int affectedRows = statement.executeUpdate();
-        if (affectedRows != 0) {
+        if (DAO.update(statement)) {
             return pegar(crianca.getId());
         }
         return null;
     }
-    
+
     @Override
-    public void deletar(long id) throws SQLException, Exception {
+    public boolean deletar(long id) throws SQLException, Exception {
         if (id < 1) {
             throw new Exception("Id inválido");
         }
-
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
-        Statement statement = conn.createStatement();
-        statement.execute("DELETE FROM TBCrianca WHERE id_crianca = " + id);
+        PreparedStatement statement = DAO.criarStatement(SQL_DELETE);
+        statement.setLong(1, id);
+        return DAO.delete(statement);
     }
 
     @Override
     public List<Crianca> pegarTodas() throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
-        Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM TBCrianca");
-
-        List<Crianca> lista = new ArrayList<Crianca>();
+        PreparedStatement statement = DAO.criarStatement(SQL_GETALL);
+        ResultSet rs = DAO.get(statement);
+        List<Crianca> lista = new ArrayList();
         while (rs.next()) {
-            Crianca c = new Crianca();
-            c.setNome(rs.getString("nome"));
-            c.setTelefone(rs.getString("telefone"));
-            c.setEndereco(rs.getString("endereco"));
-            c.setRG(rs.getString("rg"));
-            lista.add(c);
+            lista.add(make(rs));
         }
         return lista;
     }
@@ -94,26 +75,29 @@ public class CriancaDAO implements ICriancaPostgresRepository{
         if (id < 1) {
             throw new Exception("Id inválido");
         }
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
-        Statement st = conn.createStatement();
-
-        ResultSet rs = st.executeQuery("SELECT * FROM TBCrianca WHERE id_crianca = " + id);
+        PreparedStatement statement = DAO.criarStatement(SQL_GET);
+        statement.setLong(1, id);
+        ResultSet rs = DAO.get(statement);
         if (rs.next()) {
-            Crianca c = new Crianca();
-            c.setNome(rs.getString("nome"));
-            c.setTelefone(rs.getString("telefone"));
-            c.setEndereco(rs.getString("endereco"));
-            c.setRG(rs.getString("rg"));
-            return c;
+            return make(rs);
         }
         return null;
     }
 
-    private PreparedStatement prepararPreparedStatement(PreparedStatement statement, Crianca crianca) throws SQLException {
+    private PreparedStatement prepareStatement(PreparedStatement statement, Crianca crianca) throws SQLException {
         statement.setString(1, crianca.getNome());
         statement.setString(2, crianca.getTelefone());
         statement.setString(3, crianca.getTelefone());
         statement.setString(4, crianca.getEndereco());
         return statement;
+    }
+
+    private Crianca make(ResultSet rs) throws SQLException {
+        Crianca c = new Crianca();
+        c.setNome(rs.getString("nome"));
+        c.setTelefone(rs.getString("telefone"));
+        c.setEndereco(rs.getString("endereco"));
+        c.setRG(rs.getString("rg"));
+        return c;
     }
 }
