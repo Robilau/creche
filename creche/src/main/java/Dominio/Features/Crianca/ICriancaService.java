@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface ICriancaService {
 
-    Crianca adicionar(Crianca crianca) throws SQLException;
+    Crianca adicionar(Crianca crianca) throws SQLException, Exception;
 
     Crianca atualizar(Crianca crianca) throws SQLException, Exception;
 

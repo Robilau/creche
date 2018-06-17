@@ -18,23 +18,23 @@ import org.junit.Test;
  *
  * @author Aluno
  */
-public class CriancaDAOIT {
+public class CriancaPostgresRepositoryIT {
 
     Crianca _crianca;
     Crianca _criancaEsperada;
-    CriancaDAO _repositorio;
+    CriancaPostgresRepository _repositorio;
     SeedDatabase _seed = new SeedDatabase();
 
     @Before
     public void setUp() throws SQLException {
         _crianca = new Crianca();
         _criancaEsperada = new Crianca();
-        _repositorio = new CriancaDAO();
-        _seed.criancaSeed();
+        _repositorio = new CriancaPostgresRepository();
+        _seed.criancaERpcSeed();
     }
 
     /**
-     * Test of adicionar method, of class CriancaDAO.
+     * Test of adicionar method, of class CriancaPostgresRepository.
      * @throws java.lang.Exception
      */
     @Test
@@ -46,7 +46,7 @@ public class CriancaDAOIT {
     }
 
     /**
-     * Test of atualizar method, of class CriancaDAO.
+     * Test of atualizar method, of class CriancaPostgresRepository.
      * @throws java.lang.Exception
      */
     @Test
@@ -60,7 +60,7 @@ public class CriancaDAOIT {
     }
 
     /**
-     * Test of pegarTodas method, of class CriancaDAO.
+     * Test of pegarTodas method, of class CriancaPostgresRepository.
      * @throws java.lang.Exception
      */
     @Test
@@ -70,7 +70,7 @@ public class CriancaDAOIT {
     }
 
     /**
-     * Test of pegar method, of class CriancaDAO.
+     * Test of pegar method, of class CriancaPostgresRepository.
      * @throws java.lang.Exception
      */
     @Test
@@ -83,13 +83,13 @@ public class CriancaDAOIT {
     }
 
     /**
-     * Test of deletar method, of class CriancaDAO.
+     * Test of deletar method, of class CriancaPostgresRepository.
      * @throws java.lang.Exception
      */
     @Test
     public void testDeletar() throws Exception {
         System.out.println("deletar");
-        long id = 1;
+        int id = 1;
         Assertions.assertThat(_repositorio.deletar(id)).isTrue();
         Assertions.assertThat(_repositorio.pegar(id)).isNull();
     }

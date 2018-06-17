@@ -17,24 +17,7 @@ package Dominio;
 public abstract class Pessoa extends Entidade {
 
     String nome;
-    String telefone;
-    String endereco;
-    String RG;
-
-    /**
-     * Método construtor da super-classe <b><i>pessoa</i></b>. Este método
-     * recebe 3 parametros como atributos para o seu funcionamento.
-     * @param <b>nome</b> Nome do objeto instanciado 
-     * @param <b>telefone</b> Telefone do objeto instanciado
-     * @param <b>endereco</b> Endereço do objeto instanciado
-     * @param <b>RG</b> RG  do objeto instanciado
-     */
-    public Pessoa(String nome, String telefone, String endereco, String RG) {
-        this.nome = nome;
-        this.telefone = telefone;
-        this.endereco = endereco;
-        this.RG = RG;
-    }
+    String RG;   
     
     public Pessoa(){
         
@@ -48,22 +31,6 @@ public abstract class Pessoa extends Entidade {
         this.nome = nome;
     }
 
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
     public String getRG() {
         return RG;
     }
@@ -71,10 +38,10 @@ public abstract class Pessoa extends Entidade {
     public void setRG(String RG) {
         this.RG = RG;
     }
-
-    @Override
-    public String toString() {
-        return "Pessoa{" + "nome=" + nome + ", telefone=" + telefone + ", endereco=" + endereco + ", RG=" + RG + '}';
-    }   
     
+    @Override
+    public void validar() throws Exception{
+        if(nome.isEmpty()) throw new Exception("Nome não pode ser vazio");
+        if(RG.isEmpty()) throw new Exception("RG não pode ser vazio");
+    }   
 }

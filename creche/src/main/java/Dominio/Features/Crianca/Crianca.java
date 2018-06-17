@@ -7,8 +7,8 @@ package Dominio.Features.Crianca;
 
 import Dominio.Pessoa;
 import Dominio.Pessoa;
-import Dominio.ResponsavelPelaCrianca;
-import Dominio.ResponsavelPelaCrianca;
+import Dominio.Features.RPC.Rpc;
+import Dominio.Features.RPC.Rpc;
 import java.util.Date;
 
 /**
@@ -21,30 +21,13 @@ import java.util.Date;
  * @version 1.0
  * @since Vr 1.0
  * @see Pessoa
- * @see ResponsavelPelaCrianca
+ * @see Rpc
  * @see Entidade
  */
 public class Crianca extends Pessoa {
 
     private Date dataNascimento;
-    private ResponsavelPelaCrianca responsavelPelaCrianca;
-
-    /**
-     * Método construtor da classe <b><i>Crianca</i></b>. Este método recebe 6
-     * parametros como atributos para o seu funcionamento.
-     *
-     * @param <b>dataNascimento</b> Data de Nascimento do objeto instanciado 
-     * @param <b>responsavelPelaCrianca</b> Responsavel Pela Criança do objeto instanciado
-     * @param <b>nome</b> Nome do objeto instanciado
-     * @param <b>telefone</b> Telefone do objeto instanciado
-     * @param <b>endereco</b> Endereço do objeto instanciado
-     * @param <b>RG</b> RG do objeto instanciado
-     */
-    public Crianca(Date dataNascimento, ResponsavelPelaCrianca responsavelPelaCrianca, String nome, String telefone, String endereco, String RG) {
-        super(nome, telefone, endereco, RG);
-        this.dataNascimento = dataNascimento;
-        this.responsavelPelaCrianca = responsavelPelaCrianca;
-    }
+    private Rpc responsavelPelaCrianca;
 
     public Crianca() {
     }   
@@ -57,17 +40,18 @@ public class Crianca extends Pessoa {
         this.dataNascimento = dataNascimento;
     }
 
-    public ResponsavelPelaCrianca getResponsavelPelaCrianca() {
+    public Rpc getResponsavelPelaCrianca() {
         return responsavelPelaCrianca;
     }
 
-    public void setResponsavelPelaCrianca(ResponsavelPelaCrianca responsavelPelaCrianca) {
+    public void setResponsavelPelaCrianca(Rpc responsavelPelaCrianca) {
         this.responsavelPelaCrianca = responsavelPelaCrianca;
     }
 
     @Override
-    public boolean validar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void validar() throws Exception{
+        super.validar();
+        if (responsavelPelaCrianca == null) throw new Exception("Responsável pela crianca não pode ser nulo");
     }
 
 }

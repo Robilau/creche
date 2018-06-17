@@ -27,17 +27,20 @@ public class CriancaService implements ICriancaService {
     }
 
     @Override
-    public Crianca adicionar(Crianca crianca) throws SQLException {
+    public Crianca adicionar(Crianca crianca) throws SQLException, Exception {
+        crianca.validar();
         return repositorio.adicionar(crianca);
     }
 
     @Override
     public Crianca atualizar(Crianca crianca) throws SQLException, Exception {
+        crianca.validar();
         return repositorio.atualizar(crianca);
     }
 
     @Override
     public Crianca pegar(Crianca crianca) throws SQLException, Exception{
+        crianca.validar();
         return repositorio.pegar(crianca.getId());
     }
 
@@ -48,6 +51,7 @@ public class CriancaService implements ICriancaService {
 
     @Override
     public boolean deletar(Crianca crianca) throws SQLException, Exception{
+        crianca.validar();
         return repositorio.deletar(crianca.getId());
     }
      

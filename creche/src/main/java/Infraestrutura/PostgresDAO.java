@@ -7,15 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DAO {
+public class PostgresDAO {
 
-    public static long add(PreparedStatement statement) throws SQLException {
+    public static int add(PreparedStatement statement) throws SQLException {
         int affectedRows = statement.executeUpdate();
         statement.getConnection().close();
         if (affectedRows != 0) {
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                return generatedKeys.getLong(1);
+                return generatedKeys.getInt(1);
             }
         }
         return 0;
@@ -45,12 +45,12 @@ public class DAO {
         return rs;
     }
 
-    public static PreparedStatement criarStatementRetornandoChaveGerada(String query) throws SQLException {
+    public static PreparedStatement createStatementReturningGeneratedKeys(String query) throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
         return conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
     }
 
-    public static PreparedStatement criarStatement(String query) throws SQLException {
+    public static PreparedStatement createStatement(String query) throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
         return conn.prepareStatement(query);
     }

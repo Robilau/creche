@@ -5,7 +5,6 @@
  */
 package Dominio.Features.Crianca;
 
-import Dominio.Interfaces.IRepository;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -19,9 +18,9 @@ public interface ICriancaPostgresRepository {
 
     Crianca atualizar(Crianca crianca) throws SQLException, Exception;
 
-    Crianca pegar(long id) throws SQLException, Exception;
+    Crianca pegar(int id) throws SQLException, Exception;
 
-    boolean deletar(long id) throws SQLException, Exception;
+    boolean deletar(int id) throws SQLException, Exception;
 
     List<Crianca> pegarTodas() throws SQLException;
 }
