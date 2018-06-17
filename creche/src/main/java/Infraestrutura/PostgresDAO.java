@@ -9,13 +9,13 @@ import java.sql.Statement;
 
 public class PostgresDAO {
 
-    public static long add(PreparedStatement statement) throws SQLException {
+    public static int add(PreparedStatement statement) throws SQLException {
         int affectedRows = statement.executeUpdate();
         statement.getConnection().close();
         if (affectedRows != 0) {
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                return generatedKeys.getLong(1);
+                return generatedKeys.getInt(1);
             }
         }
         return 0;

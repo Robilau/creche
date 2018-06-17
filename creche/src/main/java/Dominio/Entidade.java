@@ -14,13 +14,13 @@ package Dominio;
  */
 public abstract class Entidade {
 
-    long Id;
+    int Id;
 
-    public long getId() {
+    public int getId() {
         return Id;
     }
 
-    public void setId(long Id) {
+    public void setId(int Id) {
         this.Id = Id;
     }
 

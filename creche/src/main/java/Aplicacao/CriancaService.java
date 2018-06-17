@@ -27,7 +27,7 @@ public class CriancaService implements ICriancaService {
     }
 
     @Override
-    public Crianca adicionar(Crianca crianca) throws SQLException {
+    public Crianca adicionar(Crianca crianca) throws SQLException, Exception {
         crianca.validar();
         return repositorio.adicionar(crianca);
     }

@@ -1,3 +1,4 @@
 CREATE TABLE TBUsuario (id_ususario serial primary key not null, login text, senha text);
-Create table TBCrianca (id_crianca serial primary key not null, nome text, rg text, dataNascimento Date, rpc_id integer);
-create table TBCuidador (id_cuidador serial primary key not null, nome text, telefone text, endereco text, rg text, cpf text);
+Create table TBRpc (id_rpc serial primary key not null, nome_rpc text not null, rg_rpc text not null, cpf_rpc text not null, telefone_rpc text not null, endereco_rpc text not null);
+Create table TBCrianca (id_crianca serial primary key not null, nome_crianca text not null, rg_crianca text not null, dataNascimento_crianca Date not null, rpc_id integer not null, FOREIGN KEY (rpc_id) REFERENCES TBRpc(id_rpc));
+Create table TBCuidador (id_cuidador serial primary key not null, nome text, telefone text, endereco text, rg text, cpf text);

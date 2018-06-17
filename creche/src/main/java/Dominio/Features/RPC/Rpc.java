@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dominio;
+package Dominio.Features.RPC;
+
+import Dominio.Pessoa;
 
 /**
  * A classe Mensalidade possibilita instanciar o objeto mensalidade e extende
@@ -18,7 +20,7 @@ package Dominio;
  * @see Entidade
  * @see Pessoa
  */
-public class ResponsavelPelaCrianca extends Pessoa {
+public class Rpc extends Pessoa {
 
     private String CPF;
     private String telefone;

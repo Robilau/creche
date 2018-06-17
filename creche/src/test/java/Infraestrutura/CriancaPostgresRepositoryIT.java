@@ -18,7 +18,7 @@ import org.junit.Test;
  *
  * @author Aluno
  */
-public class CriancaDAOIT {
+public class CriancaPostgresRepositoryIT {
 
     Crianca _crianca;
     Crianca _criancaEsperada;
@@ -30,7 +30,7 @@ public class CriancaDAOIT {
         _crianca = new Crianca();
         _criancaEsperada = new Crianca();
         _repositorio = new CriancaPostgresRepository();
-        _seed.criancaSeed();
+        _seed.criancaERpcSeed();
     }
 
     /**
@@ -89,7 +89,7 @@ public class CriancaDAOIT {
     @Test
     public void testDeletar() throws Exception {
         System.out.println("deletar");
-        long id = 1;
+        int id = 1;
         Assertions.assertThat(_repositorio.deletar(id)).isTrue();
         Assertions.assertThat(_repositorio.pegar(id)).isNull();
     }

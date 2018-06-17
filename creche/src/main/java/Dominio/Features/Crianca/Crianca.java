@@ -7,8 +7,8 @@ package Dominio.Features.Crianca;
 
 import Dominio.Pessoa;
 import Dominio.Pessoa;
-import Dominio.ResponsavelPelaCrianca;
-import Dominio.ResponsavelPelaCrianca;
+import Dominio.Features.RPC.Rpc;
+import Dominio.Features.RPC.Rpc;
 import java.util.Date;
 
 /**
@@ -21,13 +21,13 @@ import java.util.Date;
  * @version 1.0
  * @since Vr 1.0
  * @see Pessoa
- * @see ResponsavelPelaCrianca
+ * @see Rpc
  * @see Entidade
  */
 public class Crianca extends Pessoa {
 
     private Date dataNascimento;
-    private ResponsavelPelaCrianca responsavelPelaCrianca;
+    private Rpc responsavelPelaCrianca;
 
     public Crianca() {
     }   
@@ -40,17 +40,18 @@ public class Crianca extends Pessoa {
         this.dataNascimento = dataNascimento;
     }
 
-    public ResponsavelPelaCrianca getResponsavelPelaCrianca() {
+    public Rpc getResponsavelPelaCrianca() {
         return responsavelPelaCrianca;
     }
 
-    public void setResponsavelPelaCrianca(ResponsavelPelaCrianca responsavelPelaCrianca) {
+    public void setResponsavelPelaCrianca(Rpc responsavelPelaCrianca) {
         this.responsavelPelaCrianca = responsavelPelaCrianca;
     }
 
     @Override
-    public void validar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void validar() throws Exception{
+        super.validar();
+        if (responsavelPelaCrianca == null) throw new Exception("Responsável pela crianca não pode ser nulo");
     }
 
 }
