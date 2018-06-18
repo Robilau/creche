@@ -7,58 +7,58 @@ package Infraestrutura;
 
 import Common.ObjectMother;
 import Common.SeedDatabase;
-import Dominio.Features.RPC.Rpc;
+import Dominio.Features.Crianca.Crianca;
+import Dominio.Features.Crianca.ICriancaPostgresRepository;
 import java.sql.SQLException;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author T0KS1CK
  */
 public class CriancaPostgresRepositoryIT {
-    Rpc _rpc;
-    Rpc _rpcEsperada;
-    RpcPostgresRepository _repositorio;
+    Crianca _crianca;
+    Crianca _criancaEsperada;
+    ICriancaPostgresRepository _repositorio;
     SeedDatabase _seed = new SeedDatabase();
     
     @Before
     public void setUp() throws SQLException {
-        _rpc = new Rpc();
-        _rpcEsperada = new Rpc();
-        _repositorio = new RpcPostgresRepository();
+        _crianca = new Crianca();
+        _criancaEsperada = new Crianca();
+        _repositorio = new CriancaPostgresRepository();
         _seed.criancaERpcSeed();
     }
 
     /**
-     * Test of adicionar method, of class RpcPostgresRepository.
+     * Test of adicionar method, of class CriancaPostgresRepository.
      */
     @Test
     public void testAdicionar() throws Exception {
         System.out.println("adicionar");
-        _rpc = ObjectMother.pegarRpc();
-        _rpcEsperada = _repositorio.adicionar(_rpc);
-        Assertions.assertThat(_rpcEsperada.getId()).isEqualTo(2);
+        _crianca = ObjectMother.pegarCrianca();
+        _criancaEsperada = _repositorio.adicionar(_crianca);
+        Assertions.assertThat(_criancaEsperada.getId()).isEqualTo(2);
     }
 
     /**
-     * Test of atualizar method, of class RpcPostgresRepository.
+     * Test of atualizar method, of class CriancaPostgresRepository.
      */
     @Test
     public void testAtualizar() throws Exception {
         System.out.println("atualizar");
-        _rpc = ObjectMother.pegarRpc();
-        _rpc.setId(1);
-        _rpc.setNome("atualizar");
-        _rpcEsperada = _repositorio.atualizar(_rpc);
-        Assertions.assertThat(_rpcEsperada.getNome()).isEqualToIgnoringCase(_rpc.getNome());
+        _crianca = ObjectMother.pegarCrianca();
+        _crianca.setId(1);
+        _crianca.setNome("atualizar");
+        _criancaEsperada = _repositorio.atualizar(_crianca);
+        Assertions.assertThat(_criancaEsperada.getNome()).isEqualToIgnoringCase(_crianca.getNome());
     }
 
     /**
-     * Test of deletar method, of class RpcPostgresRepository.
+     * Test of deletar method, of class CriancaPostgresRepository.
      */
     @Test
     public void testDeletar() throws Exception {
@@ -69,24 +69,24 @@ public class CriancaPostgresRepositoryIT {
     }
 
     /**
-     * Test of pegarTodas method, of class RpcPostgresRepository.
+     * Test of pegarTodas method, of class CriancaPostgresRepository.
      */
     @Test
     public void testPegarTodas() throws Exception {
-        List<Rpc> result = _repositorio.pegarTodos();
+        List<Crianca> result = _repositorio.pegarTodas();
         Assertions.assertThat(result.size()).isEqualTo(1);
     }
 
     /**
-     * Test of pegar method, of class RpcPostgresRepository.
+     * Test of pegar method, of class CriancaPostgresRepository.
      */
     @Test
     public void testPegar() throws Exception {
         System.out.println("pegar");
-        _rpc = ObjectMother.pegarRpc();
-        _rpc.setId(1);
-        _rpcEsperada = _repositorio.pegar((int) _rpc.getId());
-        Assertions.assertThat(_rpcEsperada.getNome()).isEqualToIgnoringCase(_rpc.getNome());
+        _crianca = ObjectMother.pegarCrianca();
+        _crianca.setId(1);
+        _criancaEsperada = _repositorio.pegar((int) _crianca.getId());
+        Assertions.assertThat(_criancaEsperada.getNome()).isEqualToIgnoringCase(_crianca.getNome());
     }
     
 }

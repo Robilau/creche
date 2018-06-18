@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class CriancaPostgresRepository implements ICriancaPostgresRepository {
 
-    private final String SQL_INSERT = "INSERT INTO TBCrianca (nome_crianca, rg_crianca, dataNascimento_crianca, rpc_id) VALUES (?,?,?,?);";
+    private final String SQL_INSERT = " INSERT INTO TBCrianca (nome_crianca, rg_crianca, dataNascimento_crianca, rpc_id) VALUES (?,?,?,?);";
     private final String SQL_UPDATE = "UPDATE TBCrianca SET nome_crianca = ?, rg_crianca = ?, dataNascimento_crianca = ?, rpc_id = ? WHERE id_crianca = ?;";
     private final String SQL_DELETE = "DELETE FROM TBCrianca WHERE id_crianca = ?;";
     private final String SQL_GETALL = "SELECT * FROM TBCrianca c, TBRpc r WHERE c.rpc_id = r.id_rpc";
