@@ -1,6 +1,7 @@
 package Apresentacao;
 
 import java.beans.PropertyVetoException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -12,8 +13,8 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     public FramePrincipal() {
         initComponents();
-        menuContexto.setEnabled(false);
-        menuAjuda.setEnabled(false);
+        menuContexto.setEnabled(true);
+        menuAjuda.setEnabled(true);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         adicionaTela(new FrameLogin());
     }
@@ -97,7 +98,11 @@ public class FramePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        adicionaTela(new FrameCadastroCrianca());
+        try {
+            adicionaTela(new FrameCadastroCriança());
+        } catch (ParseException ex) {
+            Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     public static void main(String args[]) {
