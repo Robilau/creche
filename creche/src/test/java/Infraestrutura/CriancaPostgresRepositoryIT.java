@@ -5,9 +5,10 @@
  */
 package Infraestrutura;
 
-import Dominio.Features.Crianca.Crianca;
 import Common.ObjectMother;
 import Common.SeedDatabase;
+import Dominio.Features.Crianca.Crianca;
+import Dominio.Features.Crianca.ICriancaPostgresRepository;
 import java.sql.SQLException;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -16,15 +17,14 @@ import org.junit.Test;
 
 /**
  *
- * @author Aluno
+ * @author T0KS1CK
  */
 public class CriancaPostgresRepositoryIT {
-
     Crianca _crianca;
     Crianca _criancaEsperada;
-    CriancaPostgresRepository _repositorio;
+    ICriancaPostgresRepository _repositorio;
     SeedDatabase _seed = new SeedDatabase();
-
+    
     @Before
     public void setUp() throws SQLException {
         _crianca = new Crianca();
@@ -35,7 +35,6 @@ public class CriancaPostgresRepositoryIT {
 
     /**
      * Test of adicionar method, of class CriancaPostgresRepository.
-     * @throws java.lang.Exception
      */
     @Test
     public void testAdicionar() throws Exception {
@@ -47,7 +46,6 @@ public class CriancaPostgresRepositoryIT {
 
     /**
      * Test of atualizar method, of class CriancaPostgresRepository.
-     * @throws java.lang.Exception
      */
     @Test
     public void testAtualizar() throws Exception {
@@ -60,31 +58,7 @@ public class CriancaPostgresRepositoryIT {
     }
 
     /**
-     * Test of pegarTodas method, of class CriancaPostgresRepository.
-     * @throws java.lang.Exception
-     */
-    @Test
-    public void testPegarTodas() throws Exception {
-        List<Crianca> result = _repositorio.pegarTodas();
-        Assertions.assertThat(result.size()).isEqualTo(1);
-    }
-
-    /**
-     * Test of pegar method, of class CriancaPostgresRepository.
-     * @throws java.lang.Exception
-     */
-    @Test
-    public void testPegar() throws Exception {
-        System.out.println("pegar");
-        _crianca = ObjectMother.pegarCrianca();
-        _crianca.setId(1);
-        _criancaEsperada = _repositorio.pegar(_crianca.getId());
-        Assertions.assertThat(_criancaEsperada.getNome()).isEqualToIgnoringCase(_crianca.getNome());
-    }
-
-    /**
      * Test of deletar method, of class CriancaPostgresRepository.
-     * @throws java.lang.Exception
      */
     @Test
     public void testDeletar() throws Exception {
@@ -94,4 +68,25 @@ public class CriancaPostgresRepositoryIT {
         Assertions.assertThat(_repositorio.pegar(id)).isNull();
     }
 
+    /**
+     * Test of pegarTodas method, of class CriancaPostgresRepository.
+     */
+    @Test
+    public void testPegarTodas() throws Exception {
+        List<Crianca> result = _repositorio.pegarTodas();
+        Assertions.assertThat(result.size()).isEqualTo(1);
+    }
+
+    /**
+     * Test of pegar method, of class CriancaPostgresRepository.
+     */
+    @Test
+    public void testPegar() throws Exception {
+        System.out.println("pegar");
+        _crianca = ObjectMother.pegarCrianca();
+        _crianca.setId(1);
+        _criancaEsperada = _repositorio.pegar((int) _crianca.getId());
+        Assertions.assertThat(_criancaEsperada.getNome()).isEqualToIgnoringCase(_crianca.getNome());
+    }
+    
 }

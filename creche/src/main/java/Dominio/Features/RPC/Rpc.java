@@ -51,8 +51,10 @@ public class Rpc extends Pessoa {
     }   
 
     @Override
-    public void validar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void validar() throws Exception {
+        if (CPF.isEmpty()) throw new Exception("CPF não pode estar vazio");
+        if (telefone.isEmpty()) throw new Exception("Telefone não pode estar vazio");
+        if (endereco.isEmpty()) throw new Exception("Endereco não pode estar vazio");
     }
 
 }

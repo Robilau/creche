@@ -20,6 +20,8 @@ public interface IRpcPostgresRepository {
     Rpc pegar(int id) throws SQLException, Exception;
 
     boolean deletar(int id) throws SQLException, Exception;
+    
+    boolean ExisteForeignKey(int id) throws SQLException, Exception;
 
     List<Rpc> pegarTodos() throws SQLException;
 }

@@ -72,7 +72,7 @@ public class RpcPostgresRepositoryIT {
      * Test of pegarTodas method, of class RpcPostgresRepository.
      */
     @Test
-    public void testPegarTodas() throws Exception {
+    public void testPegarTodos() throws Exception {
         List<Rpc> result = _repositorio.pegarTodos();
         Assertions.assertThat(result.size()).isEqualTo(1);
     }
@@ -85,8 +85,18 @@ public class RpcPostgresRepositoryIT {
         System.out.println("pegar");
         _rpc = ObjectMother.pegarRpc();
         _rpc.setId(1);
-        _rpcEsperada = _repositorio.pegar(_rpc.getId());
+        _rpcEsperada = _repositorio.pegar((int) _rpc.getId());
         Assertions.assertThat(_rpcEsperada.getNome()).isEqualToIgnoringCase(_rpc.getNome());
     }
-    
+
+    /**
+     * Test of ExisteForeignKey method, of class RpcPostgresRepository.
+     */
+    @Test
+    public void testExisteForeignKey_shouldBeTrue() throws Exception {
+        System.out.println("ExisteForeignKey");
+        int id = 1;
+        boolean resultado = _repositorio.ExisteForeignKey(id);
+        Assertions.assertThat(resultado).isTrue();
+    }    
 }

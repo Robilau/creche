@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,7 +23,8 @@ public class RpcPostgresRepository implements IRpcPostgresRepository {
     private final String SQL_DELETE = "DELETE FROM TBRpc WHERE id_rpc = ?;";
     private final String SQL_GETALL = "SELECT * FROM TBRpc;";
     private final String SQL_GET = "SELECT * FROM TBRpc WHERE id_rpc = ?;";
-
+    private final String SQL_VERIFY_FK = "SELECT id_crianca FROM TBCrianca WHERE rpc_id = ?";
+    
     @Override
     public Rpc adicionar(Rpc rpc) throws SQLException{
         PreparedStatement statement = PostgresDAO.createStatementReturningGeneratedKeys(SQL_INSERT);
@@ -57,6 +57,18 @@ public class RpcPostgresRepository implements IRpcPostgresRepository {
         PreparedStatement statement = PostgresDAO.createStatement(SQL_DELETE);
         statement.setInt(1, id);
         return PostgresDAO.delete(statement);
+    }
+    
+    @Override
+    public boolean ExisteForeignKey(int id) throws SQLException, Exception {
+        if (id < 1) {
+            throw new Exception("Id inválido");
+        }
+        PreparedStatement statement = PostgresDAO.createStatement(SQL_VERIFY_FK);
+        statement.setInt(1, id);
+        ResultSet rs = PostgresDAO.get(statement);
+        if (rs.next()) return true;
+        return false;
     }
 
     @Override
@@ -103,4 +115,6 @@ public class RpcPostgresRepository implements IRpcPostgresRepository {
         rpc.setTelefone(rs.getString("telefone_rpc"));
         return rpc;
     }
+
+    
 }
