@@ -14,7 +14,7 @@ package Dominio;
  */
 public abstract class Entidade {
 
-    int Id;
+    private int Id;
 
     public int getId() {
         return Id;
@@ -22,8 +22,8 @@ public abstract class Entidade {
 
     public void setId(int Id) {
         this.Id = Id;
-    }
-
+    }   
+    
     public abstract void validar() throws Exception;
 
 }
