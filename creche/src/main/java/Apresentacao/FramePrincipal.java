@@ -16,6 +16,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         menuContexto.setEnabled(true);
         menuAjuda.setEnabled(true);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        adicionaTela(new FrameInicio());
         adicionaTela(new FrameLogin());
     }
 
