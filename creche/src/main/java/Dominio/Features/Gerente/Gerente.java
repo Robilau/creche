@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dominio;
+package Dominio.Features.Gerente;
+
+import Dominio.Pessoa;
 
 /**
  * A classe Gerente possibilita instanciar gerentes e extende sua funcionalidade
@@ -21,6 +23,27 @@ public class Gerente extends Pessoa {
 
     private String CPF;
     private String telefone;
+    private String login;
+    private String senha;
+
+    public Gerente() {
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 
     public String getCPF() {
         return CPF;
@@ -29,7 +52,7 @@ public class Gerente extends Pessoa {
     public void setCPF(String CPF) {
         this.CPF = CPF;
     }
-    
+
     public String getTelefone() {
         return telefone;
     }
@@ -38,10 +61,22 @@ public class Gerente extends Pessoa {
         this.telefone = telefone;
     }
 
-
     @Override
-    public void validar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void validar() throws Exception {
+        super.validar();
+        if (CPF == null) {
+            throw new Exception("CPF não pode ser nulo");
+        }
+        if (telefone == null) {
+            throw new Exception("O campo telefone não pode ser nulo");
+        }
+        if (login == null) {
+            throw new Exception("O campo login não pode ser nulo");
+        }
+        if (senha == null) {
+            throw new Exception("O campo login não pode ser nulo");
+        }
+
     }
 
 }
