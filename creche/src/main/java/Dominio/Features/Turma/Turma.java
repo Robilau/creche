@@ -26,6 +26,14 @@ public class Turma extends Entidade {
     private Date dataInicio;
     private Date dataFim;
     private Cuidador cuidador;
+
+    public Cuidador getCuidador() {
+        return cuidador;
+    }
+
+    public void setCuidador(Cuidador cuidador) {
+        this.cuidador = cuidador;
+    }   
     
     public Date getDataInicio() {
         return dataInicio;

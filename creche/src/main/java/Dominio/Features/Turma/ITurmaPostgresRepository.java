@@ -22,7 +22,5 @@ public interface ITurmaPostgresRepository {
 
     boolean deletar(int id) throws SQLException, Exception;
     
-    boolean ExisteForeignKey(int id) throws SQLException, Exception;
-
     List<Turma> pegarTodos() throws SQLException;
 }

@@ -28,7 +28,7 @@ public class SeedDatabase {
     protected final String insertTbturma = "INSERT INTO TBTurma (dataInicio_turma, dataFim_turma, cuidador_id) VALUES (now(), now(), 1)";
     
     protected final String dropTbCuidador = "DROP TABLE TBCuidador;";
-    protected final String createTbCuidador = "Create table TBCuidador (id_cuidador serial primary key not null, nome_cuidador text, telefon_cuidadore text, endereco_cuidador text, rg_cuidador text, cpf_cuidador text);";
+    protected final String createTbCuidador = "Create table TBCuidador (id_cuidador serial primary key not null, nome_cuidador text, telefone_cuidador text, endereco_cuidador text, rg_cuidador text, cpf_cuidador text);";
     protected final String insertTbCuidador = "INSERT INTO TBCuidador (nome_cuidador) VALUES ('nome_cuidador')";
     
     public void criancaERpcSeed() throws SQLException{
@@ -47,8 +47,8 @@ public class SeedDatabase {
         Statement st = conn.createStatement();
         st.execute(dropTbTurma);
         st.execute(dropTbCuidador);
-        st.execute(createTbTurma);
         st.execute(createTbCuidador);
+        st.execute(createTbTurma);        
         st.execute(insertTbCuidador);
         st.execute(insertTbturma);
     }
