@@ -5,7 +5,7 @@
  */
 package Infraestrutura;
 
-import Dominio.Cuidador;
+import Dominio.Features.Cuidador.Cuidador;
 import Dominio.Features.Turma.Turma;
 import Dominio.Features.Turma.ITurmaPostgresRepository;
 import java.sql.Date;
@@ -19,15 +19,16 @@ import java.util.List;
  *
  * @author Aluno
  */
-public class TurmaPostgresRepository implements ITurmaPostgresRepository{
-       private final String SQL_INSERT = "INSERT INTO TBTurma (dataInicio_turma, dataFim_turma, cuidador_id) VALUES (?,?,?);";
+public class TurmaPostgresRepository implements ITurmaPostgresRepository {
+
+    private final String SQL_INSERT = "INSERT INTO TBTurma (dataInicio_turma, dataFim_turma, cuidador_id) VALUES (?,?,?);";
     private final String SQL_UPDATE = "UPDATE TBTurma SET dataInicio_turma = ?, dataFim_turma = ?, cuidador_id = ? WHERE id_turma = ?;";
     private final String SQL_DELETE = "DELETE FROM TBTurma WHERE id_turma = ?;";
     private final String SQL_GETALL = "SELECT * FROM TBTurma t, TBCuidador c WHERE t.cuidador_id = c.id_cuidador;";
     private final String SQL_GET = "SELECT * FROM TBTurma t, TBCuidador c WHERE t.cuidador_id = c.id_cuidador AND t.id_turma = ?;";
-    
+
     @Override
-    public Turma adicionar(Turma turma) throws SQLException{
+    public Turma adicionar(Turma turma) throws SQLException {
         PreparedStatement statement = PostgresDAO.createStatementReturningGeneratedKeys(SQL_INSERT);
         statement = prepareStatement(statement, turma);
 
@@ -86,7 +87,7 @@ public class TurmaPostgresRepository implements ITurmaPostgresRepository{
     }
 
     private PreparedStatement prepareStatement(PreparedStatement statement, Turma turma) throws SQLException {
-        statement.setDate(1, new Date (turma.getDataInicio().getTime()));
+        statement.setDate(1, new Date(turma.getDataInicio().getTime()));
         statement.setDate(2, new Date(turma.getDataFim().getTime()));
         statement.setInt(3, turma.getCuidador().getId());
         return statement;

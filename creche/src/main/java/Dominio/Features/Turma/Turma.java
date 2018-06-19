@@ -5,7 +5,7 @@
  */
 package Dominio.Features.Turma;
 
-import Dominio.Cuidador;
+import Dominio.Features.Cuidador.Cuidador;
 import Dominio.Entidade;
 import java.util.Date;
 

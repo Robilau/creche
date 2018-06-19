@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface ICuidadorService {
 
-    Cuidador adicionar(Cuidador cuidador) throws SQLException;
+    Cuidador adicionar(Cuidador cuidador) throws SQLException, Exception;
 
     Cuidador atualizar(Cuidador cuidador) throws SQLException, Exception;
 

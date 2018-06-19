@@ -22,12 +22,8 @@ public class CuidadorService implements ICuidadorService {
     ICuidadorPostgresRepository repositorio;
 
     @Override
-    public Cuidador adicionar(Cuidador cuidador) throws SQLException {
-        try {
-            cuidador.validar();
-        } catch (Exception ex) {
-            Logger.getLogger(CuidadorService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public Cuidador adicionar(Cuidador cuidador) throws SQLException, Exception {
+        cuidador.validar();
         return repositorio.adicionar(cuidador);
     }
 

@@ -5,7 +5,7 @@
  */
 package Common;
 
-import Dominio.Cuidador;
+import Dominio.Features.Cuidador.Cuidador;
 import Dominio.Features.Crianca.Crianca;
 import Dominio.Features.RPC.Rpc;
 import Dominio.Features.Turma.Turma;
