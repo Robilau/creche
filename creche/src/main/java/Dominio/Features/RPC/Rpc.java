@@ -32,8 +32,8 @@ public class Rpc extends Pessoa {
 
     public void setCPF(String CPF) {
         this.CPF = CPF;
-    }    
-    
+    }
+
     public String getTelefone() {
         return telefone;
     }
@@ -48,13 +48,19 @@ public class Rpc extends Pessoa {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
-    }   
+    }
 
     @Override
     public void validar() throws Exception {
-        if (CPF.isEmpty()) throw new Exception("CPF não pode estar vazio");
-        if (telefone.isEmpty()) throw new Exception("Telefone não pode estar vazio");
-        if (endereco.isEmpty()) throw new Exception("Endereco não pode estar vazio");
+        if (CPF.isEmpty()) {
+            throw new Exception("CPF não pode estar vazio");
+        }
+        if (telefone.isEmpty()) {
+            throw new Exception("Telefone não pode estar vazio");
+        }
+        if (endereco.isEmpty()) {
+            throw new Exception("Endereco não pode estar vazio");
+        }
     }
 
 }
