@@ -1,5 +1,9 @@
 package Apresentacao;
 
+import Aplicacao.CriancaService;
+import Dominio.Features.Crianca.ICriancaPostgresRepository;
+import Dominio.Features.Crianca.ICriancaService;
+import Infraestrutura.CriancaPostgresRepository;
 import java.beans.PropertyVetoException;
 import java.text.ParseException;
 import java.util.logging.Level;
@@ -10,8 +14,12 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 public class FramePrincipal extends javax.swing.JFrame {
+    ICriancaPostgresRepository criancaRepositorio;
+    ICriancaService criancaService;
 
     public FramePrincipal() {
+        criancaRepositorio = new CriancaPostgresRepository();
+        criancaService = new CriancaService(criancaRepositorio);
         initComponents();
         menuContexto.setEnabled(true);
         menuAjuda.setEnabled(true);
@@ -20,7 +28,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         adicionaTela(new FrameLogin());
     }
 
-    public void adicionaTela(JInternalFrame frame) {
+    public static void adicionaTela(JInternalFrame frame) {
         try {
             jDesktopPane1.add(frame);
             frame.setVisible(true);
@@ -99,11 +107,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        try {
-            adicionaTela(new FrameCadastroCriança());
-        } catch (ParseException ex) {
-            Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        adicionaTela(new FrameMenuCadastroCrianca(criancaService));
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     public static void main(String args[]) {
@@ -139,7 +143,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane jDesktopPane1;
+    private static javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;

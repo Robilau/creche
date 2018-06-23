@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IGerenteService {
 
-    Gerente adicionar(Gerente gerente) throws SQLException;
+    Gerente adicionar(Gerente gerente) throws SQLException, Exception;
 
     Gerente atualizar(Gerente gerente) throws SQLException, Exception;
 

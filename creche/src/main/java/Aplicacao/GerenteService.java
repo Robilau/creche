@@ -26,12 +26,8 @@ public class GerenteService implements IGerenteService {
     }
 
     @Override
-    public Gerente adicionar(Gerente gerente) throws SQLException {
-        try {
-            gerente.validar();
-        } catch (Exception ex) {
-            Logger.getLogger(GerenteService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public Gerente adicionar(Gerente gerente) throws SQLException, Exception {
+        gerente.validar();
         return repositorio.adicionar(gerente);
     }
 
@@ -43,13 +39,11 @@ public class GerenteService implements IGerenteService {
 
     @Override
     public Gerente pegar(Gerente gerente) throws SQLException, Exception {
-        gerente.validar();
         return repositorio.pegar(gerente.getId());
     }
 
     @Override
     public boolean deletar(Gerente gerente) throws SQLException, Exception {
-        gerente.validar();
         return repositorio.deletar(gerente.getId());
     }
 

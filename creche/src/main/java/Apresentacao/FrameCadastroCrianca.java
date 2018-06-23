@@ -13,11 +13,11 @@ import javax.swing.text.MaskFormatter;
  *
  * @author Aluno
  */
-public class FrameCadastroCriança extends javax.swing.JInternalFrame {
+public class FrameCadastroCrianca extends javax.swing.JInternalFrame {
 
     MaskFormatter mascaraDataNascimento;
     
-    public FrameCadastroCriança() throws ParseException {
+    public FrameCadastroCrianca() throws ParseException {
         this.mascaraDataNascimento = new MaskFormatter("##/##/####");
         initComponents();
     }

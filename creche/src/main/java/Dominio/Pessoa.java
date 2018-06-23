@@ -37,7 +37,7 @@ public abstract class Pessoa extends Entidade {
 
     public void setRG(String RG) {
         this.RG = RG;
-    }
+    } 
     
     @Override
     public void validar() throws Exception{
