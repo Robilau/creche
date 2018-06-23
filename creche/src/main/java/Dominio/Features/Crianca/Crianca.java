@@ -5,11 +5,12 @@
  */
 package Dominio.Features.Crianca;
 
-import Dominio.Pessoa;
+import Dominio.Entidade;
 import Dominio.Pessoa;
 import Dominio.Features.RPC.Rpc;
-import Dominio.Features.RPC.Rpc;
+import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * A classe crianca possibilita instanciar crianças e extende sua funcionalidade
@@ -53,5 +54,12 @@ public class Crianca extends Pessoa {
         super.validar();
         if (responsavelPelaCrianca == null) throw new Exception("Responsável pela crianca não pode ser nulo");
     }
+
+    @Override
+    public String toString() {
+        return "Nome: " + this.getNome() + "  RG: " + this.getRG() + "  Data de Nascimento: " + DateFormat.getDateInstance(DateFormat.SHORT).format(dataNascimento);
+    }
+    
+    
 
 }
