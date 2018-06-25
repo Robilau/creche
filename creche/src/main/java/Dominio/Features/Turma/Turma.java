@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dominio;
+package Dominio.Features.Turma;
 
+import Dominio.Features.Cuidador.Cuidador;
+import Dominio.Entidade;
 import java.util.Date;
 
 /**
@@ -23,19 +25,16 @@ public class Turma extends Entidade {
 
     private Date dataInicio;
     private Date dataFim;
+    private Cuidador cuidador;
 
-    /**
-     * Método construtor da classe <b><i>Turma</i></b>. Este método recebe 2
-     * parametros como atributos para o seu funcionamento.
-     *
-     * @param <b>dataInicio</b>
-     * @param <b>dataFim</b>
-     */
-    public Turma(Date dataInicio, Date dataFim) {
-        this.dataInicio = dataInicio;
-        this.dataFim = dataFim;
+    public Cuidador getCuidador() {
+        return cuidador;
     }
 
+    public void setCuidador(Cuidador cuidador) {
+        this.cuidador = cuidador;
+    }   
+    
     public Date getDataInicio() {
         return dataInicio;
     }
@@ -53,8 +52,7 @@ public class Turma extends Entidade {
     }
 
     @Override
-    public void validar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void validar() throws Exception {
+        if (cuidador == null) throw new Exception ("cuidador não pode estar nulo");
     }
-
 }

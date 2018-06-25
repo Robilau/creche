@@ -86,10 +86,9 @@ public class CriancaPostgresRepository implements ICriancaPostgresRepository {
     }
 
     private PreparedStatement prepareStatement(PreparedStatement statement, Crianca crianca) throws SQLException {
-        java.util.Date d = crianca.getDataNascimento();
         statement.setString(1, crianca.getNome());
         statement.setString(2, crianca.getRG());
-        statement.setDate(3, new Date(d.getYear(), d.getMonth(), d.getDate()));
+        statement.setDate(3, new Date(crianca.getDataNascimento().getTime()));
         statement.setInt(4, crianca.getResponsavelPelaCrianca().getId());
         return statement;
     }

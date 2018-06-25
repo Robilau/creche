@@ -1,42 +1,70 @@
 package Apresentacao;
 
 import Aplicacao.CriancaService;
+import Aplicacao.LoginService;
+import Aplicacao.RpcService;
 import Dominio.Features.Crianca.ICriancaPostgresRepository;
 import Dominio.Features.Crianca.ICriancaService;
+import Dominio.Features.RPC.IRpcPostgresRepository;
+import Dominio.Features.RPC.IRpcService;
+import Dominio.Usuario;
 import Infraestrutura.CriancaPostgresRepository;
+import Infraestrutura.Login.ConfiguracoesLogin;
+import Infraestrutura.Login.IConfiguracoesLogin;
+import Infraestrutura.RpcPostgresRepository;
+import java.awt.Dimension;
 import java.beans.PropertyVetoException;
-import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 public class FramePrincipal extends javax.swing.JFrame {
-    ICriancaPostgresRepository criancaRepositorio;
-    ICriancaService criancaService;
+    private ICriancaPostgresRepository criancaRepositorio;
+    private ICriancaService criancaService;
+    
+    private IRpcService rpcService;
+    private IRpcPostgresRepository rpcRepositorio;
+    
+    private IConfiguracoesLogin configuracaoLogin;
+    private LoginService loginService;
+    
+    private static Usuario user;
 
     public FramePrincipal() {
         criancaRepositorio = new CriancaPostgresRepository();
         criancaService = new CriancaService(criancaRepositorio);
+        
+        rpcRepositorio = new RpcPostgresRepository();
+        rpcService = new RpcService(rpcRepositorio);
+        
+        configuracaoLogin = new ConfiguracoesLogin();
+        loginService = new LoginService(configuracaoLogin);
+        
         initComponents();
         menuContexto.setEnabled(true);
         menuAjuda.setEnabled(true);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        adicionaTela(new FrameInicio());
-        adicionaTela(new FrameLogin());
+        JInternalFrame FrameInicio = new FrameInicio();        
+        JInternalFrame FrameLogin = new FrameLogin(loginService);        
+        adicionaTela(FrameInicio, true);
+        adicionaTela(FrameLogin, true);        
     }
 
-    public static void adicionaTela(JInternalFrame frame) {
+    public static void adicionaTela(JInternalFrame frame, boolean isMaximumm){        
+        jDesktopPane1.add(frame);
+        frame.setVisible(true);
+        jDesktopPane1.setSelectedFrame(frame);
         try {
-            jDesktopPane1.add(frame);
-            frame.setVisible(true);
-            jDesktopPane1.setSelectedFrame(frame);
-            frame.setMaximum(true);
+            frame.setMaximum(isMaximumm);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static void setUsuarioConectado(Usuario user){
+        FramePrincipal.user = user;
+        jLabelUsuarioConectado.setText(user.getNome() + ", " + user.getTipoUsuario());
     }
 
     @SuppressWarnings("unchecked")
@@ -45,6 +73,8 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
+        jLabel2 = new javax.swing.JLabel();
+        jLabelUsuarioConectado = new javax.swing.JLabel();
         jMenuBar2 = new javax.swing.JMenuBar();
         menuContexto = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -60,18 +90,32 @@ public class FramePrincipal extends javax.swing.JFrame {
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGap(0, 259, Short.MAX_VALUE)
         );
+
+        jLabel2.setText("Usuário conectado: ");
+
+        jLabelUsuarioConectado.setText("          ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jDesktopPane1)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelUsuarioConectado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jDesktopPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabelUsuarioConectado)))
         );
 
         menuContexto.setText("Contexto");
@@ -107,7 +151,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        adicionaTela(new FrameMenuCadastroCrianca(criancaService));
+        adicionaTela(new FrameMenuCadastroCrianca(criancaService, rpcService), true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     public static void main(String args[]) {
@@ -144,6 +188,8 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private static javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JLabel jLabel2;
+    private static javax.swing.JLabel jLabelUsuarioConectado;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;

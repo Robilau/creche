@@ -36,18 +36,16 @@ public class RpcService implements IRpcService{
 
     @Override
     public Rpc pegar(Rpc rpc) throws SQLException, Exception{
-        rpc.validar();
         return repositorio.pegar(rpc.getId());
     }
 
     @Override
-    public List<Rpc> pegarTodas() throws SQLException{
+    public List<Rpc> pegarTodos() throws SQLException{
         return repositorio.pegarTodos();
     }
 
     @Override
     public boolean deletar(Rpc rpc) throws SQLException, Exception{
-        rpc.validar();
         if (!repositorio.ExisteForeignKey(rpc.getId())) return repositorio.deletar(rpc.getId());
         throw new Exception("Não é possível deletar um Responsavel Pela Crianca que possua crianças cadastradas");
     }

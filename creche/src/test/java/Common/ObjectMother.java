@@ -5,8 +5,10 @@
  */
 package Common;
 
+import Dominio.Features.Cuidador.Cuidador;
 import Dominio.Features.Crianca.Crianca;
 import Dominio.Features.RPC.Rpc;
+import Dominio.Features.Turma.Turma;
 import java.util.Date;
 
 /**
@@ -32,5 +34,23 @@ public class ObjectMother {
         rpc.setTelefone("telefone_rpc");
         rpc.setEndereco("endereco_rpc");
         return rpc;
+    }
+    
+    public static Cuidador pegarCuidador(){
+        Cuidador cuidador = new Cuidador();
+        cuidador.setNome("nome_cuidador");
+        cuidador.setRG("rg_cuidador");
+        cuidador.setCPF("cpf_cuidador");
+        cuidador.setTelefone("telefone_cuidador");
+        return cuidador;
+    }
+
+    public static Turma pegarTurma() {
+        Turma turma = new Turma();
+        turma.setCuidador(pegarCuidador());
+        turma.getCuidador().setId(1);
+        turma.setDataFim(new Date());
+        turma.setDataInicio(new Date());
+        return turma;
     }
 }

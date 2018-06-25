@@ -19,7 +19,7 @@ public interface IRpcService {
 
     Rpc pegar(Rpc rpc) throws SQLException, Exception;
 
-    List<Rpc> pegarTodas() throws SQLException;
+    List<Rpc> pegarTodos() throws SQLException;
 
     boolean deletar(Rpc rpc)  throws SQLException, Exception;
 }
