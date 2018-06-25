@@ -22,7 +22,9 @@ public class ObjectMother {
         c.setNome("nome_crianca");
         c.setRG("rg_crianca");
         c.setResponsavelPelaCrianca(pegarRpc());
+        c.setTurma(pegarTurma());
         c.getResponsavelPelaCrianca().setId(1);
+        c.getTurma().setId(1);
         return c;
     }
     
@@ -51,8 +53,8 @@ public class ObjectMother {
         Turma turma = new Turma();
         turma.setCuidador(pegarCuidador());
         turma.getCuidador().setId(1);
-        turma.setDataFim(new Date());
-        turma.setDataInicio(new Date());
+        turma.setNome("Gralha Azul");
+        turma.setTurno("Matutino");
         return turma;
     }
 }

@@ -166,10 +166,13 @@
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jTextDataNascimento">
           <Properties>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format subtype="2" type="1"/>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.JFormattedTextField.AbstractFormatterFactory() {&#xd;&#xa;public javax.swing.JFormattedTextField.AbstractFormatter&#xd;&#xa;    getFormatter(javax.swing.JFormattedTextField jf) {&#xd;&#xa;try{&#xd;&#xa;return new javax.swing.text.MaskFormatter(&quot;##/##/####&quot;);&#xd;&#xa;} catch (ParseException pe){&#xd;&#xa;pe.printStackTrace();&#xd;&#xa;}&#xd;&#xa;return null;&#xd;&#xa;}&#xd;&#xa;}" type="code"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextDataNascimento.setText(&quot;31/12/1997&quot;);"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextRg">
         </Component>

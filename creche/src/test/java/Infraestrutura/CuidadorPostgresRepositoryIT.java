@@ -12,6 +12,7 @@ import Dominio.Features.Cuidador.Cuidador;
 import java.sql.SQLException;
 import java.util.List;
 import org.assertj.core.api.Assertions;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,6 +24,11 @@ public class CuidadorPostgresRepositoryIT {
     Cuidador _cuidador;
     Cuidador _cuidadorEsperado;
     ICuidadorPostgresRepository _repositorio;
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+        SeedDatabase.seedCompleto();
+    }
 
     @Before
     public void setUp() throws SQLException {
@@ -96,7 +102,7 @@ public class CuidadorPostgresRepositoryIT {
      * Test of ExisteForeignKey method, of class CuidadorPostgresRepository.
      */
     @Test
-    public void testExisteForeignKey() throws Exception {
+    public void testExisteForeignKey_shouldBeTrue() throws Exception {
         System.out.println("ExisteForeignKey");
         SeedDatabase.turmaECuidadorSeed();
         Assertions.assertThat(_repositorio.ExisteForeignKey(1)).isTrue();

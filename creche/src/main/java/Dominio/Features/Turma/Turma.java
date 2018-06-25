@@ -23,8 +23,8 @@ import java.util.Date;
  */
 public class Turma extends Entidade {
 
-    private Date dataInicio;
-    private Date dataFim;
+    private String nome;
+    private String turno;
     private Cuidador cuidador;
 
     public Cuidador getCuidador() {
@@ -34,25 +34,34 @@ public class Turma extends Entidade {
     public void setCuidador(Cuidador cuidador) {
         this.cuidador = cuidador;
     }   
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getTurno() {
+        return turno;
+    }
+
+    public void setTurno(String turno) {
+        this.turno = turno;
+    }
     
-    public Date getDataInicio() {
-        return dataInicio;
-    }
-
-    public void setDataInicio(Date dataInicio) {
-        this.dataInicio = dataInicio;
-    }
-
-    public Date getDataFim() {
-        return dataFim;
-    }
-
-    public void setDataFim(Date dataFim) {
-        this.dataFim = dataFim;
-    }
+    
 
     @Override
     public void validar() throws Exception {
         if (cuidador == null) throw new Exception ("cuidador não pode estar nulo");
     }
+
+    @Override
+    public String toString() {
+        return "Nome: " + nome + " Cuidador: " + cuidador.getNome() + " Turno: " + turno;
+    }
+    
+    
 }

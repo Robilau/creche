@@ -12,6 +12,7 @@ import Dominio.Features.Crianca.ICriancaPostgresRepository;
 import java.sql.SQLException;
 import java.util.List;
 import org.assertj.core.api.Assertions;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,13 +24,18 @@ public class CriancaPostgresRepositoryIT {
     Crianca _crianca;
     Crianca _criancaEsperada;
     ICriancaPostgresRepository _repositorio;
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+        SeedDatabase.seedCompleto();
+    }
     
     @Before
     public void setUp() throws SQLException {
         _crianca = new Crianca();
         _criancaEsperada = new Crianca();
         _repositorio = new CriancaPostgresRepository();
-        SeedDatabase.criancaERpcSeed();
+        SeedDatabase.seedCompleto();
     }
 
     /**
@@ -85,7 +91,9 @@ public class CriancaPostgresRepositoryIT {
         _crianca = ObjectMother.pegarCrianca();
         _crianca.setId(1);
         _criancaEsperada = _repositorio.pegar((int) _crianca.getId());
-        Assertions.assertThat(_criancaEsperada.getNome()).isEqualToIgnoringCase(_crianca.getNome());
+        Assertions.assertThat(_criancaEsperada.getNome()).isNotEmpty();
+        Assertions.assertThat(_criancaEsperada.getResponsavelPelaCrianca().getNome()).isNotEmpty();
+        Assertions.assertThat(_criancaEsperada.getTurma().getCuidador().getNome()).isNotEmpty();
     }
     
 }

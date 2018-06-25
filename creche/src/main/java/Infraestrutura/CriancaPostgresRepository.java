@@ -7,7 +7,9 @@ package Infraestrutura;
 
 import Dominio.Features.Crianca.Crianca;
 import Dominio.Features.Crianca.ICriancaPostgresRepository;
+import Dominio.Features.Cuidador.Cuidador;
 import Dominio.Features.RPC.Rpc;
+import Dominio.Features.Turma.Turma;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,11 +22,11 @@ import java.util.List;
  */
 public class CriancaPostgresRepository implements ICriancaPostgresRepository {
 
-    private final String SQL_INSERT = " INSERT INTO TBCrianca (nome_crianca, rg_crianca, dataNascimento_crianca, rpc_id) VALUES (?,?,?,?);";
-    private final String SQL_UPDATE = "UPDATE TBCrianca SET nome_crianca = ?, rg_crianca = ?, dataNascimento_crianca = ?, rpc_id = ? WHERE id_crianca = ?;";
+    private final String SQL_INSERT = " INSERT INTO TBCrianca (nome_crianca, rg_crianca, dataNascimento_crianca, rpc_id, turma_id) VALUES (?,?,?,?,?);";
+    private final String SQL_UPDATE = "UPDATE TBCrianca SET nome_crianca = ?, rg_crianca = ?, dataNascimento_crianca = ?, rpc_id = ?, turma_id = ? WHERE id_crianca = ?;";
     private final String SQL_DELETE = "DELETE FROM TBCrianca WHERE id_crianca = ?;";
-    private final String SQL_GETALL = "SELECT * FROM TBCrianca c, TBRpc r WHERE c.rpc_id = r.id_rpc";
-    private final String SQL_GET = "SELECT * FROM TBCrianca c, TBRpc r WHERE c.rpc_id = r.id_rpc AND c.id_crianca = ?";
+    private final String SQL_GETALL = "SELECT * FROM TBCrianca c, TBRpc r, TBTurma t, TBcuidador cu WHERE c.rpc_id = r.id_rpc AND c.turma_id = t.id_turma AND cu.id_cuidador = t.cuidador_id";
+    private final String SQL_GET = "SELECT * FROM TBCrianca, TBRpc, TBTurma, TBCuidador WHERE id_crianca = ?";
 
     @Override
     public Crianca adicionar(Crianca crianca) throws SQLException{
@@ -42,7 +44,7 @@ public class CriancaPostgresRepository implements ICriancaPostgresRepository {
         }
         PreparedStatement statement = PostgresDAO.createStatement(SQL_UPDATE);
         statement = prepareStatement(statement, crianca);
-        statement.setInt(5, crianca.getId());
+        statement.setInt(6, crianca.getId());
 
         if (PostgresDAO.update(statement)) {
             return pegar(crianca.getId());
@@ -90,12 +92,15 @@ public class CriancaPostgresRepository implements ICriancaPostgresRepository {
         statement.setString(2, crianca.getRG());
         statement.setDate(3, new Date(crianca.getDataNascimento().getTime()));
         statement.setInt(4, crianca.getResponsavelPelaCrianca().getId());
+        statement.setInt(5, crianca.getTurma().getId());
         return statement;
     }
 
     private Crianca make(ResultSet rs) throws SQLException {
         Crianca c = new Crianca();
         Rpc rpc = new Rpc();
+        Turma turma = new Turma();
+        Cuidador cuidador = new Cuidador();
         c.setId(rs.getInt("id_crianca"));
         c.setNome(rs.getString("nome_crianca"));
         c.setRG(rs.getString("rg_crianca"));
@@ -106,7 +111,15 @@ public class CriancaPostgresRepository implements ICriancaPostgresRepository {
         rpc.setCPF(rs.getString("cpf_rpc"));
         rpc.setEndereco(rs.getString("endereco_rpc"));
         rpc.setTelefone(rs.getString("telefone_rpc"));
+        turma.setNome(rs.getString("nome_turma"));
+        cuidador.setId(rs.getInt("id_cuidador"));
+        cuidador.setNome(rs.getString("nome_cuidador"));
+        cuidador.setRG("rg_cuidador");
+        cuidador.setTelefone("telefone_cuidador");
+        cuidador.setCPF("cpf_cuidador");
+        turma.setCuidador(cuidador);
         c.setResponsavelPelaCrianca(rpc);
+        c.setTurma(turma);
         return c;
     }
 }
