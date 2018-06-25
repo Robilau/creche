@@ -23,14 +23,13 @@ public class CriancaPostgresRepositoryIT {
     Crianca _crianca;
     Crianca _criancaEsperada;
     ICriancaPostgresRepository _repositorio;
-    SeedDatabase _seed = new SeedDatabase();
     
     @Before
     public void setUp() throws SQLException {
         _crianca = new Crianca();
         _criancaEsperada = new Crianca();
         _repositorio = new CriancaPostgresRepository();
-        _seed.criancaERpcSeed();
+        SeedDatabase.criancaERpcSeed();
     }
 
     /**

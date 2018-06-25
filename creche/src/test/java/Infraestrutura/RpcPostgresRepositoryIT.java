@@ -13,7 +13,6 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -23,14 +22,13 @@ public class RpcPostgresRepositoryIT {
     Rpc _rpc;
     Rpc _rpcEsperada;
     RpcPostgresRepository _repositorio;
-    SeedDatabase _seed = new SeedDatabase();
     
     @Before
     public void setUp() throws SQLException {
         _rpc = new Rpc();
         _rpcEsperada = new Rpc();
         _repositorio = new RpcPostgresRepository();
-        _seed.criancaERpcSeed();
+        SeedDatabase.criancaERpcSeed();
     }
 
     /**
