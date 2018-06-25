@@ -23,4 +23,6 @@ public interface ICuidadorPostgresRepository {
     boolean deletar(int id) throws SQLException, Exception;
 
     List<Cuidador> pegarTodos() throws SQLException;
+
+    public boolean ExisteForeignKey(int id) throws SQLException, Exception;
 }

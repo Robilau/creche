@@ -42,6 +42,8 @@ public class ObjectMother {
         cuidador.setRG("rg_cuidador");
         cuidador.setCPF("cpf_cuidador");
         cuidador.setTelefone("telefone_cuidador");
+        cuidador.setLogin("login");
+        cuidador.setSenha("senha");
         return cuidador;
     }
 

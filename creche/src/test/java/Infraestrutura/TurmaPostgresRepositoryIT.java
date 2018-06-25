@@ -25,14 +25,13 @@ public class TurmaPostgresRepositoryIT {
     Turma _turma;
     Turma _turmaEsperada;
     ITurmaPostgresRepository _repositorio;
-    SeedDatabase _seed = new SeedDatabase();
 
     @Before
     public void setUp() throws SQLException {
         _turma = new Turma();
         _turmaEsperada = new Turma();
         _repositorio = new TurmaPostgresRepository();
-        _seed.turmaECuidadorSeed();
+        SeedDatabase.turmaECuidadorSeed();
     }
 
     /**

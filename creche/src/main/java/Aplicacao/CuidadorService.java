@@ -19,6 +19,10 @@ public class CuidadorService implements ICuidadorService {
 
     ICuidadorPostgresRepository repositorio;
 
+    public CuidadorService(ICuidadorPostgresRepository repositorio) {
+        this.repositorio = repositorio;
+    }   
+
     @Override
     public Cuidador adicionar(Cuidador cuidador) throws SQLException, Exception {
         cuidador.validar();
@@ -38,7 +42,8 @@ public class CuidadorService implements ICuidadorService {
 
     @Override
     public boolean deletar(Cuidador cuidador) throws SQLException, Exception {
-        return repositorio.deletar(cuidador.getId());
+        if (!repositorio.ExisteForeignKey(cuidador.getId())) return repositorio.deletar(cuidador.getId());
+        throw new Exception ("Não é possível deletar um cuidador que esteja cadastrado em uma turma");
     }
 
     @Override

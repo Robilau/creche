@@ -47,7 +47,8 @@ public class TurmaService implements ITurmaService{
 
     @Override
     public boolean deletar(Turma turma) throws SQLException, Exception{
-        return repositorio.deletar(turma.getId());
+        if (!repositorio.ExisteForeignKey(turma.getId()))return repositorio.deletar(turma.getId());
+        throw new Exception ("Não é possível deletar uma turma que possua crianças cadastradas");
     }
     
 }
