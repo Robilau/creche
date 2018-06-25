@@ -26,6 +26,7 @@ public class TurmaPostgresRepository implements ITurmaPostgresRepository {
     private final String SQL_DELETE = "DELETE FROM TBTurma WHERE id_turma = ?;";
     private final String SQL_GETALL = "SELECT * FROM TBTurma t, TBCuidador c WHERE t.cuidador_id = c.id_cuidador;";
     private final String SQL_GET = "SELECT * FROM TBTurma t, TBCuidador c WHERE t.cuidador_id = c.id_cuidador AND t.id_turma = ?;";
+    private final String SQL_VERIFY_FK = "SELECT id_crianca FROM TBCrianca WHERE turma_Id = ?;";
 
     @Override
     public Turma adicionar(Turma turma) throws SQLException {
@@ -84,6 +85,18 @@ public class TurmaPostgresRepository implements ITurmaPostgresRepository {
             return make(rs);
         }
         return null;
+    }
+    
+    @Override
+    public boolean ExisteForeignKey(int id) throws SQLException, Exception {
+        if (id < 1) {
+            throw new Exception("Id inválido");
+        }
+        PreparedStatement statement = PostgresDAO.createStatement(SQL_VERIFY_FK);
+        statement.setInt(1, id);
+        ResultSet rs = PostgresDAO.get(statement);
+        if (rs.next()) return true;
+        return false;
     }
 
     private PreparedStatement prepareStatement(PreparedStatement statement, Turma turma) throws SQLException {

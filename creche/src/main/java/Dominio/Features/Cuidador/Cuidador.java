@@ -64,17 +64,17 @@ public class Cuidador extends Pessoa {
     @Override
     public void validar() throws Exception {
         super.validar();
-        if (CPF == null) {
+        if (CPF.isEmpty()) {
             throw new Exception("O campo CPF não pode ser nulo");
         }
-        if (telefone == null) {
+        if (telefone.isEmpty()) {
             throw new Exception("O campo telefone não pode ser nulo");
         }
-        if (login == null) {
+        if (login.isEmpty()) {
             throw new Exception("O campo login não pode ser nulo");
         }
-        if (senha == null) {
-            throw new Exception("O campo login não pode ser nulo");
+        if (senha.length() < 4) {
+            throw new Exception("O campo senha deve ter pelo menos 4 caracteres");
         }
     }
 
