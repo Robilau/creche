@@ -55,4 +55,11 @@ public class Turma extends Entidade {
     public void validar() throws Exception {
         if (cuidador == null) throw new Exception ("cuidador não pode estar nulo");
     }
+
+    @Override
+    public String toString() {
+        return "Turma{" + "dataInicio=" + dataInicio + ", dataFim=" + dataFim + ", cuidador=" + cuidador.getNome() + '}';
+    }
+    
+    
 }

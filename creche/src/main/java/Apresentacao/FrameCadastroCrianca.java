@@ -1,5 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+ * To change this license header, choose License Headers in Pr            @Override
+            public JFormattedTextField.AbstractFormatter getFormatter(JFormattedTextField tf) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        }ject Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -9,16 +13,17 @@ import Dominio.Features.Crianca.Crianca;
 import Dominio.Features.Crianca.ICriancaService;
 import Dominio.Features.RPC.IRpcService;
 import Dominio.Features.RPC.Rpc;
+import Dominio.Features.Turma.ITurmaService;
+import Dominio.Features.Turma.Turma;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -26,21 +31,57 @@ import javax.swing.text.MaskFormatter;
  */
 public class FrameCadastroCrianca extends javax.swing.JInternalFrame {
 
-    private MaskFormatter mascaraDataNascimento;
     private IRpcService serviceRpc;
+    private ITurmaService serviceTurma;
     private ICriancaService serviceCrianca;
-    private Crianca crianca;
+    private Crianca novaCrianca;
+    private SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-    public FrameCadastroCrianca(IRpcService serviceRpc, ICriancaService serviceCrianca) throws ParseException, SQLException {
+    public Crianca getNovaCrianca() throws ParseException {
+        novaCrianca.setNome(jTextNomeCrianca.getText());
+        novaCrianca.setRG(jTextRg.getText());
+        novaCrianca.setDataNascimento(df.parse((String) jTextDataNascimento.getValue()));
+        novaCrianca.setResponsavelPelaCrianca((Rpc) jCmbRpc.getSelectedItem());
+        novaCrianca.setTurma((Turma) jCmbTurma.getSelectedItem());
+        return novaCrianca;
+    }
+
+    public void setNovaCrianca(Crianca crianca) {
+        this.novaCrianca = crianca;
+        jTextNomeCrianca.setText(crianca.getNome());
+        jTextRg.setText(crianca.getNome());
+        jTextDataNascimento.setText(crianca.getDataNascimento().toString());
+        jCmbRpc.setSelectedItem(crianca.getResponsavelPelaCrianca());
+        jCmbTurma.setSelectedItem(crianca.getTurma());
+    }
+
+    public FrameCadastroCrianca(IRpcService serviceRpc, ITurmaService serviceTurma, ICriancaService serviceCrianca) throws ParseException, SQLException {
         this.serviceRpc = serviceRpc;
         this.serviceCrianca = serviceCrianca;
-        this.mascaraDataNascimento = new MaskFormatter("##/##/####");
+        this.serviceTurma = serviceTurma;
         initComponents();
         Vector<Rpc> listaRPC = new Vector<>(serviceRpc.pegarTodos());
-        DefaultComboBoxModel modelo = new DefaultComboBoxModel(listaRPC);
-        jCmbRpc.setModel(modelo);
+        Vector<Turma> listaTurma = new Vector<>(serviceTurma.pegarTodas());
+        DefaultComboBoxModel modeloTurma = new DefaultComboBoxModel(listaTurma);
+        DefaultComboBoxModel modeloRpc = new DefaultComboBoxModel(listaRPC);
+        jCmbRpc.setModel(modeloRpc);
+        jCmbTurma.setModel(modeloTurma);
     }
     
+    public FrameCadastroCrianca(IRpcService serviceRpc, ITurmaService serviceTurma, ICriancaService serviceCrianca, Crianca crianca) throws ParseException, SQLException {
+        this.serviceRpc = serviceRpc;
+        this.serviceCrianca = serviceCrianca;
+        this.serviceTurma = serviceTurma;
+        setNovaCrianca(crianca);
+        initComponents();
+        Vector<Rpc> listaRPC = new Vector<>(serviceRpc.pegarTodos());
+        Vector<Turma> listaTurma = new Vector<>(serviceTurma.pegarTodas());
+        DefaultComboBoxModel modeloTurma = new DefaultComboBoxModel(listaTurma);
+        DefaultComboBoxModel modeloRpc = new DefaultComboBoxModel(listaRPC);
+        jCmbRpc.setModel(modeloRpc);
+        jCmbTurma.setModel(modeloTurma);
+    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -72,7 +113,17 @@ public class FrameCadastroCrianca extends javax.swing.JInternalFrame {
 
         jLabel4.setText("RG:");
 
-        jTextDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
+        jTextDataNascimento.setFormatterFactory(new javax.swing.JFormattedTextField.AbstractFormatterFactory() {
+            public javax.swing.JFormattedTextField.AbstractFormatter
+            getFormatter(javax.swing.JFormattedTextField jf) {
+                try{
+                    return new javax.swing.text.MaskFormatter("##/##/####");
+                } catch (ParseException pe){
+                    pe.printStackTrace();
+                }
+                return null;
+            }
+        });
 
         jCmbRpc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -200,13 +251,10 @@ public class FrameCadastroCrianca extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBcancelarActionPerformed
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
-        crianca = new Crianca();
-        crianca.setNome(jTextNomeCrianca.getText());
-        crianca.setRG(jTextRg.getText());
-        crianca.setDataNascimento((Date) jTextDataNascimento.getValue());
-        crianca.setResponsavelPelaCrianca((Rpc) jCmbRpc.getSelectedItem());
         try {
-            serviceCrianca.adicionar(crianca);
+            serviceCrianca.adicionar(getNovaCrianca());
+            JOptionPane.showMessageDialog(null, "Salvo com sucesso, nome: " + novaCrianca.getNome());
+            dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }

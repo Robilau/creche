@@ -8,6 +8,7 @@ package Apresentacao;
 import Dominio.Features.Crianca.Crianca;
 import Dominio.Features.Crianca.ICriancaService;
 import Dominio.Features.RPC.IRpcService;
+import Dominio.Features.Turma.ITurmaService;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Vector;
@@ -22,10 +23,12 @@ import javax.swing.JOptionPane;
 public class FrameMenuCadastroCrianca extends javax.swing.JInternalFrame {
     private ICriancaService serviceCrianca;
     private IRpcService serviceRpc;
+    private ITurmaService serviceTurma;
 
-    public FrameMenuCadastroCrianca(ICriancaService service, IRpcService serviceRpc) {
+    public FrameMenuCadastroCrianca(ICriancaService service, IRpcService serviceRpc, ITurmaService serviceTurma) {
         this.serviceCrianca = service;
         this.serviceRpc = serviceRpc;
+        this.serviceTurma = serviceTurma;
         initComponents();
         AtualizarLista();
     }
@@ -54,6 +57,11 @@ public class FrameMenuCadastroCrianca extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                formFocusGained(evt);
+            }
+        });
 
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
@@ -88,8 +96,18 @@ public class FrameMenuCadastroCrianca extends javax.swing.JInternalFrame {
         });
 
         jButton2.setText("Editar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Excluir");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -155,13 +173,37 @@ public class FrameMenuCadastroCrianca extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            FramePrincipal.adicionaTela(new FrameCadastroCrianca(serviceRpc, serviceCrianca), false);            
-        } catch (ParseException ex) {
-            Logger.getLogger(FrameMenuCadastroCrianca.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(FrameMenuCadastroCrianca.class.getName()).log(Level.SEVERE, null, ex);
+            FramePrincipal.adicionaTela(new FrameCadastroCrianca(serviceRpc, serviceTurma, serviceCrianca, new Crianca()), false);            
+        } catch (ParseException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            if (jListaCrianca.getSelectedValue() == null) JOptionPane.showMessageDialog(null, "Selecione uma criança!");
+            FramePrincipal.adicionaTela(new FrameCadastroCrianca(serviceRpc, serviceTurma, serviceCrianca, (Crianca) jListaCrianca.getSelectedValue()), false);            
+        } catch (ParseException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            if (jListaCrianca.getSelectedValue() == null) {
+                JOptionPane.showMessageDialog(null, "Selecione uma criança!");
+            } else {
+                serviceCrianca.deletar((Crianca) jListaCrianca.getSelectedValue());
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
+        AtualizarLista();
+    }//GEN-LAST:event_formFocusGained
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

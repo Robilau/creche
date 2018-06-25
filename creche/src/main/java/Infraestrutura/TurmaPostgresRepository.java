@@ -25,7 +25,7 @@ public class TurmaPostgresRepository implements ITurmaPostgresRepository {
     private final String SQL_UPDATE = "UPDATE TBTurma SET dataInicio_turma = ?, dataFim_turma = ?, cuidador_id = ? WHERE id_turma = ?;";
     private final String SQL_DELETE = "DELETE FROM TBTurma WHERE id_turma = ?;";
     private final String SQL_GETALL = "SELECT * FROM TBTurma t, TBCuidador c WHERE t.cuidador_id = c.id_cuidador;";
-    private final String SQL_GET = "SELECT * FROM TBTurma t, TBCuidador c WHERE t.cuidador_id = c.id_cuidador AND t.id_turma = ?;";
+    private final String SQL_GET = "SELECT * FROM TBTurma, TBCuidador WHERE id_turma = ?;";
     private final String SQL_VERIFY_FK = "SELECT id_crianca FROM TBCrianca WHERE turma_Id = ?;";
 
     @Override

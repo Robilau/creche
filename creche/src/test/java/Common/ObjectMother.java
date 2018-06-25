@@ -22,7 +22,9 @@ public class ObjectMother {
         c.setNome("nome_crianca");
         c.setRG("rg_crianca");
         c.setResponsavelPelaCrianca(pegarRpc());
+        c.setTurma(pegarTurma());
         c.getResponsavelPelaCrianca().setId(1);
+        c.getTurma().setId(1);
         return c;
     }
     

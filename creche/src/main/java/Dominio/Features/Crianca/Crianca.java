@@ -8,9 +8,9 @@ package Dominio.Features.Crianca;
 import Dominio.Entidade;
 import Dominio.Pessoa;
 import Dominio.Features.RPC.Rpc;
+import Dominio.Features.Turma.Turma;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * A classe crianca possibilita instanciar crianças e extende sua funcionalidade
@@ -29,6 +29,7 @@ public class Crianca extends Pessoa {
 
     private Date dataNascimento;
     private Rpc responsavelPelaCrianca;
+    private Turma turma;
 
     public Crianca() {
     }   
@@ -49,6 +50,15 @@ public class Crianca extends Pessoa {
         this.responsavelPelaCrianca = responsavelPelaCrianca;
     }
 
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public void setTurma(Turma turma) {
+        this.turma = turma;
+    }
+    
+
     @Override
     public void validar() throws Exception{
         super.validar();
@@ -57,7 +67,8 @@ public class Crianca extends Pessoa {
 
     @Override
     public String toString() {
-        return "Nome: " + this.getNome() + "  RG: " + this.getRG() + "  Data de Nascimento: " + DateFormat.getDateInstance(DateFormat.SHORT).format(dataNascimento);
+        return "Nome: " + this.getNome() + "  Data de Nascimento: " + DateFormat.getDateInstance(DateFormat.SHORT).format(dataNascimento)
+                + "Turma: " + turma.getCuidador() + "Rpc: " + responsavelPelaCrianca.getNome();
     }
     
     

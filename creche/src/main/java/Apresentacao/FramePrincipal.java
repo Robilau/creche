@@ -3,16 +3,19 @@ package Apresentacao;
 import Aplicacao.CriancaService;
 import Aplicacao.LoginService;
 import Aplicacao.RpcService;
+import Aplicacao.TurmaService;
 import Dominio.Features.Crianca.ICriancaPostgresRepository;
 import Dominio.Features.Crianca.ICriancaService;
 import Dominio.Features.RPC.IRpcPostgresRepository;
 import Dominio.Features.RPC.IRpcService;
+import Dominio.Features.Turma.ITurmaPostgresRepository;
+import Dominio.Features.Turma.ITurmaService;
 import Dominio.Usuario;
 import Infraestrutura.CriancaPostgresRepository;
 import Infraestrutura.Login.ConfiguracoesLogin;
 import Infraestrutura.Login.IConfiguracoesLogin;
 import Infraestrutura.RpcPostgresRepository;
-import java.awt.Dimension;
+import Infraestrutura.TurmaPostgresRepository;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +28,9 @@ public class FramePrincipal extends javax.swing.JFrame {
     
     private IRpcService rpcService;
     private IRpcPostgresRepository rpcRepositorio;
+    
+    private ITurmaService turmaService;
+    private ITurmaPostgresRepository turmaRespositorio;
     
     private IConfiguracoesLogin configuracaoLogin;
     private LoginService loginService;
@@ -40,6 +46,9 @@ public class FramePrincipal extends javax.swing.JFrame {
         
         configuracaoLogin = new ConfiguracoesLogin();
         loginService = new LoginService(configuracaoLogin);
+        
+        turmaRespositorio = new TurmaPostgresRepository();
+        turmaService = new TurmaService(turmaRespositorio);
         
         initComponents();
         menuContexto.setEnabled(true);
@@ -151,7 +160,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        adicionaTela(new FrameMenuCadastroCrianca(criancaService, rpcService), true);
+        adicionaTela(new FrameMenuCadastroCrianca(criancaService, rpcService, turmaService), true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     public static void main(String args[]) {

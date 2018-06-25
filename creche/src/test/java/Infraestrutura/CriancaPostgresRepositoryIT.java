@@ -29,7 +29,7 @@ public class CriancaPostgresRepositoryIT {
         _crianca = new Crianca();
         _criancaEsperada = new Crianca();
         _repositorio = new CriancaPostgresRepository();
-        SeedDatabase.criancaERpcSeed();
+        SeedDatabase.seedCompleto();
     }
 
     /**
