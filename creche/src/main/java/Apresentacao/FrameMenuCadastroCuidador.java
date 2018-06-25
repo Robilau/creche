@@ -7,10 +7,8 @@ package Apresentacao;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import Dominio.Features.Crianca.Crianca;
-import Dominio.Features.Crianca.ICriancaService;
+import Dominio.Features.Cuidador.Cuidador;
 import Dominio.Features.Cuidador.ICuidadorService;
-import Dominio.Features.RPC.IRpcService;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Vector;
@@ -24,18 +22,16 @@ import javax.swing.JOptionPane;
  */
 public class FrameMenuCadastroCuidador extends javax.swing.JInternalFrame {
     private ICuidadorService serviceCuidador;
-    private IRpcService serviceRpc;
 
-    public FrameMenuCadastroCuidador(ICuidadorService service, IRpcService serviceRpc) {
+    public FrameMenuCadastroCuidador(ICuidadorService service) {
         this.serviceCuidador = service;
-        this.serviceRpc = serviceRpc;
         initComponents();
         AtualizarLista();
     }
     
     public void AtualizarLista(){
         try {
-            Vector<Crianca> lista = new Vector(serviceCuidador.pegarTodos());      
+            Vector<Cuidador> lista = new Vector(serviceCuidador.pegarTodos());      
             jListaCrianca.setListData(lista);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());

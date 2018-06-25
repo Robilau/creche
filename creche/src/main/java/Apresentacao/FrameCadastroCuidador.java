@@ -22,17 +22,12 @@ import javax.swing.text.MaskFormatter;
  */
 public class FrameCadastroCuidador extends javax.swing.JInternalFrame {
 
-    private MaskFormatter mascaraDataNascimento;
-    private IRpcService serviceRpc;
     private ICuidadorService serviceCuidador;
     private Cuidador cuidador;
 
     public FrameCadastroCuidador(ICuidadorService serviceCuidador) throws ParseException, SQLException {
         this.serviceCuidador = serviceCuidador;
-        this.mascaraDataNascimento = new MaskFormatter("##/##/####");
         initComponents();
-        Vector<Rpc> listaRPC = new Vector<>(serviceRpc.pegarTodos());
-        DefaultComboBoxModel modelo = new DefaultComboBoxModel(listaRPC);
     }
     
 
@@ -43,7 +38,7 @@ public class FrameCadastroCuidador extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextNomeCrianca = new javax.swing.JTextField();
+        jTextNomeCuidador = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextRg = new javax.swing.JTextField();
         jBSalvar = new javax.swing.JButton();
@@ -96,7 +91,7 @@ public class FrameCadastroCuidador extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextNomeCrianca, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextNomeCuidador, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(43, 43, 43)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -127,7 +122,7 @@ public class FrameCadastroCuidador extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextNomeCrianca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextNomeCuidador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -169,7 +164,7 @@ public class FrameCadastroCuidador extends javax.swing.JInternalFrame {
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
         cuidador = new Cuidador();
-        cuidador.setNome(jTextNomeCrianca.getText());
+        cuidador.setNome(jTextNomeCuidador.getText());
         cuidador.setRG(jTextRg.getText());
         try {
             serviceCuidador.adicionar(cuidador);
@@ -190,7 +185,7 @@ public class FrameCadastroCuidador extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextNomeCrianca;
+    private javax.swing.JTextField jTextNomeCuidador;
     private javax.swing.JTextField jTextRg;
     // End of variables declaration//GEN-END:variables
 }
