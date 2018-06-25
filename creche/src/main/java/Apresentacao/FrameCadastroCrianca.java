@@ -18,10 +18,7 @@ import Dominio.Features.Turma.Turma;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -49,8 +46,9 @@ public class FrameCadastroCrianca extends javax.swing.JInternalFrame {
     public void setNovaCrianca(Crianca crianca) {
         this.novaCrianca = crianca;
         jTextNomeCrianca.setText(crianca.getNome());
-        jTextRg.setText(crianca.getNome());
-        jTextDataNascimento.setText(crianca.getDataNascimento().toString());
+        jTextRg.setText(crianca.getRG());
+        jTextDataNascimento.setText(df.format(crianca.getDataNascimento()));
+        jTextDataNascimento.setValue(df.format(crianca.getDataNascimento()));
         jCmbRpc.setSelectedItem(crianca.getResponsavelPelaCrianca());
         jCmbTurma.setSelectedItem(crianca.getTurma());
     }
@@ -60,28 +58,21 @@ public class FrameCadastroCrianca extends javax.swing.JInternalFrame {
         this.serviceCrianca = serviceCrianca;
         this.serviceTurma = serviceTurma;
         initComponents();
-        Vector<Rpc> listaRPC = new Vector<>(serviceRpc.pegarTodos());
-        Vector<Turma> listaTurma = new Vector<>(serviceTurma.pegarTodas());
-        DefaultComboBoxModel modeloTurma = new DefaultComboBoxModel(listaTurma);
-        DefaultComboBoxModel modeloRpc = new DefaultComboBoxModel(listaRPC);
-        jCmbRpc.setModel(modeloRpc);
-        jCmbTurma.setModel(modeloTurma);
-    }
-    
-    public FrameCadastroCrianca(IRpcService serviceRpc, ITurmaService serviceTurma, ICriancaService serviceCrianca, Crianca crianca) throws ParseException, SQLException {
-        this.serviceRpc = serviceRpc;
-        this.serviceCrianca = serviceCrianca;
-        this.serviceTurma = serviceTurma;
-        setNovaCrianca(crianca);
-        initComponents();
-        Vector<Rpc> listaRPC = new Vector<>(serviceRpc.pegarTodos());
-        Vector<Turma> listaTurma = new Vector<>(serviceTurma.pegarTodas());
-        DefaultComboBoxModel modeloTurma = new DefaultComboBoxModel(listaTurma);
-        DefaultComboBoxModel modeloRpc = new DefaultComboBoxModel(listaRPC);
-        jCmbRpc.setModel(modeloRpc);
-        jCmbTurma.setModel(modeloTurma);
+        AtualizarComboBox();
     }
 
+    public void AtualizarComboBox() {
+        try {
+            Vector<Rpc> listaRPC = new Vector<>(serviceRpc.pegarTodos());
+            Vector<Turma> listaTurma = new Vector<>(serviceTurma.pegarTodas());
+            DefaultComboBoxModel modeloTurma = new DefaultComboBoxModel(listaTurma);
+            DefaultComboBoxModel modeloRpc = new DefaultComboBoxModel(listaRPC);
+            jCmbRpc.setModel(modeloRpc);
+            jCmbTurma.setModel(modeloTurma);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -252,7 +243,12 @@ public class FrameCadastroCrianca extends javax.swing.JInternalFrame {
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
         try {
-            serviceCrianca.adicionar(getNovaCrianca());
+            if (novaCrianca == null) {
+                novaCrianca = new Crianca();
+                serviceCrianca.adicionar(getNovaCrianca());
+            } else {
+                serviceCrianca.atualizar(getNovaCrianca());
+            }
             JOptionPane.showMessageDialog(null, "Salvo com sucesso, nome: " + novaCrianca.getNome());
             dispose();
         } catch (Exception ex) {

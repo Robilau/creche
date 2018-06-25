@@ -53,8 +53,8 @@ public class ObjectMother {
         Turma turma = new Turma();
         turma.setCuidador(pegarCuidador());
         turma.getCuidador().setId(1);
-        turma.setDataFim(new Date());
-        turma.setDataInicio(new Date());
+        turma.setNome("Gralha Azul");
+        turma.setTurno("Matutino");
         return turma;
     }
 }

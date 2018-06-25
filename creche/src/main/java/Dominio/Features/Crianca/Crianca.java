@@ -67,8 +67,8 @@ public class Crianca extends Pessoa {
 
     @Override
     public String toString() {
-        return "Nome: " + this.getNome() + "  Data de Nascimento: " + DateFormat.getDateInstance(DateFormat.SHORT).format(dataNascimento)
-                + "Turma: " + turma.getCuidador() + "Rpc: " + responsavelPelaCrianca.getNome();
+        return "Nome: " + this.getNome() + "  \tData de Nascimento: " + DateFormat.getDateInstance(DateFormat.SHORT).format(dataNascimento)
+                + "Turma: " + turma.getCuidador().getNome() + "Rpc: " + responsavelPelaCrianca.getNome();
     }
     
     

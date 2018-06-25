@@ -12,6 +12,7 @@ import Dominio.Features.Crianca.ICriancaPostgresRepository;
 import java.sql.SQLException;
 import java.util.List;
 import org.assertj.core.api.Assertions;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,6 +24,11 @@ public class CriancaPostgresRepositoryIT {
     Crianca _crianca;
     Crianca _criancaEsperada;
     ICriancaPostgresRepository _repositorio;
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+        SeedDatabase.restartDB();
+    }
     
     @Before
     public void setUp() throws SQLException {

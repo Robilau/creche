@@ -1,4 +1,4 @@
 Create table TBRpc (id_rpc serial primary key not null, nome_rpc text not null, rg_rpc text not null, cpf_rpc text not null, telefone_rpc text not null, endereco_rpc text not null);
 Create table TBCrianca (id_crianca serial primary key not null, nome_crianca text not null, rg_crianca text not null, dataNascimento_crianca Date not null, rpc_id integer not null, turma_id integer not null, FOREIGN KEY (rpc_id) REFERENCES TBRpc(id_rpc), FOREIGN KEY (turma_id) REFERENCES TBTurma(id_turma));
 Create table TBCuidador (id_cuidador serial primary key not null, nome_cuidador text not null, telefone_cuidador text, rg_cuidador text not null, cpf_cuidador text not null, login_cuidador text not null, senha_cuidador text not null);
-CREATE TABLE TBTurma (id_turma serial primary key not null, cuidador_id integer not null, dataInicio_turma Date not null, dataFim_turma Date not null, FOREIGN KEY (cuidador_id) REFERENCES TBCuidador (id_cuidador));
+CREATE TABLE TBTurma (id_turma serial primary key not null, cuidador_id integer not null, nome_turma text not null, turno_turma text not null, FOREIGN KEY (cuidador_id) REFERENCES TBCuidador (id_cuidador));

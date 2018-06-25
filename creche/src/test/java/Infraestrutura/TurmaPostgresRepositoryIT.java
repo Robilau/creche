@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import org.assertj.core.api.Assertions;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,12 +27,16 @@ public class TurmaPostgresRepositoryIT {
     Turma _turmaEsperada;
     ITurmaPostgresRepository _repositorio;
 
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+        SeedDatabase.restartDB();
+    }
+
     @Before
     public void setUp() throws SQLException {
         _turma = new Turma();
         _turmaEsperada = new Turma();
         _repositorio = new TurmaPostgresRepository();
-        SeedDatabase.turmaECuidadorSeed();
     }
 
     /**
@@ -42,23 +47,29 @@ public class TurmaPostgresRepositoryIT {
     @Test
     public void testAdicionar() throws Exception {
         System.out.println("adicionar");
+        SeedDatabase.turmaECuidadorSeed();
         _turma = ObjectMother.pegarTurma();
         _turmaEsperada = _repositorio.adicionar(_turma);
         Assertions.assertThat(_turmaEsperada.getId()).isEqualTo(2);
+        Assertions.assertThat(_turmaEsperada.getNome()).isEqualTo(_turma.getNome());
+        Assertions.assertThat(_turmaEsperada.getCuidador().getNome()).isEqualTo(_turma.getCuidador().getNome());
     }
 
     /**
      * Test of atualizar method, of class TurmaPostgresRepository.
+     *
      * @throws java.lang.Exception
      */
     @Test
     public void testAtualizar() throws Exception {
         System.out.println("atualizar");
+        SeedDatabase.turmaECuidadorSeed();
         _turma = ObjectMother.pegarTurma();
         _turma.setId(1);
-        _turma.setDataInicio(new Date(1996, 8, 12));
+        _turma.setNome("nome atualizado");
         _turmaEsperada = _repositorio.atualizar(_turma);
-        Assertions.assertThat(_turmaEsperada).isNotNull();
+        Assertions.assertThat(_turmaEsperada.getNome()).isEqualTo(_turma.getNome());
+        Assertions.assertThat(_turmaEsperada.getCuidador().getNome()).isEqualTo(_turma.getCuidador().getNome());
     }
 
     /**
@@ -67,6 +78,7 @@ public class TurmaPostgresRepositoryIT {
     @Test
     public void testDeletar() throws Exception {
         System.out.println("deletar");
+        SeedDatabase.turmaECuidadorSeed();
         int id = 1;
         Assertions.assertThat(_repositorio.deletar(id)).isTrue();
         Assertions.assertThat(_repositorio.pegar(id)).isNull();
@@ -77,6 +89,7 @@ public class TurmaPostgresRepositoryIT {
      */
     @Test
     public void testPegarTodos() throws Exception {
+        SeedDatabase.turmaECuidadorSeed();
         List<Turma> result = _repositorio.pegarTodos();
         Assertions.assertThat(result.size()).isEqualTo(1);
     }
@@ -87,10 +100,32 @@ public class TurmaPostgresRepositoryIT {
     @Test
     public void testPegar() throws Exception {
         System.out.println("pegar");
-        _turma = ObjectMother.pegarTurma();
-        _turma.setId(1);
-        _turmaEsperada = _repositorio.pegar((int) _turma.getId());
-        Assertions.assertThat(_turmaEsperada.getDataInicio()).isNotNull();
+        SeedDatabase.turmaECuidadorSeed();
+        int idParaBuscar = 1;
+        _turmaEsperada = _repositorio.pegar(idParaBuscar);
+        Assertions.assertThat(_turmaEsperada.getNome()).isNotEmpty();
+        Assertions.assertThat(_turmaEsperada.getCuidador().getNome()).isNotEmpty();
     }
 
+    /**
+     * Test of ExisteForeignKey method, of class TurmaPostgresRepository.
+     */
+    @Test
+    public void testExisteForeignKey_shouldBeFalse() throws Exception {
+        SeedDatabase.turmaECuidadorSeed();
+        int id = 1;
+        boolean resultado = _repositorio.ExisteForeignKey(id);
+        Assertions.assertThat(resultado).isFalse();
+    }
+    
+        /**
+     * Test of ExisteForeignKey method, of class TurmaPostgresRepository.
+     */
+    @Test
+    public void testExisteForeignKey_shouldBeTrue() throws Exception {
+        SeedDatabase.seedCompleto();
+        int id = 1;
+        boolean resultado = _repositorio.ExisteForeignKey(id);
+        Assertions.assertThat(resultado).isTrue();
+    }
 }

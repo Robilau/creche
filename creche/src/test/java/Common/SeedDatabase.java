@@ -25,8 +25,8 @@ public class SeedDatabase {
     protected final static String insertTbRpc = "INSERT INTO TBRpc (nome_rpc, rg_rpc, cpf_rpc, endereco_rpc, telefone_rpc) VALUES ('nome_rpc', 'rg_rpc', 'cpf_rpc', 'endereco_rpc', 'telefone_rpc')";
 
     protected final static String dropTbTurma = "DROP TABLE TBTurma;";
-    protected final static String createTbTurma = "CREATE TABLE TBTurma (id_turma serial primary key not null, cuidador_id integer not null, dataInicio_turma Date not null, dataFim_turma Date not null, FOREIGN KEY (cuidador_id) REFERENCES TBCuidador (id_cuidador));";
-    protected final static String insertTbturma = "INSERT INTO TBTurma (dataInicio_turma, dataFim_turma, cuidador_id) VALUES (now(), now(), 1)";
+    protected final static String createTbTurma = "CREATE TABLE TBTurma (id_turma serial primary key not null, cuidador_id integer not null, nome_turma text not null, turno_turma text not null, FOREIGN KEY (cuidador_id) REFERENCES TBCuidador (id_cuidador));";
+    protected final static String insertTbturma = "INSERT INTO TBTurma (nome_turma, turno_turma, cuidador_id) VALUES ('maternal II', 'Matutino', 1)";
 
     protected final static String dropTbCuidador = "DROP TABLE TBCuidador;";
     protected final static String createTbCuidador = "Create table TBCuidador (id_cuidador serial primary key not null, nome_cuidador text not null, telefone_cuidador text not null, rg_cuidador text not null, cpf_cuidador text not null, login_cuidador text not null, senha_cuidador text not null);";
@@ -48,8 +48,8 @@ public class SeedDatabase {
         st.execute(insertTbturma);
         st.execute(insertTbCrianca);
     }
-    
-    public static void rpcSeed() throws SQLException{
+
+    public static void rpcSeed() throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
         Statement st = conn.createStatement();
         st.execute(dropTbCrianca);
@@ -90,5 +90,18 @@ public class SeedDatabase {
         st.execute(createTbTurma);
         st.execute(createTbCrianca);
         st.execute(insertTbCuidador);
+    }
+
+    public static void restartDB() throws SQLException {
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
+        Statement st = conn.createStatement();
+        st.execute(dropTbCrianca);
+        st.execute(dropTbRpc);
+        st.execute(dropTbTurma);
+        st.execute(dropTbCuidador);
+        st.execute(createTbRpc);
+        st.execute(createTbCuidador);
+        st.execute(createTbTurma);
+        st.execute(createTbCrianca);
     }
 }
