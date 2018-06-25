@@ -13,6 +13,7 @@ import Dominio.Features.RPC.IRpcService;
 import Dominio.TipoUsuario;
 import Dominio.Usuario;
 import Infraestrutura.CriancaPostgresRepository;
+import Infraestrutura.CuidadorPostgresRepository;
 import Infraestrutura.Login.ConfiguracoesLogin;
 import Infraestrutura.Login.IConfiguracoesLogin;
 import Infraestrutura.RpcPostgresRepository;

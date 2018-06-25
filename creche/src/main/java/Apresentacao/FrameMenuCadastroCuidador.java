@@ -9,6 +9,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import Dominio.Features.Crianca.Crianca;
 import Dominio.Features.Crianca.ICriancaService;
+import Dominio.Features.Cuidador.ICuidadorService;
 import Dominio.Features.RPC.IRpcService;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -22,10 +23,10 @@ import javax.swing.JOptionPane;
  * @author Aluno
  */
 public class FrameMenuCadastroCuidador extends javax.swing.JInternalFrame {
-    private ICriancaService serviceCuidador;
+    private ICuidadorService serviceCuidador;
     private IRpcService serviceRpc;
 
-    public FrameMenuCadastroCuidador(ICriancaService service, IRpcService serviceRpc) {
+    public FrameMenuCadastroCuidador(ICuidadorService service, IRpcService serviceRpc) {
         this.serviceCuidador = service;
         this.serviceRpc = serviceRpc;
         initComponents();
@@ -34,7 +35,7 @@ public class FrameMenuCadastroCuidador extends javax.swing.JInternalFrame {
     
     public void AtualizarLista(){
         try {
-            Vector<Crianca> lista = new Vector(serviceCuidador.pegarTodas());      
+            Vector<Crianca> lista = new Vector(serviceCuidador.pegarTodos());      
             jListaCrianca.setListData(lista);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -156,7 +157,7 @@ public class FrameMenuCadastroCuidador extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            FramePrincipal.adicionaTela(new FrameCadastroCrianca(serviceRpc, serviceCuidador), false);            
+            FramePrincipal.adicionaTela(new FrameCadastroCuidador( serviceCuidador), false);            
         } catch (ParseException | SQLException ex) {
             Logger.getLogger(FrameMenuCadastroCuidador.class.getName()).log(Level.SEVERE, null, ex);
         }
