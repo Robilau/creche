@@ -72,7 +72,8 @@ public class FrameCadastroCrianca extends javax.swing.JInternalFrame {
 
         jLabel4.setText("RG:");
 
-        jTextDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
+        jTextDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        jTextDataNascimento.setText("31/12/1997");
 
         jCmbRpc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

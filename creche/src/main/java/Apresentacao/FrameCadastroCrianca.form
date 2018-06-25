@@ -167,9 +167,12 @@
         <Component class="javax.swing.JFormattedTextField" name="jTextDataNascimento">
           <Properties>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format subtype="2" type="1"/>
+              <Format subtype="0" type="1"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextDataNascimento.setText(&quot;31/12/1997&quot;);"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextRg">
         </Component>
