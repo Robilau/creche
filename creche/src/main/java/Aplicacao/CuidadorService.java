@@ -10,8 +10,6 @@ import Dominio.Features.Cuidador.ICuidadorPostgresRepository;
 import Dominio.Features.Cuidador.ICuidadorService;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -35,13 +33,11 @@ public class CuidadorService implements ICuidadorService {
 
     @Override
     public Cuidador pegar(Cuidador cuidador) throws SQLException, Exception {
-        cuidador.validar();
         return repositorio.pegar(cuidador.getId());
     }
 
     @Override
     public boolean deletar(Cuidador cuidador) throws SQLException, Exception {
-        cuidador.validar();
         return repositorio.deletar(cuidador.getId());
     }
 
@@ -49,5 +45,4 @@ public class CuidadorService implements ICuidadorService {
     public List<Cuidador> pegarTodos() throws SQLException {
         return repositorio.pegarTodos();
     }
-    //faz comunicação com a infra
 }

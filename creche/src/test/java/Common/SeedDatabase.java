@@ -28,8 +28,8 @@ public class SeedDatabase {
     protected final String insertTbturma = "INSERT INTO TBTurma (dataInicio_turma, dataFim_turma, cuidador_id) VALUES (now(), now(), 1)";
     
     protected final String dropTbCuidador = "DROP TABLE TBCuidador;";
-    protected final String createTbCuidador = "Create table TBCuidador (id_cuidador serial primary key not null, nome_cuidador text, telefone_cuidador text, endereco_cuidador text, rg_cuidador text, cpf_cuidador text);";
-    protected final String insertTbCuidador = "INSERT INTO TBCuidador (nome_cuidador) VALUES ('nome_cuidador')";
+    protected final String createTbCuidador = "Create table TBCuidador (id_cuidador serial primary key not null, nome_cuidador text not null, telefone_cuidador text, endereco_cuidador text, rg_cuidador text, cpf_cuidador text, login_cuidador text not null, senha_cuidador text not null);";
+    protected final String insertTbCuidador = "INSERT INTO TBCuidador (nome_cuidador, login_cuidador, senha_cuidador) VALUES ('nome_cuidador', 'login', 'senha')";
     
     public void criancaERpcSeed() throws SQLException{
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");

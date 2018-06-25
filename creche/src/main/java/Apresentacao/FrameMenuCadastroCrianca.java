@@ -7,9 +7,9 @@ package Apresentacao;
 
 import Dominio.Features.Crianca.Crianca;
 import Dominio.Features.Crianca.ICriancaService;
+import Dominio.Features.RPC.IRpcService;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,28 +20,24 @@ import javax.swing.JOptionPane;
  * @author Aluno
  */
 public class FrameMenuCadastroCrianca extends javax.swing.JInternalFrame {
-    ICriancaService service;
+    private ICriancaService serviceCrianca;
+    private IRpcService serviceRpc;
 
-    public FrameMenuCadastroCrianca(ICriancaService service) {
-        this.service = service;
+    public FrameMenuCadastroCrianca(ICriancaService service, IRpcService serviceRpc) {
+        this.serviceCrianca = service;
+        this.serviceRpc = serviceRpc;
         initComponents();
         AtualizarLista();
     }
     
     public void AtualizarLista(){
         try {
-            ArrayList<Crianca> criancas = (ArrayList<Crianca>) service.pegarTodas();
-            Vector<Crianca> lista = new Vector<>();
-            for (Crianca crianca : criancas) {
-                lista.add(crianca);
-            }            
+            Vector<Crianca> lista = new Vector(serviceCrianca.pegarTodas());      
             jListaCrianca.setListData(lista);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-    }
-    
-    
+    }   
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -157,8 +153,10 @@ public class FrameMenuCadastroCrianca extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            FramePrincipal.adicionaTela(new FrameCadastroCrianca());
+            FramePrincipal.adicionaTela(new FrameCadastroCrianca(serviceRpc, serviceCrianca), false);            
         } catch (ParseException ex) {
+            Logger.getLogger(FrameMenuCadastroCrianca.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(FrameMenuCadastroCrianca.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed

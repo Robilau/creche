@@ -5,14 +5,12 @@
  */
 package Apresentacao;
 
+import Aplicacao.LoginService;
+import Dominio.Usuario;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import java.awt.Color;
-import java.beans.PropertyVetoException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,10 +18,10 @@ import javax.swing.JInternalFrame;
  */
 public class FrameLogin extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form FrameLogin
-     */
-    public FrameLogin() {
+    private LoginService loginService;
+    private Usuario user;
+    public FrameLogin(LoginService loginService) {
+        this.loginService = loginService;
         initComponents();
     }
 
@@ -143,8 +141,15 @@ public class FrameLogin extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextUserFocusGained
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //Codigo de validação de login e senha
-        dispose();
+        String loginDigitado = jTextUser.getText();
+        String senhaDigitada = String.copyValueOf(jPassword.getPassword());
+        user = loginService.verificarUsuario(loginDigitado, senhaDigitada);
+        if (user != null){
+            FramePrincipal.setUsuarioConectado(user);
+            dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Usuário ou senha não conferem");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

@@ -63,4 +63,8 @@ public class Rpc extends Pessoa {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Nome: " + this.getNome() + ", CPF: " + CPF;
+    }
 }

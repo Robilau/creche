@@ -37,7 +37,6 @@ public class TurmaService implements ITurmaService{
 
     @Override
     public Turma pegar(Turma turma) throws SQLException, Exception{
-        turma.validar();
         return repositorio.pegar(turma.getId());
     }
 
@@ -48,7 +47,6 @@ public class TurmaService implements ITurmaService{
 
     @Override
     public boolean deletar(Turma turma) throws SQLException, Exception{
-        turma.validar();
         return repositorio.deletar(turma.getId());
     }
     
