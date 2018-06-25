@@ -32,7 +32,7 @@ public class TurmaPostgresRepositoryIT {
         _turma = new Turma();
         _turmaEsperada = new Turma();
         _repositorio = new TurmaPostgresRepository();
-        _seed.cuidadorSeed();
+        _seed.turmaECuidadorSeed();
     }
 
     /**
