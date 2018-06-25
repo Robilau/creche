@@ -27,7 +27,7 @@ public class CriancaPostgresRepositoryIT {
 
     @AfterClass
     public static void tearDownClass() throws Exception {
-        SeedDatabase.restartDB();
+        SeedDatabase.seedCompleto();
     }
     
     @Before
@@ -91,7 +91,9 @@ public class CriancaPostgresRepositoryIT {
         _crianca = ObjectMother.pegarCrianca();
         _crianca.setId(1);
         _criancaEsperada = _repositorio.pegar((int) _crianca.getId());
-        Assertions.assertThat(_criancaEsperada.getNome()).isEqualToIgnoringCase(_crianca.getNome());
+        Assertions.assertThat(_criancaEsperada.getNome()).isNotEmpty();
+        Assertions.assertThat(_criancaEsperada.getResponsavelPelaCrianca().getNome()).isNotEmpty();
+        Assertions.assertThat(_criancaEsperada.getTurma().getCuidador().getNome()).isNotEmpty();
     }
     
 }

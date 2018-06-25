@@ -29,7 +29,7 @@ public class TurmaPostgresRepositoryIT {
 
     @AfterClass
     public static void tearDownClass() throws Exception {
-        SeedDatabase.restartDB();
+        SeedDatabase.seedCompleto();
     }
 
     @Before

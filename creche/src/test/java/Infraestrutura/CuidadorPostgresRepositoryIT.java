@@ -27,7 +27,7 @@ public class CuidadorPostgresRepositoryIT {
 
     @AfterClass
     public static void tearDownClass() throws Exception {
-        SeedDatabase.restartDB();
+        SeedDatabase.seedCompleto();
     }
 
     @Before
