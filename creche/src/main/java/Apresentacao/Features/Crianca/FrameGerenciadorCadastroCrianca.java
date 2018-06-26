@@ -224,7 +224,7 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame{
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonExcluir;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList jListaCrianca;
+    public static javax.swing.JList jListaCrianca;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
