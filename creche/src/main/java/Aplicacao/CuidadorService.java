@@ -6,10 +6,10 @@
 package Aplicacao;
 
 import Dominio.Features.Cuidador.Cuidador;
-import Dominio.Features.Cuidador.ICuidadorPostgresRepository;
 import Dominio.Features.Cuidador.ICuidadorService;
-import java.sql.SQLException;
 import java.util.List;
+import Dominio.Features.Cuidador.ICuidadorRepository;
+import Infraestrutura.Login.IConfiguracoesLogin;
 
 /**
  *
@@ -17,37 +17,47 @@ import java.util.List;
  */
 public class CuidadorService implements ICuidadorService {
 
-    ICuidadorPostgresRepository repositorio;
+    ICuidadorRepository repositorio;
+    IConfiguracoesLogin configLogin;
 
-    public CuidadorService(ICuidadorPostgresRepository repositorio) {
+    public CuidadorService(ICuidadorRepository repositorio, IConfiguracoesLogin configLogin) {
         this.repositorio = repositorio;
-    }   
-
-    @Override
-    public Cuidador adicionar(Cuidador cuidador) throws SQLException, Exception {
-        cuidador.validar();
-        return repositorio.adicionar(cuidador);
+        this.configLogin = configLogin;
     }
 
     @Override
-    public Cuidador atualizar(Cuidador cuidador) throws SQLException, Exception {
+    public Cuidador adicionar(Cuidador cuidador) throws Exception {
         cuidador.validar();
-        return repositorio.atualizar(cuidador);
+        if (!configLogin.existeLogin(cuidador.getLogin(), cuidador.getId())) {
+            return repositorio.adicionar(cuidador);
+        }
+        throw new Exception("Já existe um usuário cadastrado com esse login");
     }
 
     @Override
-    public Cuidador pegar(Cuidador cuidador) throws SQLException, Exception {
+    public Cuidador atualizar(Cuidador cuidador) throws Exception {
+        cuidador.validar();
+        if (!configLogin.existeLogin(cuidador.getLogin(), cuidador.getId())) {
+            return repositorio.atualizar(cuidador);
+        }
+        throw new Exception("Já existe um usuário cadastrado com esse login");
+    }
+
+    @Override
+    public Cuidador pegar(Cuidador cuidador) throws Exception {
         return repositorio.pegar(cuidador.getId());
     }
 
     @Override
-    public boolean deletar(Cuidador cuidador) throws SQLException, Exception {
-        if (!repositorio.ExisteForeignKey(cuidador.getId())) return repositorio.deletar(cuidador.getId());
-        throw new Exception ("Não é possível deletar um cuidador que esteja cadastrado em uma turma");
+    public boolean deletar(Cuidador cuidador) throws Exception {
+        if (!repositorio.ExisteForeignKey(cuidador.getId())) {
+            return repositorio.deletar(cuidador.getId());
+        }
+        throw new Exception("Não é possível deletar um cuidador que esteja cadastrado em uma turma");
     }
 
     @Override
-    public List<Cuidador> pegarTodos() throws SQLException {
+    public List<Cuidador> pegarTodos() throws Exception {
         return repositorio.pegarTodos();
     }
 }

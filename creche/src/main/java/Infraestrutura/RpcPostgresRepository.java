@@ -5,19 +5,19 @@
  */
 package Infraestrutura;
 
-import Dominio.Features.RPC.IRpcPostgresRepository;
 import Dominio.Features.RPC.Rpc;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import Dominio.Features.RPC.IRpcRepository;
 
 /**
  *
  * @author T0KS1CK
  */
-public class RpcPostgresRepository implements IRpcPostgresRepository {
+public class RpcPostgresRepository implements IRpcRepository {
     private final String SQL_INSERT = "INSERT INTO TBRpc (nome_rpc, rg_rpc, cpf_rpc, endereco_rpc, telefone_rpc) VALUES (?,?,?,?,?);";
     private final String SQL_UPDATE = "UPDATE TBRpc SET nome_rpc = ?, rg_rpc = ?, cpf_rpc = ?, endereco_rpc = ?, telefone_rpc = ? WHERE id_rpc = ?;";
     private final String SQL_DELETE = "DELETE FROM TBRpc WHERE id_rpc = ?;";

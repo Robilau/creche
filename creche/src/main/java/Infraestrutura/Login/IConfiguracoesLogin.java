@@ -14,11 +14,14 @@ import java.sql.SQLException;
  */
 public interface IConfiguracoesLogin {
 
-    public boolean VerificarLoginGerente(String login, String senha) throws IOException;
+    public boolean VerificarLoginGerente(String login, String senha) throws Exception;
 
-    public boolean VerificarLoginCuidador(String login, String senha) throws SQLException;
+    public boolean VerificarLoginCuidador(String login, String senha) throws Exception;
 
-    public boolean modificarSenhaGerente(String login, String senha, String NovaSenha);
+    public boolean modificarSenhaGerente(String login, String senha, String NovaSenha) throws Exception;
 
-    public String getNome_da_pessoa_logada();
+    public boolean existeLogin(String login, int id) throws Exception;
+
+    public boolean modificarSenhaCuidador(String login, String senha, String NovaSenha) throws Exception;
+
 }

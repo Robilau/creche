@@ -5,11 +5,10 @@
  */
 package Aplicacao;
 
-import Dominio.Features.Turma.ITurmaPostgresRepository;
 import Dominio.Features.Turma.ITurmaService;
 import Dominio.Features.Turma.Turma;
-import java.sql.SQLException;
 import java.util.List;
+import Dominio.Features.Turma.ITurmaRepository;
 
 /**
  *
@@ -17,36 +16,36 @@ import java.util.List;
  */
 public class TurmaService implements ITurmaService{
 
-    ITurmaPostgresRepository repositorio;
+    ITurmaRepository repositorio;
 
-    public TurmaService(ITurmaPostgresRepository repositorio) {
+    public TurmaService(ITurmaRepository repositorio) {
         this.repositorio = repositorio;
     }
 
     @Override
-    public Turma adicionar(Turma turma) throws SQLException, Exception {
+    public Turma adicionar(Turma turma) throws Exception {
         turma.validar();
         return repositorio.adicionar(turma);
     }
 
     @Override
-    public Turma atualizar(Turma turma) throws SQLException, Exception {
+    public Turma atualizar(Turma turma) throws Exception {
         turma.validar();
         return repositorio.atualizar(turma);
     }
 
     @Override
-    public Turma pegar(Turma turma) throws SQLException, Exception{
+    public Turma pegar(Turma turma) throws Exception{
         return repositorio.pegar(turma.getId());
     }
 
     @Override
-    public List<Turma> pegarTodas() throws SQLException{
+    public List<Turma> pegarTodas() throws Exception{
         return repositorio.pegarTodos();
     }
 
     @Override
-    public boolean deletar(Turma turma) throws SQLException, Exception{
+    public boolean deletar(Turma turma) throws Exception{
         if (!repositorio.ExisteForeignKey(turma.getId()))return repositorio.deletar(turma.getId());
         throw new Exception ("Não é possível deletar uma turma que possua crianças cadastradas");
     }

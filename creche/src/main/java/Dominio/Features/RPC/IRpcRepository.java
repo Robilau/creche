@@ -12,14 +12,16 @@ import java.util.List;
  *
  * @author T0KS1CK
  */
-public interface IRpcService {
+public interface IRpcRepository {
     Rpc adicionar(Rpc rpc) throws Exception;
 
     Rpc atualizar(Rpc rpc) throws Exception;
 
-    Rpc pegar(Rpc rpc) throws Exception;
+    Rpc pegar(int id) throws Exception;
+
+    boolean deletar(int id) throws Exception;
+    
+    boolean ExisteForeignKey(int id) throws Exception;
 
     List<Rpc> pegarTodos() throws Exception;
-
-    boolean deletar(Rpc rpc)  throws Exception;
 }

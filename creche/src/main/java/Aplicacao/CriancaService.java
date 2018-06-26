@@ -6,13 +6,9 @@
 package Aplicacao;
 
 import Dominio.Features.Crianca.Crianca;
-import Dominio.Features.Crianca.ICriancaPostgresRepository;
 import Dominio.Features.Crianca.ICriancaService;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import Dominio.Features.Crianca.ICriancaRepository;
 
 /**
  *
@@ -20,36 +16,36 @@ import java.util.logging.Logger;
  */
 public class CriancaService implements ICriancaService {
 
-    ICriancaPostgresRepository repositorio;
+    ICriancaRepository repositorio;
 
-    public CriancaService(ICriancaPostgresRepository repositorio) {
+    public CriancaService(ICriancaRepository repositorio) {
         this.repositorio = repositorio;
     }
 
     @Override
-    public Crianca adicionar(Crianca crianca) throws SQLException, Exception {
+    public Crianca adicionar(Crianca crianca) throws Exception {
         crianca.validar();
         return repositorio.adicionar(crianca);
     }
 
     @Override
-    public Crianca atualizar(Crianca crianca) throws SQLException, Exception {
+    public Crianca atualizar(Crianca crianca) throws Exception {
         crianca.validar();
         return repositorio.atualizar(crianca);
     }
 
     @Override
-    public Crianca pegar(Crianca crianca) throws SQLException, Exception{
+    public Crianca pegar(Crianca crianca) throws Exception{
         return repositorio.pegar(crianca.getId());
     }
 
     @Override
-    public List<Crianca> pegarTodas() throws SQLException{
+    public List<Crianca> pegarTodas() throws Exception{
         return repositorio.pegarTodas();
     }
 
     @Override
-    public boolean deletar(Crianca crianca) throws SQLException, Exception{
+    public boolean deletar(Crianca crianca) throws Exception{
         return repositorio.deletar(crianca.getId());
     }
      

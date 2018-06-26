@@ -5,6 +5,7 @@
  */
 package Dominio;
 
+import Dominio.Base.Entidade;
 import java.util.Date;
 
 /**

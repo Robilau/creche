@@ -7,7 +7,6 @@ package Infraestrutura;
 
 import Common.ObjectMother;
 import Common.SeedDatabase;
-import Dominio.Features.Turma.ITurmaPostgresRepository;
 import Dominio.Features.Turma.Turma;
 import java.sql.SQLException;
 import java.util.Date;
@@ -16,6 +15,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
+import Dominio.Features.Turma.ITurmaRepository;
 
 /**
  *
@@ -25,7 +25,7 @@ public class TurmaPostgresRepositoryIT {
 
     Turma _turma;
     Turma _turmaEsperada;
-    ITurmaPostgresRepository _repositorio;
+    ITurmaRepository _repositorio;
 
     @AfterClass
     public static void tearDownClass() throws Exception {

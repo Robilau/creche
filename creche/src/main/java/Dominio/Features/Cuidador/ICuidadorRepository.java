@@ -12,15 +12,17 @@ import java.util.List;
  *
  * @author User
  */
-public interface ICuidadorService {
+public interface ICuidadorRepository {
 
     Cuidador adicionar(Cuidador cuidador) throws Exception;
 
     Cuidador atualizar(Cuidador cuidador) throws Exception;
 
-    Cuidador pegar(Cuidador cuidador) throws Exception;
+    Cuidador pegar(int id) throws Exception;
 
-    boolean deletar(Cuidador cuidador) throws Exception;
+    boolean deletar(int id) throws Exception;
 
     List<Cuidador> pegarTodos() throws Exception;
+
+    public boolean ExisteForeignKey(int id) throws Exception;
 }

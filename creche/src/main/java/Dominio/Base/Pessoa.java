@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dominio;
+package Dominio.Base;
+
+import Dominio.Base.Entidade;
 
 /**
  * A classe Pessoa é abstrata e fornece atributos e métodos relevantes para o

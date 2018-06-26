@@ -7,19 +7,19 @@ package Infraestrutura;
 
 import Dominio.Features.Cuidador.Cuidador;
 import Dominio.Features.Turma.Turma;
-import Dominio.Features.Turma.ITurmaPostgresRepository;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import Dominio.Features.Turma.ITurmaRepository;
 
 /**
  *
  * @author Aluno
  */
-public class TurmaPostgresRepository implements ITurmaPostgresRepository {
+public class TurmaPostgresRepository implements ITurmaRepository {
 
     private final String SQL_INSERT = "INSERT INTO TBTurma (nome_turma, turno_turma, cuidador_id) VALUES (?,?,?);";
     private final String SQL_UPDATE = "UPDATE TBTurma SET nome_turma = ?, turno_turma = ?, cuidador_id = ? WHERE id_turma = ?;";

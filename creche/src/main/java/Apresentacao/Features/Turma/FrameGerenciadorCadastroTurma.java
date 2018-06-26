@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Apresentacao;
+package Apresentacao.Features.Turma;
 
+import Apresentacao.Base.FramePrincipal;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import Dominio.Features.Crianca.Crianca;
-import Dominio.Features.Crianca.ICriancaService;
-import Dominio.Features.RPC.IRpcService;
+import Dominio.Features.Cuidador.ICuidadorService;
 import Dominio.Features.Turma.ITurmaService;
-import java.sql.SQLException;
-import java.text.ParseException;
+import Dominio.Features.Turma.Turma;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 
@@ -20,25 +18,23 @@ import javax.swing.JOptionPane;
  *
  * @author Aluno
  */
-public class FrameMenuCadastroCrianca extends javax.swing.JInternalFrame {
+public class FrameGerenciadorCadastroTurma extends javax.swing.JInternalFrame{
 
-    private ICriancaService serviceCrianca;
-    private IRpcService serviceRpc;
+    private ICuidadorService serviceCuidador;
     private ITurmaService serviceTurma;
 
-    public FrameMenuCadastroCrianca(ICriancaService service, IRpcService serviceRpc, ITurmaService serviceTurma) {
-        this.serviceCrianca = service;
-        this.serviceRpc = serviceRpc;
+    public FrameGerenciadorCadastroTurma(ICuidadorService serviceCuidador, ITurmaService serviceTurma) {
+        this.serviceCuidador = serviceCuidador;
         this.serviceTurma = serviceTurma;
         initComponents();
         AtualizarLista();
     }
-
+    
     public void AtualizarLista() {
         try {
-            Vector<Crianca> lista = new Vector(serviceCrianca.pegarTodas());
-            jListaCrianca.setListData(lista);
-        } catch (SQLException ex) {
+            Vector<Turma> lista = new Vector(serviceTurma.pegarTodas());
+            jList.setListData(lista);
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
@@ -49,7 +45,7 @@ public class FrameMenuCadastroCrianca extends javax.swing.JInternalFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jListaCrianca = new javax.swing.JList();
+        jList = new javax.swing.JList();
         jPanel3 = new javax.swing.JPanel();
         jButtonCadastrar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
@@ -77,14 +73,9 @@ public class FrameMenuCadastroCrianca extends javax.swing.JInternalFrame {
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Crianças"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Turmas"));
 
-        jListaCrianca.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jListaCrianca);
+        jScrollPane1.setViewportView(jList);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -184,32 +175,32 @@ public class FrameMenuCadastroCrianca extends javax.swing.JInternalFrame {
 
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
         try {
-            FrameCadastroCrianca telaCadastro = new FrameCadastroCrianca(serviceRpc, serviceTurma, serviceCrianca);
+            FrameCadastroTurma telaCadastro = new FrameCadastroTurma(serviceTurma, serviceCuidador);
             FramePrincipal.adicionaTela(telaCadastro, false);
-        } catch (ParseException | SQLException ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         try {
-            if (jListaCrianca.getSelectedValue() == null) {
-                JOptionPane.showMessageDialog(null, "Selecione uma criança!");
+            if (jList.getSelectedValue() == null) {
+                JOptionPane.showMessageDialog(null, "Selecione uma turma!");
             }
-            FrameCadastroCrianca telaCadastro = new FrameCadastroCrianca(serviceRpc, serviceTurma, serviceCrianca);
-            telaCadastro.setNovaCrianca((Crianca) jListaCrianca.getSelectedValue());
+            FrameCadastroTurma telaCadastro = new FrameCadastroTurma(serviceTurma, serviceCuidador);
+            telaCadastro.setTurma((Turma) jList.getSelectedValue());
             FramePrincipal.adicionaTela(telaCadastro, false);
-        } catch (ParseException | SQLException ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         try {
-            if (jListaCrianca.getSelectedValue() == null) {
-                JOptionPane.showMessageDialog(null, "Selecione uma criança!");
+            if (jList.getSelectedValue() == null) {
+                JOptionPane.showMessageDialog(null, "Selecione uma turma!");
             } else {
-                serviceCrianca.deletar((Crianca) jListaCrianca.getSelectedValue());
+                serviceTurma.deletar((Turma) jList.getSelectedValue());
                 AtualizarLista();
             }
         } catch (Exception ex) {
@@ -228,7 +219,7 @@ public class FrameMenuCadastroCrianca extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonExcluir;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList jListaCrianca;
+    private javax.swing.JList jList;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
