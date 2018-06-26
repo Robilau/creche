@@ -1,5 +1,7 @@
 package Apresentacao.Base;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import Apresentacao.Features.Usuario.FrameLogin;
 import Apresentacao.Features.Usuario.FrameMudarSenha;
 import Apresentacao.Features.Cuidador.FrameGerenciadorCadastroCuidador;
@@ -10,7 +12,6 @@ import Aplicacao.LoginService;
 import Aplicacao.RpcService;
 import Aplicacao.TurmaService;
 import Apresentacao.Features.Rpc.FrameGerenciadorCadastroRpc;
-import Apresentacao.Features.Turma.FrameCadastroTurma;
 import Apresentacao.Features.Turma.FrameGerenciadorCadastroTurma;
 import Dominio.Features.Crianca.ICriancaService;
 import Dominio.Features.Cuidador.ICuidadorService;
@@ -45,10 +46,10 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private IRpcService rpcService;
     private IRpcRepository rpcRepositorio;
-    
+
     private ITurmaService turmaService;
     private ITurmaRepository turmaRespositorio;
-    
+
     private IConfiguracoesLogin configuracaoLogin;
     private ILoginService loginService;
 
@@ -63,24 +64,21 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         configuracaoLogin = new ConfiguracoesLogin();
         loginService = new LoginService(configuracaoLogin);
-        
+
         turmaRespositorio = new TurmaPostgresRepository();
-        turmaService = new TurmaService(turmaRespositorio);        
-        
+        turmaService = new TurmaService(turmaRespositorio);
+
         cuidadorRepositorio = new CuidadorPostgresRepository();
         cuidadorService = new CuidadorService(cuidadorRepositorio, configuracaoLogin);
-        
         initComponents();
         menuContexto.setEnabled(false);
         menuAjuda.setEnabled(false);
         menuUsuario.setEnabled(false);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        JInternalFrame FrameInicio = new FrameInicio();
         JInternalFrame FrameLogin = new FrameLogin(loginService);
-        adicionaTela(FrameInicio, true);
         adicionaTela(FrameLogin, true);
     }
-    
+
     public static void adicionaTela(JInternalFrame frame, boolean isMaximumm) {
         jDesktopPane1.add(frame);
         frame.setVisible(true);
@@ -105,6 +103,13 @@ public class FramePrincipal extends javax.swing.JFrame {
         jLabelUsuarioConectado.setText(user.getLogin() + ", " + user.getTipoUsuario());
     }
 
+    public static void fecharTodosFrames() {
+        JInternalFrame[] frames = jDesktopPane1.getAllFrames();
+        for (JInternalFrame frame : frames) {
+            frame.dispose();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -116,6 +121,8 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
+        Icon icaa = new ImageIcon("src/main/resources/Imagens/crianca.png");
+        jLabel1 = new javax.swing.JLabel(icaa);
         jLabel2 = new javax.swing.JLabel();
         jLabelUsuarioConectado = new javax.swing.JLabel();
         jMenuBar2 = new javax.swing.JMenuBar();
@@ -124,10 +131,10 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
-        menuAjuda = new javax.swing.JMenu();
         menuUsuario = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        menuAjuda = new javax.swing.JMenu();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -141,15 +148,19 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setText("jLabel1");
+
+        jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 259, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
         );
 
         jLabel2.setText("Usuário conectado: ");
@@ -164,7 +175,7 @@ public class FramePrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelUsuarioConectado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelUsuarioConectado, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -217,9 +228,6 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jMenuBar2.add(menuContexto);
 
-        menuAjuda.setText("Ajuda");
-        jMenuBar2.add(menuAjuda);
-
         menuUsuario.setText("Usuario");
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
@@ -241,6 +249,9 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jMenuBar2.add(menuUsuario);
 
+        menuAjuda.setText("Ajuda");
+        jMenuBar2.add(menuAjuda);
+
         setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -258,14 +269,17 @@ public class FramePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        fecharTodosFrames();
         adicionaTela(new FrameGerenciadorCadastroCrianca(criancaService, rpcService, turmaService), true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        fecharTodosFrames();
         adicionaTela(new FrameMudarSenha(user, loginService), false);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        fecharTodosFrames();
         adicionaTela(new FrameGerenciadorCadastroCuidador(cuidadorService), true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
@@ -274,10 +288,12 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        fecharTodosFrames();
         adicionaTela(new FrameGerenciadorCadastroRpc(rpcService), true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        fecharTodosFrames();
         adicionaTela(new FrameGerenciadorCadastroTurma(cuidadorService, turmaService), true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
@@ -315,6 +331,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private static javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private static javax.swing.JLabel jLabelUsuarioConectado;
     private javax.swing.JMenu jMenu1;

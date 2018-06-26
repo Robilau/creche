@@ -62,6 +62,12 @@ public class FrameLogin extends javax.swing.JInternalFrame {
             }
         });
 
+        jPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordKeyPressed(evt);
+            }
+        });
+
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -156,6 +162,22 @@ public class FrameLogin extends javax.swing.JInternalFrame {
         jTextUser.setText("");
         jPassword.setText("");
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordKeyPressed
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            String loginDigitado = jTextUser.getText();
+            String senhaDigitada = String.copyValueOf(jPassword.getPassword());
+            try {
+                user = loginService.verificarUsuario(loginDigitado, senhaDigitada);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+            if (user != null) {
+                FramePrincipal.setUsuarioConectado(user);
+                dispose();
+            }
+        }
+    }//GEN-LAST:event_jPasswordKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
