@@ -302,6 +302,9 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuCriancaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCriancaActionPerformed
         fecharTodosFrames();
+        if (user.getTipoUsuario() == TipoUsuario.CUIDADOR) {
+            frameGerenciadorCadastroCrianca.setjPanelLista(false);
+        }
         adicionaTela(frameGerenciadorCadastroCrianca, true);
     }//GEN-LAST:event_jMenuCriancaActionPerformed
 

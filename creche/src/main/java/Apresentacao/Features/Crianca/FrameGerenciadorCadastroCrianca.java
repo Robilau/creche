@@ -16,12 +16,13 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Aluno
  */
-public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame{
+public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame {
 
     private ICriancaService serviceCrianca;
     private IRpcService serviceRpc;
@@ -34,7 +35,7 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame{
         initComponents();
         AtualizarLista();
     }
-    
+
     public void AtualizarLista() {
         try {
             Vector<Crianca> lista = new Vector(serviceCrianca.pegarTodas());
@@ -44,14 +45,20 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame{
         }
     }
 
+    public void setjPanelLista(boolean enabled) {
+        this.jButtonCadastrar.setEnabled(enabled);
+        this.jButtonEditar.setEnabled(enabled);
+        this.jButtonExcluir.setEnabled(enabled);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
+        jPanelLista = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListaCrianca = new javax.swing.JList();
-        jPanel3 = new javax.swing.JPanel();
+        jPanelOperacoes = new javax.swing.JPanel();
         jButtonCadastrar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
@@ -78,22 +85,22 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame{
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Crianças"));
+        jPanelLista.setBorder(javax.swing.BorderFactory.createTitledBorder("Crianças"));
 
         jScrollPane1.setViewportView(jListaCrianca);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jPanelListaLayout = new javax.swing.GroupLayout(jPanelLista);
+        jPanelLista.setLayout(jPanelListaLayout);
+        jPanelListaLayout.setHorizontalGroup(
+            jPanelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanelListaLayout.setVerticalGroup(
+            jPanelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Operações"));
+        jPanelOperacoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Operações"));
 
         jButtonCadastrar.setText("Cadastrar");
         jButtonCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -116,17 +123,17 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame{
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jPanelOperacoesLayout = new javax.swing.GroupLayout(jPanelOperacoes);
+        jPanelOperacoes.setLayout(jPanelOperacoesLayout);
+        jPanelOperacoesLayout.setHorizontalGroup(
+            jPanelOperacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jButtonCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButtonEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButtonExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        jPanelOperacoesLayout.setVerticalGroup(
+            jPanelOperacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelOperacoesLayout.createSequentialGroup()
                 .addComponent(jButtonCadastrar)
                 .addGap(2, 2, 2)
                 .addComponent(jButtonEditar)
@@ -158,18 +165,18 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelOperacoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelOperacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -226,8 +233,8 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame{
     private javax.swing.JLabel jLabel1;
     public static javax.swing.JList jListaCrianca;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanelLista;
+    private javax.swing.JPanel jPanelOperacoes;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
