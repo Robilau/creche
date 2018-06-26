@@ -164,8 +164,8 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuRpc = new javax.swing.JMenuItem();
         jMenuTurma = new javax.swing.JMenuItem();
         menuUsuario = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuSenha = new javax.swing.JMenuItem();
+        jMenuLogout = new javax.swing.JMenuItem();
         menuAjuda = new javax.swing.JMenu();
 
         jMenu1.setText("File");
@@ -262,22 +262,22 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         menuUsuario.setText("Usuario");
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
-        jMenuItem3.setText("Alterar Senha");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        jMenuSenha.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
+        jMenuSenha.setText("Alterar Senha");
+        jMenuSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                jMenuSenhaActionPerformed(evt);
             }
         });
-        menuUsuario.add(jMenuItem3);
+        menuUsuario.add(jMenuSenha);
 
-        jMenuItem5.setText("Logout");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        jMenuLogout.setText("Logout");
+        jMenuLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                jMenuLogoutActionPerformed(evt);
             }
         });
-        menuUsuario.add(jMenuItem5);
+        menuUsuario.add(jMenuLogout);
 
         jMenuBar2.add(menuUsuario);
 
@@ -305,19 +305,19 @@ public class FramePrincipal extends javax.swing.JFrame {
         adicionaTela(frameGerenciadorCadastroCrianca, true);
     }//GEN-LAST:event_jMenuCriancaActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void jMenuSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSenhaActionPerformed
         fecharTodosFrames();
         adicionaTela(frameMudarSenha, false);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_jMenuSenhaActionPerformed
 
     private void jMenuCuidadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCuidadorActionPerformed
         fecharTodosFrames();
         adicionaTela(frameGerenciadorCadastroCuidador, true);
     }//GEN-LAST:event_jMenuCuidadorActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void jMenuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuLogoutActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_jMenuLogoutActionPerformed
 
     private void jMenuRpcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRpcActionPerformed
         fecharTodosFrames();
@@ -374,9 +374,9 @@ public class FramePrincipal extends javax.swing.JFrame {
     private static javax.swing.JMenuItem jMenuCrianca;
     private static javax.swing.JMenuItem jMenuCuidador;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuLogout;
     private static javax.swing.JMenuItem jMenuRpc;
+    private javax.swing.JMenuItem jMenuSenha;
     private static javax.swing.JMenuItem jMenuTurma;
     private javax.swing.JPanel jPanel1;
     private static javax.swing.JMenu menuAjuda;
