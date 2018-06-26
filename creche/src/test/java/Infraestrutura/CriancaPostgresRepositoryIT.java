@@ -8,13 +8,13 @@ package Infraestrutura;
 import Common.ObjectMother;
 import Common.SeedDatabase;
 import Dominio.Features.Crianca.Crianca;
-import Dominio.Features.Crianca.ICriancaPostgresRepository;
 import java.sql.SQLException;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
+import Dominio.Features.Crianca.ICriancaRepository;
 
 /**
  *
@@ -23,7 +23,7 @@ import org.junit.Test;
 public class CriancaPostgresRepositoryIT {
     Crianca _crianca;
     Crianca _criancaEsperada;
-    ICriancaPostgresRepository _repositorio;
+    ICriancaRepository _repositorio;
 
     @AfterClass
     public static void tearDownClass() throws Exception {

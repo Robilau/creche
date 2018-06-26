@@ -5,7 +5,7 @@
  */
 package Dominio.Features.RPC;
 
-import Dominio.Pessoa;
+import Dominio.Base.Pessoa;
 
 /**
  * A classe Mensalidade possibilita instanciar o objeto mensalidade e extende
@@ -65,6 +65,9 @@ public class Rpc extends Pessoa {
 
     @Override
     public String toString() {
-        return "Nome: " + this.getNome() + ", CPF: " + CPF;
+        return String.format("Nome: %-20s"
+                + "CPF: %-20s"
+                + "Telefone: %-20s"
+                + "Endereco: %s", this.getNome(), CPF, telefone, endereco);
     }
 }

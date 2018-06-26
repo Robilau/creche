@@ -5,8 +5,8 @@
  */
 package Dominio.Features.Crianca;
 
-import Dominio.Entidade;
-import Dominio.Pessoa;
+import Dominio.Base.Entidade;
+import Dominio.Base.Pessoa;
 import Dominio.Features.RPC.Rpc;
 import Dominio.Features.Turma.Turma;
 import java.text.DateFormat;
@@ -67,8 +67,7 @@ public class Crianca extends Pessoa {
 
     @Override
     public String toString() {
-        return "Nome: " + this.getNome() + "  \tData de Nascimento: " + DateFormat.getDateInstance(DateFormat.SHORT).format(dataNascimento)
-                + "Turma: " + turma.getCuidador().getNome() + "Rpc: " + responsavelPelaCrianca.getNome();
+        return String.format("Nome: %-20sDataNascimento: %-20sTurma: %-20sRPC: %s", this.getNome(), DateFormat.getDateInstance(3).format(dataNascimento), turma.getNome(), responsavelPelaCrianca.getNome());
     }
     
     

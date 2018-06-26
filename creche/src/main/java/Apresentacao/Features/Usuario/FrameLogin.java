@@ -3,13 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Apresentacao;
+package Apresentacao.Features.Usuario;
 
-import Aplicacao.LoginService;
-import Dominio.Usuario;
+import Apresentacao.Base.FramePrincipal;
+import Dominio.Features.Usuario.Usuario;
+import Infraestrutura.Login.ILoginService;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javafx.scene.input.KeyCode;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,13 +22,13 @@ import javax.swing.JOptionPane;
  */
 public class FrameLogin extends javax.swing.JInternalFrame {
 
-    private LoginService loginService;
+    private ILoginService loginService;
     private Usuario user;
-    public FrameLogin(LoginService loginService) {
+
+    public FrameLogin(ILoginService loginService) {
         this.loginService = loginService;
         initComponents();
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -55,12 +59,6 @@ public class FrameLogin extends javax.swing.JInternalFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
-            }
-        });
-
-        jPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordActionPerformed(evt);
             }
         });
 
@@ -143,12 +141,14 @@ public class FrameLogin extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String loginDigitado = jTextUser.getText();
         String senhaDigitada = String.copyValueOf(jPassword.getPassword());
-        user = loginService.verificarUsuario(loginDigitado, senhaDigitada);
-        if (user != null){
+        try {
+            user = loginService.verificarUsuario(loginDigitado, senhaDigitada);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        if (user != null) {
             FramePrincipal.setUsuarioConectado(user);
             dispose();
-        }else{
-            JOptionPane.showMessageDialog(null, "Usuário ou senha não conferem");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -156,10 +156,6 @@ public class FrameLogin extends javax.swing.JInternalFrame {
         jTextUser.setText("");
         jPassword.setText("");
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

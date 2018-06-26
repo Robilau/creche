@@ -1,18 +1,15 @@
 package Aplicacao;
 
-import Dominio.TipoUsuario;
-import Dominio.Usuario;
+import Dominio.Features.Usuario.TipoUsuario;
+import Dominio.Features.Usuario.Usuario;
 import Infraestrutura.Login.IConfiguracoesLogin;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import Infraestrutura.Login.ILoginService;
 
 /**
  *
  * @author T0KS1CK
  */
-public class LoginService {
+public class LoginService implements ILoginService{
 
     IConfiguracoesLogin config;
 
@@ -20,30 +17,29 @@ public class LoginService {
         this.config = config;
     }
 
-    public Usuario verificarUsuario(String login, String senha) {
+    @Override
+    public Usuario verificarUsuario(String login, String senha) throws Exception{
         Usuario user = null;
-        try {
-            if (config.VerificarLoginGerente(login, senha))
-            {
+        {
+            if (config.VerificarLoginGerente(login, senha)) {
                 user = new Usuario();
-                user.setNome(config.getNome_da_pessoa_logada());
+                user.setLogin(login);
                 user.setTipoUsuario(TipoUsuario.GERENTE);
-            }
-            else if (config.VerificarLoginCuidador(login, senha))
-            {
+            } else if (config.VerificarLoginCuidador(login, senha)) {
                 user = new Usuario();
-                user.setNome(config.getNome_da_pessoa_logada());
+                user.setLogin(login);
                 user.setTipoUsuario(TipoUsuario.CUIDADOR);
             }
-        } catch (IOException ex) {
-            Logger.getLogger(LoginService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginService.class.getName()).log(Level.SEVERE, null, ex);
+            if (user == null) throw new Exception("Usuário ou senha não conferem");
+            return user;
         }
-        return user;
     }
-    
-    public boolean modificarSenhaGerente(String login, String senha, String novaSenha){
-        return config.modificarSenhaGerente(login, senha, novaSenha);
+
+    @Override
+    public boolean modificarSenha(Usuario user, String senha, String novaSenha) throws Exception {
+        user = verificarUsuario(user.getLogin(), senha);
+        if (user.getTipoUsuario() == TipoUsuario.GERENTE)  return config.modificarSenhaGerente(user.getLogin(), senha, novaSenha);
+        else if (user.getTipoUsuario() == TipoUsuario.CUIDADOR) return config.modificarSenhaCuidador(user.getLogin(), senha, novaSenha);
+       return false;
     }
 }

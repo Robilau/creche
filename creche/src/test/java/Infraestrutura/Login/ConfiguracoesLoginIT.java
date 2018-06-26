@@ -41,18 +41,7 @@ public class ConfiguracoesLoginIT {
         String senha = "senha";
         Assertions.assertThat(config.VerificarLoginCuidador(login, senha)).isTrue();
     }
-
-    /**
-     * Test of getNome_da_pessoa_logada method, of class ConfiguracoesLogin.
-     */
-    @Test
-    public void testGetNome_da_pessoa_logada() throws SQLException {
-        String login = "login";
-        String senha = "senha";
-        config.VerificarLoginCuidador(login, senha);
-        Assertions.assertThat(config.getNome_da_pessoa_logada()).isEqualToIgnoringCase("nome_cuidador");
-    }
-
+    
     /**
      * Test of modificarSenhaGerente method, of class ConfiguracoesLogin.
      */

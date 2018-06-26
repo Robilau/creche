@@ -3,15 +3,15 @@ package Infraestrutura;
 
 import Dominio.Features.Cuidador.Cuidador;
 import Dominio.Features.Cuidador.Cuidador;
-import Dominio.Features.Cuidador.ICuidadorPostgresRepository;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import Dominio.Features.Cuidador.ICuidadorRepository;
 
-public class CuidadorPostgresRepository implements ICuidadorPostgresRepository{
+public class CuidadorPostgresRepository implements ICuidadorRepository{
     private final String SQL_INSERT = "INSERT INTO TBCuidador (nome_cuidador, rg_cuidador, telefone_cuidador, cpf_cuidador, login_cuidador, senha_cuidador) VALUES (?,?,?,?,?,?);";
     private final String SQL_UPDATE = "UPDATE TBCuidador SET nome_cuidador = ?, rg_cuidador = ?, telefone_cuidador = ?, cpf_cuidador = ?, login_cuidador = ?, senha_cuidador = ? WHERE id_cuidador = ?;";
     private final String SQL_DELETE = "DELETE FROM TBCuidador WHERE id_cuidador = ?;";

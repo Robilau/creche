@@ -6,7 +6,7 @@
 package Dominio.Features.Turma;
 
 import Dominio.Features.Cuidador.Cuidador;
-import Dominio.Entidade;
+import Dominio.Base.Entidade;
 import java.util.Date;
 
 /**
@@ -60,7 +60,9 @@ public class Turma extends Entidade {
 
     @Override
     public String toString() {
-        return "Nome: " + nome + " Cuidador: " + cuidador.getNome() + " Turno: " + turno;
+        return String.format("Nome: %-20s"
+                + "Turno: %-20s"
+                + "Cuidador: %s", nome, turno, cuidador.getNome());
     }
     
     

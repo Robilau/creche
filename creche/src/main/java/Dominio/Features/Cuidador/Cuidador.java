@@ -5,7 +5,7 @@
  */
 package Dominio.Features.Cuidador;
 
-import Dominio.Pessoa;
+import Dominio.Base.Pessoa;
 
 /**
  * A classe Cuidador possibilita instanciar crianças e extende sua
@@ -76,6 +76,13 @@ public class Cuidador extends Pessoa {
         if (senha.length() < 4) {
             throw new Exception("O campo senha deve ter pelo menos 4 caracteres");
         }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Nome: %-20s"
+                + "Login: %-20s"
+                + "Telefone: %s", this.getNome(), login, telefone);
     }
 
 }

@@ -3,22 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dominio;
+package Dominio.Features.Usuario;
+
+import Dominio.Features.Usuario.TipoUsuario;
 
 /**
  *
  * @author T0KS1CK
  */
 public class Usuario {
-    private String nome;
+    private String login;
     private TipoUsuario tipoUsuario;
 
-    public String getNome() {
-        return nome;
+    public String getLogin() {
+        return login;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setLogin(String nome) {
+        this.login = nome;
     }
 
     public TipoUsuario getTipoUsuario() {

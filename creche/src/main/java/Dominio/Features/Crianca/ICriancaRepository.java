@@ -12,15 +12,15 @@ import java.util.List;
  *
  * @author Aluno
  */
-public interface ICriancaService {
+public interface ICriancaRepository {
 
     Crianca adicionar(Crianca crianca) throws Exception;
 
     Crianca atualizar(Crianca crianca) throws Exception;
 
-    Crianca pegar(Crianca crianca) throws Exception;
+    Crianca pegar(int id) throws Exception;
+
+    boolean deletar(int id) throws Exception;
 
     List<Crianca> pegarTodas() throws Exception;
-
-    boolean deletar(Crianca crianca)  throws Exception;
 }

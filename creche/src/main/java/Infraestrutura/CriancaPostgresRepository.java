@@ -6,7 +6,6 @@
 package Infraestrutura;
 
 import Dominio.Features.Crianca.Crianca;
-import Dominio.Features.Crianca.ICriancaPostgresRepository;
 import Dominio.Features.Cuidador.Cuidador;
 import Dominio.Features.RPC.Rpc;
 import Dominio.Features.Turma.Turma;
@@ -16,11 +15,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import Dominio.Features.Crianca.ICriancaRepository;
 /**
  *
  * @author T0KS1CK
  */
-public class CriancaPostgresRepository implements ICriancaPostgresRepository {
+public class CriancaPostgresRepository implements ICriancaRepository {
 
     private final String SQL_INSERT = " INSERT INTO TBCrianca (nome_crianca, rg_crianca, dataNascimento_crianca, rpc_id, turma_id) VALUES (?,?,?,?,?);";
     private final String SQL_UPDATE = "UPDATE TBCrianca SET nome_crianca = ?, rg_crianca = ?, dataNascimento_crianca = ?, rpc_id = ?, turma_id = ? WHERE id_crianca = ?;";

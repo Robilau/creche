@@ -30,7 +30,7 @@ public class SeedDatabase {
 
     protected final static String dropTbCuidador = "DROP TABLE TBCuidador;";
     protected final static String createTbCuidador = "Create table TBCuidador (id_cuidador serial primary key not null, nome_cuidador text not null, telefone_cuidador text not null, rg_cuidador text not null, cpf_cuidador text not null, login_cuidador text not null, senha_cuidador text not null);";
-    protected final static String insertTbCuidador = "INSERT INTO TBCuidador (nome_cuidador, rg_cuidador, telefone_cuidador, cpf_cuidador, login_cuidador, senha_cuidador) VALUES ('Lucas Chaves', '78965412', '(48)99987-1236', '23649826518', 'chaves', 'senha')";
+    protected final static String insertTbCuidador = "INSERT INTO TBCuidador (nome_cuidador, rg_cuidador, telefone_cuidador, cpf_cuidador, login_cuidador, senha_cuidador) VALUES ('Lucas Chaves', '78965412', '(48)99987-1236', '23649826518', 'login', 'senha')";
 
     public static void seedCompleto() throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");

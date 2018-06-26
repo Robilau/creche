@@ -7,7 +7,6 @@ package Infraestrutura;
 
 import Common.ObjectMother;
 import Common.SeedDatabase;
-import Dominio.Features.Cuidador.ICuidadorPostgresRepository;
 import Dominio.Features.Cuidador.Cuidador;
 import java.sql.SQLException;
 import java.util.List;
@@ -15,6 +14,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
+import Dominio.Features.Cuidador.ICuidadorRepository;
 
 /**
  *
@@ -23,7 +23,7 @@ import org.junit.Test;
 public class CuidadorPostgresRepositoryIT {
     Cuidador _cuidador;
     Cuidador _cuidadorEsperado;
-    ICuidadorPostgresRepository _repositorio;
+    ICuidadorRepository _repositorio;
 
     @AfterClass
     public static void tearDownClass() throws Exception {

@@ -13,14 +13,16 @@ import java.util.List;
  *
  * @author Aluno
  */
-public interface ITurmaService {
+public interface ITurmaRepository {
     Turma adicionar(Turma turma) throws Exception;
 
     Turma atualizar(Turma turma) throws Exception;
 
-    Turma pegar(Turma turma) throws Exception;
+    Turma pegar(int id) throws Exception;
 
-    List<Turma> pegarTodas() throws Exception;
-
-    boolean deletar(Turma turma)  throws Exception;
+    boolean deletar(int id) throws Exception;
+    
+    List<Turma> pegarTodos() throws Exception;
+    
+    public boolean ExisteForeignKey(int id) throws Exception;
 }

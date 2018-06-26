@@ -5,47 +5,46 @@
  */
 package Aplicacao;
 
-import Dominio.Features.RPC.IRpcPostgresRepository;
 import Dominio.Features.RPC.IRpcService;
 import Dominio.Features.RPC.Rpc;
-import java.sql.SQLException;
 import java.util.List;
+import Dominio.Features.RPC.IRpcRepository;
 
 /**
  *
  * @author T0KS1CK
  */
 public class RpcService implements IRpcService{
-    IRpcPostgresRepository repositorio;
+    IRpcRepository repositorio;
 
-    public RpcService(IRpcPostgresRepository repositorio) {
+    public RpcService(IRpcRepository repositorio) {
         this.repositorio = repositorio;
     }
 
     @Override
-    public Rpc adicionar(Rpc rpc) throws SQLException, Exception {
+    public Rpc adicionar(Rpc rpc) throws Exception {
         rpc.validar();
         return repositorio.adicionar(rpc);
     }
 
     @Override
-    public Rpc atualizar(Rpc rpc) throws SQLException, Exception {
+    public Rpc atualizar(Rpc rpc) throws Exception {
         rpc.validar();
         return repositorio.atualizar(rpc);
     }
 
     @Override
-    public Rpc pegar(Rpc rpc) throws SQLException, Exception{
+    public Rpc pegar(Rpc rpc) throws Exception{
         return repositorio.pegar(rpc.getId());
     }
 
     @Override
-    public List<Rpc> pegarTodos() throws SQLException{
+    public List<Rpc> pegarTodos() throws Exception{
         return repositorio.pegarTodos();
     }
 
     @Override
-    public boolean deletar(Rpc rpc) throws SQLException, Exception{
+    public boolean deletar(Rpc rpc) throws Exception{
         if (!repositorio.ExisteForeignKey(rpc.getId())) return repositorio.deletar(rpc.getId());
         throw new Exception("Não é possível deletar um Responsavel Pela Crianca que possua crianças cadastradas");
     }
