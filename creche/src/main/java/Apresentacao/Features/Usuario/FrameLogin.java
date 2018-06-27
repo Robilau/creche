@@ -11,6 +11,7 @@ import Infraestrutura.Login.ILoginService;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,6 +26,7 @@ public class FrameLogin extends javax.swing.JInternalFrame {
     public FrameLogin(ILoginService loginService) {
         this.loginService = loginService;
         initComponents();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -50,6 +52,11 @@ public class FrameLogin extends javax.swing.JInternalFrame {
         jTextUser.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextUserFocusGained(evt);
+            }
+        });
+        jTextUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextUserKeyPressed(evt);
             }
         });
 
@@ -151,6 +158,7 @@ public class FrameLogin extends javax.swing.JInternalFrame {
         }
         if (user != null) {
             FramePrincipal.setUsuarioConectado(user);
+            JOptionPane.showMessageDialog(null, "Login de " + user.getTipoUsuario() + " realizado com Sucesso!\n");
             dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -161,20 +169,16 @@ public class FrameLogin extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordKeyPressed
-        if (evt.getKeyCode() == evt.VK_ENTER) {
-            String loginDigitado = jTextUser.getText();
-            String senhaDigitada = String.copyValueOf(jPassword.getPassword());
-            try {
-                user = loginService.verificarUsuario(loginDigitado, senhaDigitada);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            }
-            if (user != null) {
-                FramePrincipal.setUsuarioConectado(user);
-                dispose();
-            }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jButton1.doClick();
         }
     }//GEN-LAST:event_jPasswordKeyPressed
+
+    private void jTextUserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextUserKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jButton1.doClick();
+        }
+    }//GEN-LAST:event_jTextUserKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

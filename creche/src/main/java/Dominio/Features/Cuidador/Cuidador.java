@@ -29,6 +29,10 @@ public class Cuidador extends Pessoa {
     public Cuidador() {
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getLogin() {
         return login;
     }

@@ -19,8 +19,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -75,8 +73,8 @@ public class FrameCadastroCrianca extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
-    
-    private void verificarCampoData() throws Exception{
+
+    private void verificarCampoData() throws Exception {
         if (jTextDataNascimento.getValue() == null) {
             throw new Exception("O campo data não pode estar vazio");
         }
@@ -243,7 +241,7 @@ public class FrameCadastroCrianca extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBcancelarActionPerformed
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
-        
+
         if (crianca == null) {
             crianca = new Crianca();
             try {

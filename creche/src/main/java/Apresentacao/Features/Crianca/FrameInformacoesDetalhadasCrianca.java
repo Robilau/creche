@@ -5,6 +5,8 @@
  */
 package Apresentacao.Features.Crianca;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import Apresentacao.Base.FramePrincipal;
 import Apresentacao.Features.Relatorio.FrameCadastroRelatorio;
 import Dominio.Fatures.Relatorio.IRelatorioService;
@@ -49,6 +51,12 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
     public FrameInformacoesDetalhadasCrianca(IRelatorioService serviceRelatorio) {
         this.serviceRelatorio = serviceRelatorio;
         initComponents();
+    }
+
+    private void verificarCampoData() throws Exception {
+        if (jTextDataInicioImprimir.getValue() == null || jTextDataFimImprimir.getValue() == null) {
+            throw new Exception("Os campos de data Inicial e Final não podem ser vazios");
+        }
     }
 
     /**
@@ -98,10 +106,13 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jButtonImprimirRelatorio1 = new javax.swing.JButton();
         jTextDataEditar = new javax.swing.JFormattedTextField();
         jTextDataInicioImprimir = new javax.swing.JFormattedTextField();
         jTextDataFimImprimir = new javax.swing.JFormattedTextField();
+        jButtonImprimirRelatorio1 = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
+        Icon relatorio = new ImageIcon("src/main/resources/Imagens/Relatorio.png");
+        jLabel13 = new javax.swing.JLabel(relatorio);
 
         setClosable(true);
 
@@ -342,7 +353,7 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -384,13 +395,6 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
 
         jLabel9.setText("Selecione a data: ");
 
-        jButtonImprimirRelatorio1.setText("Imprimir Todos");
-        jButtonImprimirRelatorio1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonImprimirRelatorio1ActionPerformed(evt);
-            }
-        });
-
         jTextDataEditar.setFormatterFactory(new javax.swing.JFormattedTextField.AbstractFormatterFactory() {
             public javax.swing.JFormattedTextField.AbstractFormatter
             getFormatter(javax.swing.JFormattedTextField jf) {
@@ -428,57 +432,82 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
             }
         });
 
+        jButtonImprimirRelatorio1.setText("Imprimir Todos");
+        jButtonImprimirRelatorio1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirRelatorio1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+            .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButtonRegistrarRelatorio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonImprimirRelatorio1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                            .addComponent(jLabel9)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextDataEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jButtonEditarRelatorio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel7)
-                                .addGroup(jPanel6Layout.createSequentialGroup()
-                                    .addComponent(jButtonImprimirRelatorio)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel5)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextDataInicioImprimir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                                .addComponent(jTextDataFimImprimir, javax.swing.GroupLayout.Alignment.TRAILING)))))
-                .addContainerGap())
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonImprimirRelatorio1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jButtonEditarRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextDataEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextDataInicioImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextDataFimImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButtonImprimirRelatorio)
+                    .addComponent(jButtonRegistrarRelatorio))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButtonRegistrarRelatorio)
+                .addGap(23, 23, 23)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonRegistrarRelatorio)
-                    .addComponent(jButtonEditarRelatorio))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonEditarRelatorio)
                     .addComponent(jLabel9)
                     .addComponent(jTextDataEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addComponent(jButtonImprimirRelatorio1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonImprimirRelatorio)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonImprimirRelatorio)
                     .addComponent(jLabel5)
                     .addComponent(jTextDataFimImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jTextDataInicioImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonImprimirRelatorio1)
+                .addContainerGap(12, Short.MAX_VALUE))
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -486,11 +515,11 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 83, Short.MAX_VALUE)
+                .addGap(0, 77, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(101, 101, 101))
+                .addGap(98, 98, 98))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -498,8 +527,8 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(42, 42, 42))
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
@@ -513,14 +542,17 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
 
     private void jButtonImprimirRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirRelatorioActionPerformed
         try {
+            verificarCampoData();
             JFileChooser chooserDiretorio = new JFileChooser();
             chooserDiretorio.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            chooserDiretorio.showOpenDialog(getParent());
-            String path = chooserDiretorio.getSelectedFile().getAbsolutePath() + "\\relatorio.pdf";
-            Date dateInicio = df.parse((String) jTextDataInicioImprimir.getValue());
-            Date dateFim = df.parse((String) jTextDataFimImprimir.getValue());
-            serviceRelatorio.gerarPdfRelatorio(serviceRelatorio.pegarTodos(dateInicio, dateFim, crianca), crianca, path);
-            JOptionPane.showMessageDialog(null, "Arquivo gerado com sucesso.");
+            int resultado = chooserDiretorio.showOpenDialog(getParent());
+            if (resultado == JFileChooser.APPROVE_OPTION) {
+                String path = chooserDiretorio.getSelectedFile().getAbsolutePath() + "\\relatorio.pdf";
+                Date dateInicio = df.parse((String) jTextDataInicioImprimir.getValue());
+                Date dateFim = df.parse((String) jTextDataFimImprimir.getValue());
+                serviceRelatorio.gerarPdfRelatorio(serviceRelatorio.pegarTodos(dateInicio, dateFim, crianca), crianca, path);
+                JOptionPane.showMessageDialog(null, "Arquivo gerado com sucesso.");
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -530,10 +562,12 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
         try {
             JFileChooser chooserDiretorio = new JFileChooser();
             chooserDiretorio.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            chooserDiretorio.showOpenDialog(getParent());
-            String path = chooserDiretorio.getSelectedFile().getAbsolutePath() + "\\relatorio.pdf";
-            serviceRelatorio.gerarPdfRelatorio(serviceRelatorio.pegarTodos(crianca), crianca, path);
-            JOptionPane.showMessageDialog(null, "Arquivo gerado com sucesso.");
+            int resultado = chooserDiretorio.showOpenDialog(getParent());
+            if (resultado == JFileChooser.APPROVE_OPTION) {
+                String path = chooserDiretorio.getSelectedFile().getAbsolutePath() + "\\relatorio.pdf";
+                serviceRelatorio.gerarPdfRelatorio(serviceRelatorio.pegarTodos(crianca), crianca, path);
+                JOptionPane.showMessageDialog(null, "Arquivo gerado com sucesso.");
+            }            
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -548,6 +582,7 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
@@ -580,6 +615,7 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JFormattedTextField jTextDataEditar;
     private javax.swing.JFormattedTextField jTextDataFimImprimir;
     private javax.swing.JFormattedTextField jTextDataInicioImprimir;

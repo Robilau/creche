@@ -1,6 +1,5 @@
 package Apresentacao.Base;
 
-import Apresentacao.Features.Crianca.FrameInformacoesDetalhadasCrianca;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import Apresentacao.Features.Usuario.FrameLogin;
@@ -59,10 +58,10 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private IConfiguracoesLogin configuracaoLogin;
     private ILoginService loginService;
-    
+
     private IRelatorioService relatorioService;
     private IRelatorioRepository relatorioRepository;
-    
+
     private IPDFService PDFService;
 
     private static Usuario user;
@@ -73,7 +72,6 @@ public class FramePrincipal extends javax.swing.JFrame {
     private FrameGerenciadorCadastroRpc frameGerenciadorCadastroRpc;
     private FrameGerenciadorCadastroTurma frameGerenciadorCadastroTurma;
     private FrameLogin frameLogin;
-    private FrameInformacoesDetalhadasCrianca frameInformacoesDetalhadasCrianca;
 
     public FramePrincipal() {
         iniciarServicos();
@@ -121,7 +119,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuRpc.setEnabled(false);
         jMenuTurma.setEnabled(false);
     }
-    
+
     public void iniciarServicos() {
         criancaRepositorio = new CriancaPostgresRepository();
         criancaService = new CriancaService(criancaRepositorio);
@@ -137,11 +135,11 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         cuidadorRepositorio = new CuidadorPostgresRepository();
         cuidadorService = new CuidadorService(cuidadorRepositorio, configuracaoLogin);
-        
+
         PDFService = new PDFService();
-        
+
         relatorioRepository = new RelatorioPostgresRepository();
-        relatorioService = new RelatorioService(relatorioRepository, PDFService);       
+        relatorioService = new RelatorioService(relatorioRepository, PDFService);
     }
 
     public static void fecharTodosFrames() {
@@ -371,10 +369,8 @@ public class FramePrincipal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FramePrincipal().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new FramePrincipal().setVisible(true);
         });
     }
 
