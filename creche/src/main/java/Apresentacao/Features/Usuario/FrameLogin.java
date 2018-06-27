@@ -11,9 +11,6 @@ import Infraestrutura.Login.ILoginService;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import java.awt.Color;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javafx.scene.input.KeyCode;
 import javax.swing.JOptionPane;
 
 /**

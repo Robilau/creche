@@ -65,11 +65,11 @@ public class FramePrincipal extends javax.swing.JFrame {
     public FramePrincipal() {
         iniciarServicos();
         initComponents();
-        iniciarFrames();
         menuContexto.setEnabled(false);
         menuAjuda.setEnabled(false);
         menuUsuario.setEnabled(false);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frameLogin = new FrameLogin(loginService);
         adicionaTela(frameLogin, true);
     }
 
@@ -108,16 +108,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuRpc.setEnabled(false);
         jMenuTurma.setEnabled(false);
     }
-
-    public void iniciarFrames() {
-        frameGerenciadorCadastroCrianca = new FrameGerenciadorCadastroCrianca(criancaService, rpcService, turmaService);
-        frameMudarSenha = new FrameMudarSenha(user, loginService);
-        frameGerenciadorCadastroCuidador = new FrameGerenciadorCadastroCuidador(cuidadorService);
-        frameGerenciadorCadastroRpc = new FrameGerenciadorCadastroRpc(rpcService);
-        frameGerenciadorCadastroTurma = new FrameGerenciadorCadastroTurma(cuidadorService, turmaService);
-        frameLogin = new FrameLogin(loginService);
-    }
-
+    
     public void iniciarServicos() {
         criancaRepositorio = new CriancaPostgresRepository();
         criancaService = new CriancaService(criancaRepositorio);
@@ -302,6 +293,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuCriancaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCriancaActionPerformed
         fecharTodosFrames();
+        frameGerenciadorCadastroCrianca = new FrameGerenciadorCadastroCrianca(criancaService, rpcService, turmaService);
         if (user.getTipoUsuario() == TipoUsuario.CUIDADOR) {
             frameGerenciadorCadastroCrianca.setjPanelLista(false);
         }
@@ -310,11 +302,13 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSenhaActionPerformed
         fecharTodosFrames();
+        frameMudarSenha = new FrameMudarSenha(user, loginService);
         adicionaTela(frameMudarSenha, false);
     }//GEN-LAST:event_jMenuSenhaActionPerformed
 
     private void jMenuCuidadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCuidadorActionPerformed
         fecharTodosFrames();
+        frameGerenciadorCadastroCuidador = new FrameGerenciadorCadastroCuidador(cuidadorService);
         adicionaTela(frameGerenciadorCadastroCuidador, true);
     }//GEN-LAST:event_jMenuCuidadorActionPerformed
 
@@ -324,11 +318,13 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuRpcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRpcActionPerformed
         fecharTodosFrames();
+        frameGerenciadorCadastroRpc = new FrameGerenciadorCadastroRpc(rpcService);
         adicionaTela(frameGerenciadorCadastroRpc, true);
     }//GEN-LAST:event_jMenuRpcActionPerformed
 
     private void jMenuTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTurmaActionPerformed
         fecharTodosFrames();
+        frameGerenciadorCadastroTurma = new FrameGerenciadorCadastroTurma(cuidadorService, turmaService);
         adicionaTela(frameGerenciadorCadastroTurma, true);
     }//GEN-LAST:event_jMenuTurmaActionPerformed
 

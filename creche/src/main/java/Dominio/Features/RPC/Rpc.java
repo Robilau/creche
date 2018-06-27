@@ -52,6 +52,7 @@ public class Rpc extends Pessoa {
 
     @Override
     public void validar() throws Exception {
+        super.validar();
         if (CPF.isEmpty()) {
             throw new Exception("CPF não pode estar vazio");
         }

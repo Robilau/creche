@@ -236,6 +236,7 @@ public class FrameCadastroCrianca extends javax.swing.JInternalFrame {
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
         try {
+            if (jTextDataNascimento.getValue() == null) throw new Exception("O campo data não pode estar vazio");
             if (crianca == null) {
                 crianca = new Crianca();
                 serviceCrianca.adicionar(getCrianca());
