@@ -10,10 +10,13 @@ import Apresentacao.Features.Crianca.FrameGerenciadorCadastroCrianca;
 import Aplicacao.CriancaService;
 import Aplicacao.CuidadorService;
 import Aplicacao.LoginService;
+import Aplicacao.RelatorioService;
 import Aplicacao.RpcService;
 import Aplicacao.TurmaService;
 import Apresentacao.Features.Rpc.FrameGerenciadorCadastroRpc;
 import Apresentacao.Features.Turma.FrameGerenciadorCadastroTurma;
+import Dominio.Fatures.Relatorio.IRelatorioRepository;
+import Dominio.Fatures.Relatorio.IRelatorioService;
 import Dominio.Features.Crianca.ICriancaService;
 import Dominio.Features.Cuidador.ICuidadorService;
 import Dominio.Features.RPC.IRpcService;
@@ -36,6 +39,9 @@ import Dominio.Features.Cuidador.ICuidadorRepository;
 import Dominio.Features.RPC.IRpcRepository;
 import Dominio.Features.Turma.ITurmaRepository;
 import Infraestrutura.Login.ILoginService;
+import Infraestrutura.PDF.IPDFService;
+import Infraestrutura.PDF.PDFService;
+import Infraestrutura.RelatorioPostgresRepository;
 
 public class FramePrincipal extends javax.swing.JFrame {
 
@@ -53,6 +59,11 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private IConfiguracoesLogin configuracaoLogin;
     private ILoginService loginService;
+    
+    private IRelatorioService relatorioService;
+    private IRelatorioRepository relatorioRepository;
+    
+    private IPDFService PDFService;
 
     private static Usuario user;
 
@@ -62,7 +73,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     private FrameGerenciadorCadastroRpc frameGerenciadorCadastroRpc;
     private FrameGerenciadorCadastroTurma frameGerenciadorCadastroTurma;
     private FrameLogin frameLogin;
-    private FrameInformacoesDetalhadasCrianca frameInformacoesDetalhadasCrianca ;
+    private FrameInformacoesDetalhadasCrianca frameInformacoesDetalhadasCrianca;
 
     public FramePrincipal() {
         iniciarServicos();
@@ -126,6 +137,11 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         cuidadorRepositorio = new CuidadorPostgresRepository();
         cuidadorService = new CuidadorService(cuidadorRepositorio, configuracaoLogin);
+        
+        PDFService = new PDFService();
+        
+        relatorioRepository = new RelatorioPostgresRepository();
+        relatorioService = new RelatorioService(relatorioRepository, PDFService);       
     }
 
     public static void fecharTodosFrames() {
@@ -305,7 +321,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuCriancaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCriancaActionPerformed
         fecharTodosFrames();
-        frameGerenciadorCadastroCrianca = new FrameGerenciadorCadastroCrianca(criancaService, rpcService, turmaService);
+        frameGerenciadorCadastroCrianca = new FrameGerenciadorCadastroCrianca(criancaService, rpcService, turmaService, relatorioService);
         if (user.getTipoUsuario() == TipoUsuario.CUIDADOR) {
             frameGerenciadorCadastroCrianca.setjPanelLista(false);
         }

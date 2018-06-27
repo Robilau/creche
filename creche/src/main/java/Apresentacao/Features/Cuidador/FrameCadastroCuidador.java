@@ -9,6 +9,8 @@ import Dominio.Features.Cuidador.Cuidador;
 import Dominio.Features.Cuidador.ICuidadorService;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -193,19 +195,23 @@ public class FrameCadastroCuidador extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBcancelarActionPerformed
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
-        try {
-            if (cuidador == null) {
-                cuidador = new Cuidador();
+        if (cuidador == null) {
+            cuidador = new Cuidador();
+            try {
                 serviceCuidador.adicionar(getCuidador());
-            } else {
-                serviceCuidador.atualizar(getCuidador());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+                cuidador = null;
             }
-            JOptionPane.showMessageDialog(null, "Salvo com sucesso, nome: " + cuidador.getNome());
-            dispose();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-            cuidador = null;
+        } else {
+            try {
+                serviceCuidador.atualizar(getCuidador());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
         }
+        JOptionPane.showMessageDialog(null, "Salvo com sucesso, nome: " + cuidador.getNome());
+        dispose();
     }//GEN-LAST:event_jBSalvarActionPerformed
 
 

@@ -545,16 +545,23 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Registrar Relat&#xf3;rio"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRegistrarRelatorioActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonEditarRelatorio">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Editar Relat&#xf3;rio"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonImprimirRelatorio">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Imprimir Relat&#xf3;rio"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonImprimirRelatorioActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

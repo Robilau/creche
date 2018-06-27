@@ -5,8 +5,13 @@
  */
 package Apresentacao.Features.Crianca;
 
+import Apresentacao.Base.FramePrincipal;
+import Apresentacao.Features.Relatorio.FrameCadastroRelatorio;
+import Dominio.Fatures.Relatorio.IRelatorioService;
 import Dominio.Features.Crianca.Crianca;
 import java.text.SimpleDateFormat;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,6 +21,7 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
 
     private Crianca crianca;
     private SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    private IRelatorioService serviceRelatorio;
 
     public Crianca getCrianca() {
         return crianca;
@@ -36,9 +42,10 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
         jLabelCuidadorTurma.setText(crianca.getTurma().getCuidador().getNome());
         jLabelNomeCuidador.setText(crianca.getTurma().getCuidador().getNome());
         jLabelFoneCuidador.setText(crianca.getTurma().getCuidador().getTelefone());
-    }   
-    
-    public FrameInformacoesDetalhadasCrianca() {
+    }
+
+    public FrameInformacoesDetalhadasCrianca(IRelatorioService serviceRelatorio) {
+        this.serviceRelatorio = serviceRelatorio;
         initComponents();
     }
 
@@ -313,10 +320,21 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Relatórios", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
         jButtonRegistrarRelatorio.setText("Registrar Relatório");
+        jButtonRegistrarRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegistrarRelatorioActionPerformed(evt);
+            }
+        });
 
         jButtonEditarRelatorio.setText("Editar Relatório");
+        jButtonEditarRelatorio.setEnabled(false);
 
         jButtonImprimirRelatorio.setText("Imprimir Relatório");
+        jButtonImprimirRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirRelatorioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -392,6 +410,25 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonRegistrarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarRelatorioActionPerformed
+        FrameCadastroRelatorio frameCadastroRelatorio = new FrameCadastroRelatorio(serviceRelatorio);
+        frameCadastroRelatorio.setCrianca(crianca);
+        FramePrincipal.adicionaTela(frameCadastroRelatorio, false);
+    }//GEN-LAST:event_jButtonRegistrarRelatorioActionPerformed
+
+    private void jButtonImprimirRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirRelatorioActionPerformed
+        try {
+            JFileChooser chooserDiretorio = new JFileChooser();
+            chooserDiretorio.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooserDiretorio.showOpenDialog(getParent());
+            String path = chooserDiretorio.getSelectedFile().getAbsolutePath() + "\\relatorio.pdf";
+            serviceRelatorio.gerarPdfRelatorio(serviceRelatorio.pegarTodos(crianca), crianca, path);
+            JOptionPane.showMessageDialog(null, "Arquivo gerado com sucesso.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_jButtonImprimirRelatorioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

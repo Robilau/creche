@@ -25,8 +25,8 @@ public class RelatorioPostgresRepository implements IRelatorioRepository {
 
     private final String SQL_INSERT = " INSERT INTO TBRelatorio (texto_relatorio, ausente_relatorio, data_relatorio, crianca_id) VALUES (?,?,?,?);";
     private final String SQL_UPDATE = "UPDATE TBRelatorio SET texto_relatorio = ?, ausente_relatorio = ?, data_relatorio = ?, crianca_id = ? WHERE id_relatorio = ?;";
-    private final String SQL_GETALL_RELATORIOS = "SELECT id_relatorio, texto_relatorio, ausente_relatorio, data_relatorio FROM TBRelatorio WHERE id_crianca = ? AND data_relatorio BETWEEN ? AND ?";
-    private final String SQL_GET_CRIANCA = "SELECT c.nome_crianca, c.id_crianca, cu.nome_cuidador, cu.telefone_cuidador  FROM TBTurma t, TBcuidador cu, TBCrianca c WHERE c.turma_id = t.id_turma AND cu.id_cuidador = t.cuidador_id AND c.id_crianca = ?";
+    private final String SQL_GETALL_RELATORIOS_POR_DATA = "SELECT id_relatorio, texto_relatorio, ausente_relatorio, data_relatorio FROM TBRelatorio WHERE crianca_id = ? AND data_relatorio BETWEEN ? AND ?";
+    private final String SQL_GETALL_RELATORIOS = "SELECT id_relatorio, texto_relatorio, ausente_relatorio, data_relatorio FROM TBRelatorio WHERE crianca_id = ?";
     private final String SQL_GET = "SELECT * FROM TBRelatorio, TBRpc, TBTurma, TBCuidador WHERE id_relatorio = ?";
 
     @Override
@@ -56,7 +56,7 @@ public class RelatorioPostgresRepository implements IRelatorioRepository {
 
     @Override
     public List<Relatorio> pegarTodos(Date dateInicio, Date dateFim, int criancaId) throws SQLException {
-        PreparedStatement statement = PostgresDAO.createStatement(SQL_GETALL_RELATORIOS);
+        PreparedStatement statement = PostgresDAO.createStatement(SQL_GETALL_RELATORIOS_POR_DATA);
         statement.setDate(2, new java.sql.Date(dateInicio.getTime()));
         statement.setDate(3, new java.sql.Date(dateFim.getTime()));
         statement.setInt(1, criancaId);
@@ -64,7 +64,19 @@ public class RelatorioPostgresRepository implements IRelatorioRepository {
         List<Relatorio> lista = new ArrayList();
         while (rs.next()) {
             lista.add(makeRelatorio(rs));
-        }        
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Relatorio> pegarTodos(int criancaId) throws SQLException {
+        PreparedStatement statement = PostgresDAO.createStatement(SQL_GETALL_RELATORIOS);
+        statement.setInt(1, criancaId);
+        ResultSet rs = PostgresDAO.get(statement);
+        List<Relatorio> lista = new ArrayList();
+        while (rs.next()) {
+            lista.add(makeRelatorio(rs));
+        }
         return lista;
     }
 
@@ -98,18 +110,5 @@ public class RelatorioPostgresRepository implements IRelatorioRepository {
         r.setAusente(rs.getBoolean("ausente_relatorio"));
         r.setData(rs.getDate("data_relatorio"));
         return r;
-    }
-    
-    private Crianca makeCrianca(ResultSet rs) throws SQLException {
-        Crianca c = new Crianca();
-        Turma turma = new Turma();
-        Cuidador cuidador = new Cuidador();
-        c.setId(rs.getInt("id_crianca"));
-        c.setNome(rs.getString("nome_crianca"));
-        cuidador.setNome(rs.getString("nome_cuidador"));
-        cuidador.setTelefone("telefone_cuidador");
-        turma.setCuidador(cuidador);
-        c.setTurma(turma);
-        return c;
     }
 }

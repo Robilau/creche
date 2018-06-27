@@ -6,6 +6,7 @@
 package Apresentacao.Features.Crianca;
 
 import Apresentacao.Base.FramePrincipal;
+import Dominio.Fatures.Relatorio.IRelatorioService;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import Dominio.Features.Crianca.Crianca;
@@ -26,11 +27,13 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame 
     private ICriancaService serviceCrianca;
     private IRpcService serviceRpc;
     private ITurmaService serviceTurma;
+    private IRelatorioService serviceRelatorio;
 
-    public FrameGerenciadorCadastroCrianca(ICriancaService service, IRpcService serviceRpc, ITurmaService serviceTurma) {
+    public FrameGerenciadorCadastroCrianca(ICriancaService service, IRpcService serviceRpc, ITurmaService serviceTurma, IRelatorioService serviceRelatorio) {
         this.serviceCrianca = service;
         this.serviceRpc = serviceRpc;
         this.serviceTurma = serviceTurma;
+        this.serviceRelatorio = serviceRelatorio;
         initComponents();
         AtualizarLista();
     }
@@ -240,7 +243,7 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame 
         if (jListaCrianca.getSelectedValue() == null) {
             JOptionPane.showMessageDialog(null, "Selecione uma criança!");
         }else{
-            FrameInformacoesDetalhadasCrianca telaInformacoes = new FrameInformacoesDetalhadasCrianca();
+            FrameInformacoesDetalhadasCrianca telaInformacoes = new FrameInformacoesDetalhadasCrianca(serviceRelatorio);
             telaInformacoes.setCrianca((Crianca) jListaCrianca.getSelectedValue());
             FramePrincipal.adicionaTela(telaInformacoes, false);
         }

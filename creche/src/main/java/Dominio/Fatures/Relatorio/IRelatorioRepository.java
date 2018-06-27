@@ -22,5 +22,7 @@ public interface IRelatorioRepository {
     Relatorio pegar(Date date, int criancaId) throws Exception;
 
     List<Relatorio> pegarTodos(Date dateInicio, Date dateFim, int criancaId) throws Exception;
+    
+    List<Relatorio> pegarTodos(int criancaId) throws Exception;
 
 }

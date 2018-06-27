@@ -5,8 +5,14 @@
  */
 package Apresentacao.Features.Relatorio;
 
+import Dominio.Fatures.Relatorio.IRelatorioService;
+import Dominio.Fatures.Relatorio.Relatorio;
 import Dominio.Features.Crianca.Crianca;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,8 +21,12 @@ import java.text.ParseException;
 public class FrameCadastroRelatorio extends javax.swing.JInternalFrame {
 
     private Crianca crianca;
-    
-    public FrameCadastroRelatorio() {
+    private Relatorio relatorio;
+    private SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    private IRelatorioService serviceRelatorio;
+
+    public FrameCadastroRelatorio(IRelatorioService serviceRelatorio) {
+        this.serviceRelatorio = serviceRelatorio;
         initComponents();
     }
 
@@ -24,8 +34,23 @@ public class FrameCadastroRelatorio extends javax.swing.JInternalFrame {
         this.crianca = crianca;
         jLabelInformacoesDaCrianca.setText(crianca.toString());
     }
-    
-    
+
+    public Relatorio getRelatorio() throws ParseException {
+        relatorio.setAusente(jCheckAusente.isSelected());
+        if (!relatorio.isAusente()) {
+            relatorio.setTexto(jTextAreaCadastroRelatorio.getText());
+        }
+        relatorio.setData(df.parse((String) jTextData.getValue()));
+        return relatorio;
+    }
+
+    public void setRelatorio(Relatorio relatorio) {
+        this.relatorio = relatorio;
+        jTextAreaCadastroRelatorio.setText(relatorio.getTexto());
+        jTextData.setText(df.format(relatorio.getData()));
+        jTextData.setValue(relatorio.getData());
+        jCheckAusente.setSelected(relatorio.isAusente());
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,36 +61,32 @@ public class FrameCadastroRelatorio extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabelInformacoesDaCrianca = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jTextData = new javax.swing.JFormattedTextField();
+        jCheckAusente = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaCadastroRelatorio = new javax.swing.JTextArea();
-        jButtonSalvarCadastroRelatorio = new javax.swing.JButton();
         jButtonCancelarCadatroRelatorio = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabelInformacoesDaCrianca = new javax.swing.JLabel();
-        jCheckAusente = new javax.swing.JCheckBox();
-        jLabel3 = new javax.swing.JLabel();
-        jTextDataNascimento = new javax.swing.JFormattedTextField();
-        jLabel4 = new javax.swing.JLabel();
+        jButtonSalvarCadastroRelatorio = new javax.swing.JButton();
 
-        jTextAreaCadastroRelatorio.setColumns(20);
-        jTextAreaCadastroRelatorio.setRows(5);
-        jScrollPane1.setViewportView(jTextAreaCadastroRelatorio);
-
-        jButtonSalvarCadastroRelatorio.setText("Salvar");
-
-        jButtonCancelarCadatroRelatorio.setText("Cancelar");
+        setClosable(true);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Relatório");
 
-        jLabelInformacoesDaCrianca.setText("Informações a serem carregadas.");
-
-        jCheckAusente.setText("Ausente");
-
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Informações Da Criança: ");
 
-        jTextDataNascimento.setFormatterFactory(new javax.swing.JFormattedTextField.AbstractFormatterFactory() {
+        jLabelInformacoesDaCrianca.setText("Informações a serem carregadas.");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setText("Data:");
+
+        jTextData.setFormatterFactory(new javax.swing.JFormattedTextField.AbstractFormatterFactory() {
             public javax.swing.JFormattedTextField.AbstractFormatter
             getFormatter(javax.swing.JFormattedTextField jf) {
                 try{
@@ -76,64 +97,137 @@ public class FrameCadastroRelatorio extends javax.swing.JInternalFrame {
                 return null;
             }
         });
+        jTextData.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel4.setText("Data:");
+        jCheckAusente.setText("Ausente");
+        jCheckAusente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckAusenteActionPerformed(evt);
+            }
+        });
+
+        jTextAreaCadastroRelatorio.setColumns(20);
+        jTextAreaCadastroRelatorio.setLineWrap(true);
+        jTextAreaCadastroRelatorio.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaCadastroRelatorio);
+
+        jButtonCancelarCadatroRelatorio.setText("Cancelar");
+        jButtonCancelarCadatroRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarCadatroRelatorioActionPerformed(evt);
+            }
+        });
+
+        jButtonSalvarCadastroRelatorio.setText("Salvar");
+        jButtonSalvarCadastroRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvarCadastroRelatorioActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jCheckAusente))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButtonCancelarCadatroRelatorio)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonSalvarCadastroRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jTextData))
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelInformacoesDaCrianca, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addContainerGap())))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabelInformacoesDaCrianca))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(8, 8, 8)
+                .addComponent(jCheckAusente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonSalvarCadastroRelatorio)
+                    .addComponent(jButtonCancelarCadatroRelatorio))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jCheckAusente)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabelInformacoesDaCrianca)))
-                        .addGap(0, 208, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonCancelarCadatroRelatorio)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonSalvarCadastroRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabelInformacoesDaCrianca))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(8, 8, 8)
-                .addComponent(jCheckAusente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonCancelarCadatroRelatorio)
-                    .addComponent(jButtonSalvarCadastroRelatorio))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonCancelarCadatroRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarCadatroRelatorioActionPerformed
+        dispose();    }//GEN-LAST:event_jButtonCancelarCadatroRelatorioActionPerformed
+
+    private void jCheckAusenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckAusenteActionPerformed
+        jTextAreaCadastroRelatorio.setEnabled(!jCheckAusente.isSelected());
+    }//GEN-LAST:event_jCheckAusenteActionPerformed
+
+    private void jButtonSalvarCadastroRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarCadastroRelatorioActionPerformed
+        if (relatorio == null) {
+            relatorio = new Relatorio();
+            try {
+                serviceRelatorio.adicionar(getRelatorio(), crianca);
+                JOptionPane.showMessageDialog(null, "Registrado com sucesso!");
+                dispose();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+                relatorio = null;
+            }
+        } else {
+            try {
+                serviceRelatorio.atualizar(getRelatorio(), crianca);
+                JOptionPane.showMessageDialog(null, "Registrado com sucesso!");
+                dispose();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButtonSalvarCadastroRelatorioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -144,8 +238,9 @@ public class FrameCadastroRelatorio extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelInformacoesDaCrianca;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextAreaCadastroRelatorio;
-    private javax.swing.JFormattedTextField jTextDataNascimento;
+    private javax.swing.JFormattedTextField jTextData;
     // End of variables declaration//GEN-END:variables
 }

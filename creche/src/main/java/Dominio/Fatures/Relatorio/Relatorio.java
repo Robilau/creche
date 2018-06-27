@@ -55,7 +55,7 @@ public class Relatorio extends Entidade {
     
     @Override
     public void validar() throws Exception {
-        if (ausente == false && texto.length() < 200) throw  new Exception ("O texto deve ter pelo menos 200 caracteres ou a opção ausente deve estar marcada");
+        if (ausente == false && texto.length() < 100) throw  new Exception ("O texto deve ter pelo menos 100 caracteres ou a opção ausente deve estar marcada");
         if (data == null) throw new Exception ("A data não pode estar vazia");
     }
 }

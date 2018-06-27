@@ -19,6 +19,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -71,6 +73,12 @@ public class FrameCadastroCrianca extends javax.swing.JInternalFrame {
             jCmbTurma.setModel(modeloTurma);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+    
+    private void verificarCampoData() throws Exception{
+        if (jTextDataNascimento.getValue() == null) {
+            throw new Exception("O campo data não pode estar vazio");
         }
     }
 
@@ -235,20 +243,26 @@ public class FrameCadastroCrianca extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBcancelarActionPerformed
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
-        try {
-            if (jTextDataNascimento.getValue() == null) throw new Exception("O campo data não pode estar vazio");
-            if (crianca == null) {
-                crianca = new Crianca();
+        
+        if (crianca == null) {
+            crianca = new Crianca();
+            try {
+                verificarCampoData();
                 serviceCrianca.adicionar(getCrianca());
-            } else {
-                serviceCrianca.atualizar(getCrianca());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+                crianca = null;
             }
-            JOptionPane.showMessageDialog(null, "Salvo com sucesso, nome: " + crianca.getNome());
-            dispose();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-            crianca = null;
+        } else {
+            try {
+                verificarCampoData();
+                serviceCrianca.atualizar(getCrianca());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
         }
+        JOptionPane.showMessageDialog(null, "Salvo com sucesso, nome: " + crianca.getNome());
+        dispose();
     }//GEN-LAST:event_jBSalvarActionPerformed
 
 
