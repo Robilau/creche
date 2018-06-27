@@ -172,7 +172,6 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuCuidador = new javax.swing.JMenuItem();
         jMenuRpc = new javax.swing.JMenuItem();
         jMenuTurma = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
         menuUsuario = new javax.swing.JMenu();
         jMenuSenha = new javax.swing.JMenuItem();
         jMenuLogout = new javax.swing.JMenuItem();
@@ -268,15 +267,6 @@ public class FramePrincipal extends javax.swing.JFrame {
         });
         menuContexto.add(jMenuTurma);
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
-        jMenuItem1.setText("Relatório");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        menuContexto.add(jMenuItem1);
-
         jMenuBar2.add(menuContexto);
 
         menuUsuario.setText("Usuario");
@@ -356,11 +346,6 @@ public class FramePrincipal extends javax.swing.JFrame {
         adicionaTela(frameGerenciadorCadastroTurma, true);
     }//GEN-LAST:event_jMenuTurmaActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-       fecharTodosFrames();
-        adicionaTela(frameInformacoesDetalhadasCrianca, true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -405,7 +390,6 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private static javax.swing.JMenuItem jMenuCrianca;
     private static javax.swing.JMenuItem jMenuCuidador;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuLogout;
     private static javax.swing.JMenuItem jMenuRpc;
