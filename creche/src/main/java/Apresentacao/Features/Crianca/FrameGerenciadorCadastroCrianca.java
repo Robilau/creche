@@ -6,6 +6,7 @@
 package Apresentacao.Features.Crianca;
 
 import Apresentacao.Base.FramePrincipal;
+import Dominio.Fatures.Relatorio.IRelatorioService;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import Dominio.Features.Crianca.Crianca;
@@ -16,7 +17,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Vector;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 /**
  *
@@ -27,11 +27,13 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame 
     private ICriancaService serviceCrianca;
     private IRpcService serviceRpc;
     private ITurmaService serviceTurma;
+    private IRelatorioService serviceRelatorio;
 
-    public FrameGerenciadorCadastroCrianca(ICriancaService service, IRpcService serviceRpc, ITurmaService serviceTurma) {
+    public FrameGerenciadorCadastroCrianca(ICriancaService service, IRpcService serviceRpc, ITurmaService serviceTurma, IRelatorioService serviceRelatorio) {
         this.serviceCrianca = service;
         this.serviceRpc = serviceRpc;
         this.serviceTurma = serviceTurma;
+        this.serviceRelatorio = serviceRelatorio;
         initComponents();
         AtualizarLista();
     }
@@ -62,6 +64,7 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame 
         jButtonCadastrar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
+        jButtonVisualizar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         Icon registro = new ImageIcon("src/main/resources/Imagens/Registro.png");
         jLabel1 = new javax.swing.JLabel(registro);
@@ -93,11 +96,11 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame 
         jPanelLista.setLayout(jPanelListaLayout);
         jPanelListaLayout.setHorizontalGroup(
             jPanelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE)
         );
         jPanelListaLayout.setVerticalGroup(
             jPanelListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
         );
 
         jPanelOperacoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Operações"));
@@ -123,13 +126,21 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame 
             }
         });
 
+        jButtonVisualizar.setText("Visualiizar");
+        jButtonVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVisualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelOperacoesLayout = new javax.swing.GroupLayout(jPanelOperacoes);
         jPanelOperacoes.setLayout(jPanelOperacoesLayout);
         jPanelOperacoesLayout.setHorizontalGroup(
             jPanelOperacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButtonCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButtonCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
             .addComponent(jButtonEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButtonExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButtonVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelOperacoesLayout.setVerticalGroup(
             jPanelOperacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,7 +149,9 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame 
                 .addGap(2, 2, 2)
                 .addComponent(jButtonEditar)
                 .addGap(2, 2, 2)
-                .addComponent(jButtonExcluir))
+                .addComponent(jButtonExcluir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonVisualizar))
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -155,9 +168,9 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(155, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(156, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -177,8 +190,8 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame 
             .addComponent(jPanelLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanelOperacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -198,10 +211,11 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame 
         try {
             if (jListaCrianca.getSelectedValue() == null) {
                 JOptionPane.showMessageDialog(null, "Selecione uma criança!");
-            }
-            FrameCadastroCrianca telaCadastro = new FrameCadastroCrianca(serviceRpc, serviceTurma, serviceCrianca);
-            telaCadastro.setCrianca((Crianca) jListaCrianca.getSelectedValue());
-            FramePrincipal.adicionaTela(telaCadastro, false);
+            }else{
+                FrameCadastroCrianca telaCadastro = new FrameCadastroCrianca(serviceRpc, serviceTurma, serviceCrianca);
+                telaCadastro.setCrianca((Crianca) jListaCrianca.getSelectedValue());
+                FramePrincipal.adicionaTela(telaCadastro, false);
+            }            
         } catch (ParseException | SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -225,11 +239,23 @@ public class FrameGerenciadorCadastroCrianca extends javax.swing.JInternalFrame 
         AtualizarLista();
     }//GEN-LAST:event_formInternalFrameActivated
 
+    private void jButtonVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisualizarActionPerformed
+        if (jListaCrianca.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(null, "Selecione uma criança!");
+        }else{
+            FrameInformacoesDetalhadasCrianca telaInformacoes = new FrameInformacoesDetalhadasCrianca(serviceRelatorio);
+            telaInformacoes.setCrianca((Crianca) jListaCrianca.getSelectedValue());
+            FramePrincipal.adicionaTela(telaInformacoes, false);
+        }
+        
+    }//GEN-LAST:event_jButtonVisualizarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCadastrar;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonExcluir;
+    private javax.swing.JButton jButtonVisualizar;
     private javax.swing.JLabel jLabel1;
     public static javax.swing.JList jListaCrianca;
     private javax.swing.JPanel jPanel1;

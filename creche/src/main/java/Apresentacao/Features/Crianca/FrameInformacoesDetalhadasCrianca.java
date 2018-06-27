@@ -3,7 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Apresentacao.Base;
+package Apresentacao.Features.Crianca;
+
+import Apresentacao.Base.FramePrincipal;
+import Apresentacao.Features.Relatorio.FrameCadastroRelatorio;
+import Dominio.Fatures.Relatorio.IRelatorioService;
+import Dominio.Features.Crianca.Crianca;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -11,10 +21,33 @@ package Apresentacao.Base;
  */
 public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form nomeADefinir
-     */
-    public FrameInformacoesDetalhadasCrianca() {
+    private Crianca crianca;
+    private SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    private IRelatorioService serviceRelatorio;
+
+    public Crianca getCrianca() {
+        return crianca;
+    }
+
+    public void setCrianca(Crianca crianca) {
+        this.crianca = crianca;
+        jLabelNomeCrianca.setText(crianca.getNome());
+        jLabelRGCrianca.setText(crianca.getRG());
+        jLabelDataCrianca.setText(df.format(crianca.getDataNascimento()));
+        jLabelNomeRPC.setText(crianca.getResponsavelPelaCrianca().getNome());
+        jLabelRGRPC.setText(crianca.getResponsavelPelaCrianca().getRG());
+        jLabelEnderecoRPC.setText(crianca.getResponsavelPelaCrianca().getEndereco());
+        jLabelFoneRPC.setText(crianca.getResponsavelPelaCrianca().getTelefone());
+        jLabelCPFRPC.setText(crianca.getResponsavelPelaCrianca().getCPF());
+        jLabelNomeTurma.setText(crianca.getTurma().getNome());
+        jLabelTurnoTurma.setText(crianca.getTurma().getTurno());
+        jLabelCuidadorTurma.setText(crianca.getTurma().getCuidador().getNome());
+        jLabelNomeCuidador.setText(crianca.getTurma().getCuidador().getNome());
+        jLabelFoneCuidador.setText(crianca.getTurma().getCuidador().getTelefone());
+    }
+
+    public FrameInformacoesDetalhadasCrianca(IRelatorioService serviceRelatorio) {
+        this.serviceRelatorio = serviceRelatorio;
         initComponents();
     }
 
@@ -62,6 +95,15 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
         jButtonRegistrarRelatorio = new javax.swing.JButton();
         jButtonEditarRelatorio = new javax.swing.JButton();
         jButtonImprimirRelatorio = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jButtonImprimirRelatorio1 = new javax.swing.JButton();
+        jTextDataEditar = new javax.swing.JFormattedTextField();
+        jTextDataInicioImprimir = new javax.swing.JFormattedTextField();
+        jTextDataFimImprimir = new javax.swing.JFormattedTextField();
+
+        setClosable(true);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informações Detalhadas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
 
@@ -87,19 +129,22 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelDataCrianca))
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelRGCrianca)
-                    .addComponent(jLabelNomeCrianca)))
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelDataCrianca))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel2)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelRGCrianca)
+                            .addComponent(jLabelNomeCrianca))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,7 +206,7 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jLabelTurnoTurma))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jLabelCuidadorTurma)))
@@ -284,27 +329,133 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
                 .addContainerGap())
         );
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Relatórios", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
         jButtonRegistrarRelatorio.setText("Registrar Relatório");
+        jButtonRegistrarRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegistrarRelatorioActionPerformed(evt);
+            }
+        });
 
         jButtonEditarRelatorio.setText("Editar Relatório");
+        jButtonEditarRelatorio.setEnabled(false);
 
-        jButtonImprimirRelatorio.setText("Imprimir Relatório");
+        jButtonImprimirRelatorio.setText("Imprimir Relatórios");
+        jButtonImprimirRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirRelatorioActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Selecione a data de inicial: ");
+
+        jLabel7.setText("Selecione a data final: ");
+
+        jLabel9.setText("Selecione a data: ");
+
+        jButtonImprimirRelatorio1.setText("Imprimir Todos");
+        jButtonImprimirRelatorio1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirRelatorio1ActionPerformed(evt);
+            }
+        });
+
+        jTextDataEditar.setFormatterFactory(new javax.swing.JFormattedTextField.AbstractFormatterFactory() {
+            public javax.swing.JFormattedTextField.AbstractFormatter
+            getFormatter(javax.swing.JFormattedTextField jf) {
+                try{
+                    return new javax.swing.text.MaskFormatter("##/##/####");
+                } catch (ParseException pe){
+                    pe.printStackTrace();
+                }
+                return null;
+            }
+        });
+        jTextDataEditar.setEnabled(false);
+
+        jTextDataInicioImprimir.setFormatterFactory(new javax.swing.JFormattedTextField.AbstractFormatterFactory() {
+            public javax.swing.JFormattedTextField.AbstractFormatter
+            getFormatter(javax.swing.JFormattedTextField jf) {
+                try{
+                    return new javax.swing.text.MaskFormatter("##/##/####");
+                } catch (ParseException pe){
+                    pe.printStackTrace();
+                }
+                return null;
+            }
+        });
+
+        jTextDataFimImprimir.setFormatterFactory(new javax.swing.JFormattedTextField.AbstractFormatterFactory() {
+            public javax.swing.JFormattedTextField.AbstractFormatter
+            getFormatter(javax.swing.JFormattedTextField jf) {
+                try{
+                    return new javax.swing.text.MaskFormatter("##/##/####");
+                } catch (ParseException pe){
+                    pe.printStackTrace();
+                }
+                return null;
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jButtonRegistrarRelatorio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonEditarRelatorio)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonImprimirRelatorio)
-                .addGap(50, 50, 50))
+                .addContainerGap()
+                .addComponent(jButtonRegistrarRelatorio)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonImprimirRelatorio1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                            .addComponent(jLabel9)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jTextDataEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonEditarRelatorio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel7)
+                                .addGroup(jPanel6Layout.createSequentialGroup()
+                                    .addComponent(jButtonImprimirRelatorio)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel5)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextDataInicioImprimir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                                .addComponent(jTextDataFimImprimir, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,62 +463,87 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonRegistrarRelatorio)
                     .addComponent(jButtonEditarRelatorio))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonImprimirRelatorio))
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(3, 3, 3)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(3, 3, 3)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jTextDataEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addComponent(jButtonImprimirRelatorio1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonImprimirRelatorio)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextDataFimImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jTextDataInicioImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 83, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(101, 101, 101))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(42, 42, 42))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonRegistrarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarRelatorioActionPerformed
+        FrameCadastroRelatorio frameCadastroRelatorio = new FrameCadastroRelatorio(serviceRelatorio);
+        frameCadastroRelatorio.setCrianca(crianca);
+        FramePrincipal.adicionaTela(frameCadastroRelatorio, false);
+    }//GEN-LAST:event_jButtonRegistrarRelatorioActionPerformed
+
+    private void jButtonImprimirRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirRelatorioActionPerformed
+        try {
+            JFileChooser chooserDiretorio = new JFileChooser();
+            chooserDiretorio.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooserDiretorio.showOpenDialog(getParent());
+            String path = chooserDiretorio.getSelectedFile().getAbsolutePath() + "\\relatorio.pdf";
+            Date dateInicio = df.parse((String) jTextDataInicioImprimir.getValue());
+            Date dateFim = df.parse((String) jTextDataFimImprimir.getValue());
+            serviceRelatorio.gerarPdfRelatorio(serviceRelatorio.pegarTodos(dateInicio, dateFim, crianca), crianca, path);
+            JOptionPane.showMessageDialog(null, "Arquivo gerado com sucesso.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_jButtonImprimirRelatorioActionPerformed
+
+    private void jButtonImprimirRelatorio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirRelatorio1ActionPerformed
+        try {
+            JFileChooser chooserDiretorio = new JFileChooser();
+            chooserDiretorio.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooserDiretorio.showOpenDialog(getParent());
+            String path = chooserDiretorio.getSelectedFile().getAbsolutePath() + "\\relatorio.pdf";
+            serviceRelatorio.gerarPdfRelatorio(serviceRelatorio.pegarTodos(crianca), crianca, path);
+            JOptionPane.showMessageDialog(null, "Arquivo gerado com sucesso.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_jButtonImprimirRelatorio1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEditarRelatorio;
     private javax.swing.JButton jButtonImprimirRelatorio;
+    private javax.swing.JButton jButtonImprimirRelatorio1;
     private javax.swing.JButton jButtonRegistrarRelatorio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -380,8 +556,11 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelCPFRPC;
     private javax.swing.JLabel jLabelCuidadorTurma;
     private javax.swing.JLabel jLabelDataCrianca;
@@ -401,5 +580,8 @@ public class FrameInformacoesDetalhadasCrianca extends javax.swing.JInternalFram
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JFormattedTextField jTextDataEditar;
+    private javax.swing.JFormattedTextField jTextDataFimImprimir;
+    private javax.swing.JFormattedTextField jTextDataInicioImprimir;
     // End of variables declaration//GEN-END:variables
 }

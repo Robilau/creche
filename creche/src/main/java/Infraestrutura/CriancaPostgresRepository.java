@@ -24,7 +24,8 @@ public class CriancaPostgresRepository implements ICriancaRepository {
 
     private final String SQL_INSERT = " INSERT INTO TBCrianca (nome_crianca, rg_crianca, dataNascimento_crianca, rpc_id, turma_id) VALUES (?,?,?,?,?);";
     private final String SQL_UPDATE = "UPDATE TBCrianca SET nome_crianca = ?, rg_crianca = ?, dataNascimento_crianca = ?, rpc_id = ?, turma_id = ? WHERE id_crianca = ?;";
-    private final String SQL_DELETE = "DELETE FROM TBCrianca WHERE id_crianca = ?;";
+    private final String SQL_DELETE = "DELETE FROM TBRelatorio WHERE crianca_id = ?;"
+            + "DELETE FROM TBCrianca WHERE id_crianca = ?;";
     private final String SQL_GETALL = "SELECT * FROM TBCrianca c, TBRpc r, TBTurma t, TBcuidador cu WHERE c.rpc_id = r.id_rpc AND c.turma_id = t.id_turma AND cu.id_cuidador = t.cuidador_id";
     private final String SQL_GET = "SELECT * FROM TBCrianca, TBRpc, TBTurma, TBCuidador WHERE id_crianca = ?";
 
@@ -59,6 +60,7 @@ public class CriancaPostgresRepository implements ICriancaRepository {
         }
         PreparedStatement statement = PostgresDAO.createStatement(SQL_DELETE);
         statement.setInt(1, id);
+        statement.setInt(2, id);
         return PostgresDAO.delete(statement);
     }
 
@@ -112,11 +114,12 @@ public class CriancaPostgresRepository implements ICriancaRepository {
         rpc.setEndereco(rs.getString("endereco_rpc"));
         rpc.setTelefone(rs.getString("telefone_rpc"));
         turma.setNome(rs.getString("nome_turma"));
+        turma.setTurno(rs.getString("turno_turma"));
         cuidador.setId(rs.getInt("id_cuidador"));
         cuidador.setNome(rs.getString("nome_cuidador"));
-        cuidador.setRG("rg_cuidador");
-        cuidador.setTelefone("telefone_cuidador");
-        cuidador.setCPF("cpf_cuidador");
+        cuidador.setRG(rs.getString("rg_cuidador"));
+        cuidador.setTelefone(rs.getString("telefone_cuidador"));
+        cuidador.setCPF(rs.getString("cpf_cuidador"));
         turma.setCuidador(cuidador);
         c.setResponsavelPelaCrianca(rpc);
         c.setTurma(turma);

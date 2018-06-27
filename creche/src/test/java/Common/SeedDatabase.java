@@ -32,9 +32,15 @@ public class SeedDatabase {
     protected final static String createTbCuidador = "Create table TBCuidador (id_cuidador serial primary key not null, nome_cuidador text not null, telefone_cuidador text not null, rg_cuidador text not null, cpf_cuidador text not null, login_cuidador text not null, senha_cuidador text not null);";
     protected final static String insertTbCuidador = "INSERT INTO TBCuidador (nome_cuidador, rg_cuidador, telefone_cuidador, cpf_cuidador, login_cuidador, senha_cuidador) VALUES ('Lucas Chaves', '78965412', '(48)99987-1236', '23649826518', 'login', 'senha')";
 
+    protected final static String dropTbRelatorio = "DROP TABLE TBRelatorio;";
+    protected final static String createTbRelatorio = "Create table TBRelatorio (id_relatorio serial primary key not null, texto_relatorio text, ausente_relatorio boolean not null, data_relatorio date not null, crianca_id integer not null, FOREIGN KEY (crianca_id) REFERENCES TBCrianca (id_crianca));";
+    protected final static String insertTbRelatorio = "INSERT INTO TBRelatorio (texto_relatorio, ausente_relatorio, data_relatorio, crianca_id) VALUES ('texxxxxtttttoooooooo', false, now(), '1');";
+
+    
     public static void seedCompleto() throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
         Statement st = conn.createStatement();
+        st.execute(dropTbRelatorio);
         st.execute(dropTbCrianca);
         st.execute(dropTbRpc);
         st.execute(dropTbTurma);
@@ -43,15 +49,18 @@ public class SeedDatabase {
         st.execute(createTbCuidador);
         st.execute(createTbTurma);
         st.execute(createTbCrianca);
+        st.execute(createTbRelatorio);
         st.execute(insertTbRpc);
         st.execute(insertTbCuidador);
         st.execute(insertTbturma);
         st.execute(insertTbCrianca);
+        st.execute(insertTbRelatorio);
     }
 
     public static void rpcSeed() throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
         Statement st = conn.createStatement();
+        st.execute(dropTbRelatorio);
         st.execute(dropTbCrianca);
         st.execute(dropTbRpc);
         st.execute(dropTbTurma);
@@ -60,12 +69,14 @@ public class SeedDatabase {
         st.execute(createTbCuidador);
         st.execute(createTbTurma);
         st.execute(createTbCrianca);
+        st.execute(createTbRelatorio);
         st.execute(insertTbRpc);
     }
 
     public static void turmaECuidadorSeed() throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
         Statement st = conn.createStatement();
+        st.execute(dropTbRelatorio);
         st.execute(dropTbCrianca);
         st.execute(dropTbRpc);
         st.execute(dropTbTurma);
@@ -74,6 +85,7 @@ public class SeedDatabase {
         st.execute(createTbCuidador);
         st.execute(createTbTurma);
         st.execute(createTbCrianca);
+        st.execute(createTbRelatorio);
         st.execute(insertTbCuidador);
         st.execute(insertTbturma);
     }
@@ -81,6 +93,7 @@ public class SeedDatabase {
     public static void cuidadorSeed() throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBCreche", "postgres", "aluno");
         Statement st = conn.createStatement();
+        st.execute(dropTbRelatorio);
         st.execute(dropTbCrianca);
         st.execute(dropTbRpc);
         st.execute(dropTbTurma);
@@ -89,6 +102,7 @@ public class SeedDatabase {
         st.execute(createTbCuidador);
         st.execute(createTbTurma);
         st.execute(createTbCrianca);
+        st.execute(createTbRelatorio);
         st.execute(insertTbCuidador);
     }
 }

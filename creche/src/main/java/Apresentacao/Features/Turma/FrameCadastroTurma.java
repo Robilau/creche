@@ -15,6 +15,8 @@ import Dominio.Features.Turma.ITurmaService;
 import Dominio.Features.Turma.Turma;
 import java.text.ParseException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -74,11 +76,11 @@ public class FrameCadastroTurma extends javax.swing.JInternalFrame {
         jBSalvar = new javax.swing.JButton();
         jBcancelar = new javax.swing.JButton();
 
-        setTitle("Cadastrar Criança");
+        setTitle("Cadastrar Turma");
         setMinimumSize(new java.awt.Dimension(999, 220));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Cadastrar Criança");
+        jLabel1.setText("Cadastrar Turma");
 
         jLabel2.setText("Nome:");
 
@@ -185,19 +187,23 @@ public class FrameCadastroTurma extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBcancelarActionPerformed
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
-        try {
-            if (turma == null) {
-                turma = new Turma();
+        if (turma == null) {
+            turma = new Turma();
+            try {
                 serviceTurma.adicionar(getTurma());
-            } else {
-                serviceTurma.atualizar(getTurma());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+                turma = null;
             }
-            JOptionPane.showMessageDialog(null, "Salvo com sucesso, nome: " + turma.getNome());
-            dispose();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-            turma = null;
+        } else {
+            try {
+                serviceTurma.atualizar(getTurma());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
         }
+        JOptionPane.showMessageDialog(null, "Salvo com sucesso, nome: " + turma.getNome());
+        dispose();
     }//GEN-LAST:event_jBSalvarActionPerformed
 
     private void jCmbCuidadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCmbCuidadorActionPerformed

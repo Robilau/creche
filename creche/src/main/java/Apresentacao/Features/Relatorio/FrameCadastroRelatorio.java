@@ -5,17 +5,51 @@
  */
 package Apresentacao.Features.Relatorio;
 
+import Dominio.Fatures.Relatorio.IRelatorioService;
+import Dominio.Fatures.Relatorio.Relatorio;
+import Dominio.Features.Crianca.Crianca;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author User
  */
 public class FrameCadastroRelatorio extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form FrameRelatorio
-     */
-    public FrameCadastroRelatorio() {
+    private Crianca crianca;
+    private Relatorio relatorio;
+    private SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    private IRelatorioService serviceRelatorio;
+
+    public FrameCadastroRelatorio(IRelatorioService serviceRelatorio) {
+        this.serviceRelatorio = serviceRelatorio;
         initComponents();
+    }
+
+    public void setCrianca(Crianca crianca) {
+        this.crianca = crianca;
+        jLabelInformacoesDaCrianca.setText(crianca.toString());
+    }
+
+    public Relatorio getRelatorio() throws ParseException {
+        relatorio.setAusente(jCheckAusente.isSelected());
+        if (!relatorio.isAusente()) {
+            relatorio.setTexto(jTextAreaCadastroRelatorio.getText());
+        }
+        relatorio.setData(df.parse((String) jTextData.getValue()));
+        return relatorio;
+    }
+
+    public void setRelatorio(Relatorio relatorio) {
+        this.relatorio = relatorio;
+        jTextAreaCadastroRelatorio.setText(relatorio.getTexto());
+        jTextData.setText(df.format(relatorio.getData()));
+        jTextData.setValue(relatorio.getData());
+        jCheckAusente.setSelected(relatorio.isAusente());
     }
 
     /**
@@ -27,82 +61,186 @@ public class FrameCadastroRelatorio extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabelInformacoesDaCrianca = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jTextData = new javax.swing.JFormattedTextField();
+        jCheckAusente = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaCadastroRelatorio = new javax.swing.JTextArea();
-        jButtonSalvarCadastroRelatorio = new javax.swing.JButton();
         jButtonCancelarCadatroRelatorio = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabelInformacoesDaCrianca = new javax.swing.JLabel();
+        jButtonSalvarCadastroRelatorio = new javax.swing.JButton();
+
+        setClosable(true);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Relatório");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setText("Informações Da Criança: ");
+
+        jLabelInformacoesDaCrianca.setText("Informações a serem carregadas.");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setText("Data:");
+
+        jTextData.setFormatterFactory(new javax.swing.JFormattedTextField.AbstractFormatterFactory() {
+            public javax.swing.JFormattedTextField.AbstractFormatter
+            getFormatter(javax.swing.JFormattedTextField jf) {
+                try{
+                    return new javax.swing.text.MaskFormatter("##/##/####");
+                } catch (ParseException pe){
+                    pe.printStackTrace();
+                }
+                return null;
+            }
+        });
+        jTextData.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        jCheckAusente.setText("Ausente");
+        jCheckAusente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckAusenteActionPerformed(evt);
+            }
+        });
 
         jTextAreaCadastroRelatorio.setColumns(20);
+        jTextAreaCadastroRelatorio.setLineWrap(true);
         jTextAreaCadastroRelatorio.setRows(5);
         jScrollPane1.setViewportView(jTextAreaCadastroRelatorio);
 
-        jButtonSalvarCadastroRelatorio.setText("Salvar");
-
         jButtonCancelarCadatroRelatorio.setText("Cancelar");
+        jButtonCancelarCadatroRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarCadatroRelatorioActionPerformed(evt);
+            }
+        });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Relatório");
+        jButtonSalvarCadastroRelatorio.setText("Salvar");
+        jButtonSalvarCadastroRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvarCadastroRelatorioActionPerformed(evt);
+            }
+        });
 
-        jLabel2.setText("Informações Da Criança: ");
-
-        jLabelInformacoesDaCrianca.setText("Informações a serem carregadas.");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jCheckAusente))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButtonCancelarCadatroRelatorio)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonSalvarCadastroRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jTextData))
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelInformacoesDaCrianca, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addContainerGap())))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabelInformacoesDaCrianca))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(8, 8, 8)
+                .addComponent(jCheckAusente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonSalvarCadastroRelatorio)
+                    .addComponent(jButtonCancelarCadatroRelatorio))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelInformacoesDaCrianca)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButtonSalvarCadastroRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonCancelarCadatroRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(283, 283, 283)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonSalvarCadastroRelatorio))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabelInformacoesDaCrianca))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonCancelarCadatroRelatorio)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonCancelarCadatroRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarCadatroRelatorioActionPerformed
+        dispose();    }//GEN-LAST:event_jButtonCancelarCadatroRelatorioActionPerformed
+
+    private void jCheckAusenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckAusenteActionPerformed
+        jTextAreaCadastroRelatorio.setEnabled(!jCheckAusente.isSelected());
+    }//GEN-LAST:event_jCheckAusenteActionPerformed
+
+    private void jButtonSalvarCadastroRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarCadastroRelatorioActionPerformed
+        if (relatorio == null) {
+            relatorio = new Relatorio();
+            try {
+                serviceRelatorio.adicionar(getRelatorio(), crianca);
+                JOptionPane.showMessageDialog(null, "Registrado com sucesso!");
+                dispose();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+                relatorio = null;
+            }
+        } else {
+            try {
+                serviceRelatorio.atualizar(getRelatorio(), crianca);
+                JOptionPane.showMessageDialog(null, "Registrado com sucesso!");
+                dispose();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButtonSalvarCadastroRelatorioActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelarCadatroRelatorio;
     private javax.swing.JButton jButtonSalvarCadastroRelatorio;
+    private javax.swing.JCheckBox jCheckAusente;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelInformacoesDaCrianca;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextAreaCadastroRelatorio;
+    private javax.swing.JFormattedTextField jTextData;
     // End of variables declaration//GEN-END:variables
 }

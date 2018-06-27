@@ -9,6 +9,8 @@ import Dominio.Features.RPC.IRpcService;
 import Dominio.Features.RPC.Rpc;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -183,19 +185,23 @@ public class FrameCadastroRpc extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBcancelarActionPerformed
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
-        try {
-            if (rpc == null) {
-                rpc = new Rpc();
+        if (rpc == null) {
+            rpc = new Rpc();
+            try {
                 serviceRpc.adicionar(getRpc());
-            } else {
-                serviceRpc.atualizar(getRpc());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+                rpc = null;
             }
-            JOptionPane.showMessageDialog(null, "Salvo com sucesso, nome: " + rpc.getNome());
-            dispose();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-            rpc = null;
+        } else {
+            try {
+                serviceRpc.atualizar(getRpc());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
         }
+        JOptionPane.showMessageDialog(null, "Salvo com sucesso, nome: " + rpc.getNome());
+        dispose();
     }//GEN-LAST:event_jBSalvarActionPerformed
 
 

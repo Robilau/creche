@@ -56,6 +56,8 @@ public class Turma extends Entidade {
     @Override
     public void validar() throws Exception {
         if (cuidador == null) throw new Exception ("cuidador não pode estar nulo");
+        if (turno.isEmpty()) throw new Exception("Turno não pode estar vazio");
+        if (nome.isEmpty()) throw new Exception("Nome não pode estar vazio");
     }
 
     @Override

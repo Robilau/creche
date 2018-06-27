@@ -1,5 +1,6 @@
 package Apresentacao.Base;
 
+import Apresentacao.Features.Crianca.FrameInformacoesDetalhadasCrianca;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import Apresentacao.Features.Usuario.FrameLogin;
@@ -9,10 +10,13 @@ import Apresentacao.Features.Crianca.FrameGerenciadorCadastroCrianca;
 import Aplicacao.CriancaService;
 import Aplicacao.CuidadorService;
 import Aplicacao.LoginService;
+import Aplicacao.RelatorioService;
 import Aplicacao.RpcService;
 import Aplicacao.TurmaService;
 import Apresentacao.Features.Rpc.FrameGerenciadorCadastroRpc;
 import Apresentacao.Features.Turma.FrameGerenciadorCadastroTurma;
+import Dominio.Fatures.Relatorio.IRelatorioRepository;
+import Dominio.Fatures.Relatorio.IRelatorioService;
 import Dominio.Features.Crianca.ICriancaService;
 import Dominio.Features.Cuidador.ICuidadorService;
 import Dominio.Features.RPC.IRpcService;
@@ -35,6 +39,9 @@ import Dominio.Features.Cuidador.ICuidadorRepository;
 import Dominio.Features.RPC.IRpcRepository;
 import Dominio.Features.Turma.ITurmaRepository;
 import Infraestrutura.Login.ILoginService;
+import Infraestrutura.PDF.IPDFService;
+import Infraestrutura.PDF.PDFService;
+import Infraestrutura.RelatorioPostgresRepository;
 
 public class FramePrincipal extends javax.swing.JFrame {
 
@@ -52,6 +59,11 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private IConfiguracoesLogin configuracaoLogin;
     private ILoginService loginService;
+    
+    private IRelatorioService relatorioService;
+    private IRelatorioRepository relatorioRepository;
+    
+    private IPDFService PDFService;
 
     private static Usuario user;
 
@@ -61,16 +73,16 @@ public class FramePrincipal extends javax.swing.JFrame {
     private FrameGerenciadorCadastroRpc frameGerenciadorCadastroRpc;
     private FrameGerenciadorCadastroTurma frameGerenciadorCadastroTurma;
     private FrameLogin frameLogin;
-    private FrameInformacoesDetalhadasCrianca frameInformacoesDetalhadasCrianca ;
+    private FrameInformacoesDetalhadasCrianca frameInformacoesDetalhadasCrianca;
 
     public FramePrincipal() {
         iniciarServicos();
         initComponents();
-        iniciarFrames();
         menuContexto.setEnabled(false);
         menuAjuda.setEnabled(false);
         menuUsuario.setEnabled(false);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frameLogin = new FrameLogin(loginService);
         adicionaTela(frameLogin, true);
     }
 
@@ -109,17 +121,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuRpc.setEnabled(false);
         jMenuTurma.setEnabled(false);
     }
-
-    public void iniciarFrames() {
-        frameGerenciadorCadastroCrianca = new FrameGerenciadorCadastroCrianca(criancaService, rpcService, turmaService);
-        frameMudarSenha = new FrameMudarSenha(user, loginService);
-        frameGerenciadorCadastroCuidador = new FrameGerenciadorCadastroCuidador(cuidadorService);
-        frameGerenciadorCadastroRpc = new FrameGerenciadorCadastroRpc(rpcService);
-        frameGerenciadorCadastroTurma = new FrameGerenciadorCadastroTurma(cuidadorService, turmaService);
-        frameLogin = new FrameLogin(loginService);
-        frameInformacoesDetalhadasCrianca= new FrameInformacoesDetalhadasCrianca();
-    }
-
+    
     public void iniciarServicos() {
         criancaRepositorio = new CriancaPostgresRepository();
         criancaService = new CriancaService(criancaRepositorio);
@@ -135,6 +137,11 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         cuidadorRepositorio = new CuidadorPostgresRepository();
         cuidadorService = new CuidadorService(cuidadorRepositorio, configuracaoLogin);
+        
+        PDFService = new PDFService();
+        
+        relatorioRepository = new RelatorioPostgresRepository();
+        relatorioService = new RelatorioService(relatorioRepository, PDFService);       
     }
 
     public static void fecharTodosFrames() {
@@ -165,7 +172,6 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuCuidador = new javax.swing.JMenuItem();
         jMenuRpc = new javax.swing.JMenuItem();
         jMenuTurma = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
         menuUsuario = new javax.swing.JMenu();
         jMenuSenha = new javax.swing.JMenuItem();
         jMenuLogout = new javax.swing.JMenuItem();
@@ -261,15 +267,6 @@ public class FramePrincipal extends javax.swing.JFrame {
         });
         menuContexto.add(jMenuTurma);
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
-        jMenuItem1.setText("Relatório");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        menuContexto.add(jMenuItem1);
-
         jMenuBar2.add(menuContexto);
 
         menuUsuario.setText("Usuario");
@@ -314,6 +311,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuCriancaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCriancaActionPerformed
         fecharTodosFrames();
+        frameGerenciadorCadastroCrianca = new FrameGerenciadorCadastroCrianca(criancaService, rpcService, turmaService, relatorioService);
         if (user.getTipoUsuario() == TipoUsuario.CUIDADOR) {
             frameGerenciadorCadastroCrianca.setjPanelLista(false);
         }
@@ -322,11 +320,13 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSenhaActionPerformed
         fecharTodosFrames();
+        frameMudarSenha = new FrameMudarSenha(user, loginService);
         adicionaTela(frameMudarSenha, false);
     }//GEN-LAST:event_jMenuSenhaActionPerformed
 
     private void jMenuCuidadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCuidadorActionPerformed
         fecharTodosFrames();
+        frameGerenciadorCadastroCuidador = new FrameGerenciadorCadastroCuidador(cuidadorService);
         adicionaTela(frameGerenciadorCadastroCuidador, true);
     }//GEN-LAST:event_jMenuCuidadorActionPerformed
 
@@ -336,18 +336,15 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuRpcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRpcActionPerformed
         fecharTodosFrames();
+        frameGerenciadorCadastroRpc = new FrameGerenciadorCadastroRpc(rpcService);
         adicionaTela(frameGerenciadorCadastroRpc, true);
     }//GEN-LAST:event_jMenuRpcActionPerformed
 
     private void jMenuTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTurmaActionPerformed
         fecharTodosFrames();
+        frameGerenciadorCadastroTurma = new FrameGerenciadorCadastroTurma(cuidadorService, turmaService);
         adicionaTela(frameGerenciadorCadastroTurma, true);
     }//GEN-LAST:event_jMenuTurmaActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-       fecharTodosFrames();
-        adicionaTela(frameInformacoesDetalhadasCrianca, true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -393,7 +390,6 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private static javax.swing.JMenuItem jMenuCrianca;
     private static javax.swing.JMenuItem jMenuCuidador;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuLogout;
     private static javax.swing.JMenuItem jMenuRpc;
