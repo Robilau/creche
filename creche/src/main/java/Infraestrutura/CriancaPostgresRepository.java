@@ -114,6 +114,7 @@ public class CriancaPostgresRepository implements ICriancaRepository {
         rpc.setEndereco(rs.getString("endereco_rpc"));
         rpc.setTelefone(rs.getString("telefone_rpc"));
         turma.setNome(rs.getString("nome_turma"));
+        turma.setTurno(rs.getString("turno_turma"));
         cuidador.setId(rs.getInt("id_cuidador"));
         cuidador.setNome(rs.getString("nome_cuidador"));
         cuidador.setRG("rg_cuidador");
