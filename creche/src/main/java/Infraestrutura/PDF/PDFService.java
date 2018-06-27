@@ -45,6 +45,7 @@ public class PDFService implements IPDFService{
         
         for (Relatorio relatorio : relatorios) {
             chunk = new Chunk("Data: " + df.format(relatorio.getData()) + "\n", font);
+            chunk.append("Presente: " + !relatorio.isAusente() + "\n");
             chunk.append("Texto: " + relatorio.getTexto() + "\n\n");
             document.add(new Paragraph(chunk));
         } 

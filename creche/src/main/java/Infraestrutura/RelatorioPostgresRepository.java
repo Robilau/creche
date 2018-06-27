@@ -25,8 +25,8 @@ public class RelatorioPostgresRepository implements IRelatorioRepository {
 
     private final String SQL_INSERT = " INSERT INTO TBRelatorio (texto_relatorio, ausente_relatorio, data_relatorio, crianca_id) VALUES (?,?,?,?);";
     private final String SQL_UPDATE = "UPDATE TBRelatorio SET texto_relatorio = ?, ausente_relatorio = ?, data_relatorio = ?, crianca_id = ? WHERE id_relatorio = ?;";
-    private final String SQL_GETALL_RELATORIOS_POR_DATA = "SELECT id_relatorio, texto_relatorio, ausente_relatorio, data_relatorio FROM TBRelatorio WHERE crianca_id = ? AND data_relatorio BETWEEN ? AND ?";
-    private final String SQL_GETALL_RELATORIOS = "SELECT id_relatorio, texto_relatorio, ausente_relatorio, data_relatorio FROM TBRelatorio WHERE crianca_id = ?";
+    private final String SQL_GETALL_RELATORIOS_POR_DATA = "SELECT * FROM TBRelatorio WHERE crianca_id = ? AND data_relatorio BETWEEN ? AND ?";
+    private final String SQL_GETALL_RELATORIOS = "SELECT * FROM TBRelatorio WHERE crianca_id = ?";
     private final String SQL_GET = "SELECT * FROM TBRelatorio, TBRpc, TBTurma, TBCuidador WHERE id_relatorio = ?";
 
     @Override
